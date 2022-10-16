@@ -7,13 +7,6 @@ public class ActivitiesSinglePanel extends JPanel {
     JPanel activityName;
 
     public ActivitiesSinglePanel() {
-        final boolean shouldFill = true;
-        final boolean shouldWeightX = true;
-        final boolean RIGHT_TO_LEFT = false;
-        if (RIGHT_TO_LEFT) {
-            this.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        }
-
         activityName = new JPanel();
         JButton button;
         JLabel label;
@@ -23,9 +16,7 @@ public class ActivitiesSinglePanel extends JPanel {
 
         label = new JLabel("Activity Name");
         c.fill = GridBagConstraints.HORIZONTAL;
-        if (shouldWeightX) {
-            c.weightx = 0.5;
-        }
+        c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
         c.gridwidth = 2;
         c.gridx = 0;
