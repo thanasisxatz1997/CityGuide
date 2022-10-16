@@ -13,7 +13,7 @@ public class MainForm extends JFrame{
     private JComboBox comboBox1;
     private JComboBox comboBox2;
     private JTextArea tandemSkydivingIsTheTextArea;
-    private JButton bookActivityButton;
+    private JButton detailsButton;
     private JButton button3;
     private JButton button4;
     private JButton button2;
@@ -22,6 +22,9 @@ public class MainForm extends JFrame{
     private JTextField textField1;
     private JTextField textField2;
     private JTable table1;
+    private JButton saveButton;
+    private JButton registerButton;
+    private JButton logInButton;
 
     public MainForm()
     {
