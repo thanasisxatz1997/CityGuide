@@ -1,9 +1,6 @@
 package Main;
-import Forms.MainForm;
-import com.google.common.net.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
+import Repository.ConnectToDatabase;
+import Repository.Filtering;
 
 
 import javax.swing.*;
@@ -25,7 +22,9 @@ public class Initialize {
         {
             System.out.println("Look  NOT Changed");
         }
-        new MainForm();
+        new ConnectToDatabase();
+        new Forms.MainForm();
+        Filtering.FindStoreType("Restaurant");
     }
 
     public static void main(String[] args) {
