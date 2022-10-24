@@ -47,6 +47,13 @@ public class MainForm extends JFrame{
     private JPanel storeSinglePanel4;
     private JPanel storeSinglePanel5;
     private JPanel storeSinglePanel6;
+    private JComboBox comboBox5;
+    private JTextField textField1;
+    private JCheckBox checkBox1;
+    private JButton activitiesApplyFiltersbutton;
+    private JComboBox comboBox6;
+    private JCheckBox checkBox2;
+
 
     public  ArrayList<Document> storesDocList;
     private ArrayList<StoresSinglePanel> singleStorePanelList;
