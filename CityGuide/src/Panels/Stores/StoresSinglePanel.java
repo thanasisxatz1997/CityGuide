@@ -14,9 +14,7 @@ public class StoresSinglePanel extends JPanel {
         final boolean shouldFill = true;
         final boolean shouldWeightX = true;
         final boolean RIGHT_TO_LEFT = false;
-        if (RIGHT_TO_LEFT) {
-            this.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        }
+        this.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         this.setBorder(BorderFactory.createLineBorder(Color.black));
 
 
@@ -26,12 +24,18 @@ public class StoresSinglePanel extends JPanel {
 
         label = new JLabel("Activity Name");
         c.fill = GridBagConstraints.HORIZONTAL;
-        if (shouldWeightX) {
-            c.weightx = 0.5;
-        }
+        c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
         c.gridwidth = 2;
         c.gridx = 0;
+        c.gridy = 0;
+        this.add(label, c);
+
+        label = new JLabel("Rating");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.insets = new Insets(5,5,5,5);  //padding
+        c.gridx = 2;
         c.gridy = 0;
         this.add(label, c);
 
