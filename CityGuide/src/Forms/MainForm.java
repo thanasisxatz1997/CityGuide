@@ -2,15 +2,12 @@ package Forms;
 import Panels.Stores.StoresSinglePanel;
 import Repository.Filtering;
 import org.bson.Document;
-import org.intellij.lang.annotations.Flow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import static java.awt.GridBagConstraints.RELATIVE;
 
 public class MainForm extends JFrame{
     private JPanel panel1;
@@ -33,8 +30,7 @@ public class MainForm extends JFrame{
     private JTextField textField2;
     private JTable table1;
     private JButton saveButton;
-    private JButton registerButton;
-    private JButton logInButton;
+    private JButton userButton;
     private JPanel storesDisplayPanel;
     private JPanel storesPanel;
     private JScrollPane storesDisplayPane;
@@ -67,7 +63,7 @@ public class MainForm extends JFrame{
         this.setVisible(true);
         this.add(panel1);
         this.setSize(new Dimension(800,800));
-
+        LoadListeners();
 
 
         InitializeStoreDisplayPanel();
@@ -107,7 +103,7 @@ public class MainForm extends JFrame{
             for (Document doc:storesDocList) {
                 StoresSinglePanel singleStore =new StoresSinglePanel();
                 System.out.println((String)doc.get("name"));
-                singleStore.label.setText((String) doc.get("name"));
+                singleStore.labelName.setText((String) doc.get("name"));
                 singleStorePanelList.add(singleStore);
             }
             AddSinglePanels();
@@ -119,6 +115,19 @@ public class MainForm extends JFrame{
 
 
 
+    }
+
+    private void LoadListeners(){
+        LoadActionListeners();
+    }
+
+    private void LoadActionListeners(){
+        userButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LogInManager.Managers.Initialize();
+            }
+        });
     }
 
     public void AddSinglePanels()
@@ -150,6 +159,7 @@ public class MainForm extends JFrame{
             System.out.println("added stores!");
             storesDisplayPanel.add(singlePanel);
         }
+
 
         /*
 
@@ -221,6 +231,5 @@ public class MainForm extends JFrame{
         c.gridheight=6;
         c.gridy=5;*/
     }
-
 
 }

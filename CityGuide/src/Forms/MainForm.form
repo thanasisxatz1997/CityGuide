@@ -685,20 +685,12 @@
           </grid>
         </children>
       </tabbedpane>
-      <component id="19f93" class="javax.swing.JButton" binding="registerButton" default-binding="true">
-        <constraints>
-          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Register"/>
-        </properties>
-      </component>
-      <component id="69b13" class="javax.swing.JButton" binding="logInButton" default-binding="true">
+      <component id="69b13" class="javax.swing.JButton" binding="userButton">
         <constraints>
           <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Log In"/>
+          <text value="Register / Log In"/>
         </properties>
       </component>
       <hspacer id="2cede">
