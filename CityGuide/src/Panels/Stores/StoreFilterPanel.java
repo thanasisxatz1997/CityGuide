@@ -19,7 +19,7 @@ public class StoreFilterPanel extends JPanel {
         searchField=new JTextField();
         textField1 = new JTextField();
         comboBox6 = new JComboxBox();
-        checkBox2 = new JCheckBoc();
+        checkBox2 = new JCheckBox();
 
     }
 
