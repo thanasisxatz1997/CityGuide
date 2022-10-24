@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8a1bed7b-31ba-4d4f-b3b5-184084aa9447" name="Default Changelist" comment="Adding more filters">
+      <change beforePath="$PROJECT_DIR$/CityGuide/src/Panels/Stores/StoreFilterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/CityGuide/src/Panels/Stores/StoreFilterPanel.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2GZXDfthWbgV5wxLdNJgyIp73R6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="156" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.Initialize" />
+      <module name="CityGuide" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8a1bed7b-31ba-4d4f-b3b5-184084aa9447" name="Default Changelist" comment="" />
+      <created>1666596963785</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1666596963785</updated>
+      <workItem from="1666596965743" duration="1787000" />
+      <workItem from="1666599023957" duration="517000" />
+      <workItem from="1666601417074" duration="1441000" />
+      <workItem from="1666607768900" duration="1505000" />
+      <workItem from="1666620951083" duration="57000" />
+      <workItem from="1666621026379" duration="1779000" />
+      <workItem from="1666622852507" duration="1779000" />
+      <workItem from="1666626571126" duration="1779000" />
+      <workItem from="1666628382945" duration="97000" />
+      <workItem from="1666628508976" duration="867000" />
+      <workItem from="1666629401492" duration="1515000" />
+      <workItem from="1666632208042" duration="334000" />
+      <workItem from="1666632562912" duration="377000" />
+    </task>
+    <task id="LOCAL-00001" summary="Adding more filters">
+      <created>1666630096528</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666630096528</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adding more filters" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding more filters" />
+  </component>
+</project>
