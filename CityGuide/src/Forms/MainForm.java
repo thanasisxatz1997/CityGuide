@@ -57,6 +57,19 @@ public class MainForm extends JFrame{
     public MainForm()
     {
         LoadForm();
+        logInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginPage();
+            }
+        });
+
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RegistrationForm(null);
+            }
+        });
 
     }
 
