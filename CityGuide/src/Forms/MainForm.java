@@ -64,10 +64,16 @@ public class MainForm extends JFrame{
         this.add(panel1);
         this.setSize(new Dimension(800,800));
         LoadListeners();
-
-
         InitializeStoreDisplayPanel();
         InitializeStoreFiltersPanel();
+        LoadStoreFilterComboBoxes(); // Placeholder in this class
+    }
+
+    private void LoadStoreFilterComboBoxes() // Placeholder in this class
+    {
+        comboBox3.addItem("");
+        comboBox3.addItem("Restaurants");
+        comboBox3.addItem("Cafes");
     }
 
     private void InitializeStoreDisplayPanel()
@@ -112,9 +118,6 @@ public class MainForm extends JFrame{
         {
             System.out.println("Wrong Search Parameters! Try again");
         }
-
-
-
     }
 
     private void LoadListeners(){
@@ -135,24 +138,14 @@ public class MainForm extends JFrame{
         storesDisplayPanel.removeAll();
         storesDisplayPanel.repaint();
         storesDisplayPanel.revalidate();
-
-
         listSize = 0;
-
         for (StoresSinglePanel singlePanel:singleStorePanelList)
         {
             listSize++;
             System.out.println("size added");
             System.out.println("Size is : "+listSize);
         }
-
         storesDisplayPanel.setPreferredSize(new Dimension(400,listSize*180+20));
-
-        //storesDisplayPane.setPreferredSize(new Dimension(400,800));
-        //storesDisplayPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        //BoxLayout boxLayout=new BoxLayout(storesDisplayPanel,BoxLayout.Y_AXIS);
-        //storesDisplayPanel.setLayout(boxLayout);
-
         System.out.println("List is:"+singleStorePanelList);
         for (StoresSinglePanel singlePanel:singleStorePanelList)
         {
@@ -161,6 +154,10 @@ public class MainForm extends JFrame{
         }
 
 
+        //storesDisplayPane.setPreferredSize(new Dimension(400,800));
+        //storesDisplayPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //BoxLayout boxLayout=new BoxLayout(storesDisplayPanel,BoxLayout.Y_AXIS);
+        //storesDisplayPanel.setLayout(boxLayout);
         /*
 
         storesDisplayPane.setPreferredSize(new Dimension(400,0));

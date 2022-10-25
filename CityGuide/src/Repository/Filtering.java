@@ -8,11 +8,10 @@ import org.bson.Document;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Filtering {
     public static MongoCollection collection;
-
-
     public static ArrayList<Document> FindStoreType(String type)
     {
         ArrayList<Document> results = new ArrayList<Document>();
@@ -21,7 +20,6 @@ public class Filtering {
         System.out.println(results);
         return (results);
     }
-
     public static boolean CheckSearchedFilters(String filterStr)
     {
         if(filterStr.equals("Restaurant")||filterStr.equals("Cafe"))
@@ -30,7 +28,6 @@ public class Filtering {
         }
         return false;
     }
-
 }
 
 
