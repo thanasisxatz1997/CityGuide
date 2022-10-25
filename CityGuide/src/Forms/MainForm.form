@@ -5,7 +5,10 @@
     <constraints>
       <xy x="20" y="20" width="1231" height="1124"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-2696737"/>
+      <enabled value="true"/>
+    </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="b9434" binding="tabbedPane1" default-binding="true">
@@ -14,13 +17,15 @@
             <preferred-size width="200" height="200"/>
           </grid>
         </constraints>
-        <properties/>
-        <border type="none"/>
+        <properties>
+          <background color="-12828863"/>
+        </properties>
+        <border type="bevel-lowered"/>
         <children>
-          <grid id="704e2" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="704e2" binding="mapTab" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Map"/>
+              <tabbedpane title="Map" icon="Icons/MapIcon.png"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -345,7 +350,7 @@
           <grid id="f8784" binding="storesPanel" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Stores"/>
+              <tabbedpane title="Stores" icon="Icons/shops.png"/>
             </constraints>
             <properties/>
             <border type="none"/>

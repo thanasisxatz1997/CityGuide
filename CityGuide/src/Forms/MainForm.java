@@ -40,6 +40,7 @@ public class MainForm extends JFrame{
     private JScrollPane storesDisplayPane;
     private JPanel storesFiltersPanel;
     private JButton applyFiltersButton;
+    private JPanel mapTab;
     private JScrollPane storesPane;
     private JPanel storeSinglePanel1;
     private JPanel storeSinglePanel2;
@@ -67,8 +68,6 @@ public class MainForm extends JFrame{
         this.setVisible(true);
         this.add(panel1);
         this.setSize(new Dimension(800,800));
-
-
 
         InitializeStoreDisplayPanel();
         InitializeStoreFiltersPanel();
@@ -107,7 +106,7 @@ public class MainForm extends JFrame{
             for (Document doc:storesDocList) {
                 StoresSinglePanel singleStore =new StoresSinglePanel();
                 System.out.println((String)doc.get("name"));
-                singleStore.label.setText((String) doc.get("name"));
+                singleStore.namelabel.setText((String) doc.get("name"));
                 singleStorePanelList.add(singleStore);
             }
             AddSinglePanels();
@@ -221,6 +220,7 @@ public class MainForm extends JFrame{
         c.gridheight=6;
         c.gridy=5;*/
     }
+
 
 
 }

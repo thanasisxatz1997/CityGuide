@@ -6,11 +6,14 @@ import java.awt.*;
 public class StoresSinglePanel extends JPanel {
 
     public JButton button;
-    public JLabel label;
+    public JLabel namelabel;
+    public JLabel picturelabel;
+    public JLabel ratinglabel;
     public JTextArea textarea;
     public StoresSinglePanel()
     {
-        this.setPreferredSize(new Dimension(400,150));
+        this.setPreferredSize(new Dimension(400,175));
+        this.setMaximumSize(new Dimension(400,175));
         final boolean shouldFill = true;
         final boolean shouldWeightX = true;
         final boolean RIGHT_TO_LEFT = false;
@@ -24,25 +27,33 @@ public class StoresSinglePanel extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        label = new JLabel("Activity Name");
+        namelabel = new JLabel("Activity Name");
         c.fill = GridBagConstraints.HORIZONTAL;
         if (shouldWeightX) {
             c.weightx = 0.5;
         }
         c.insets = new Insets(5,5,5,5);  //padding
-        c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(label, c);
+        this.add(namelabel, c);
 
-        label = new JLabel("Activity Picture");
+        ratinglabel = new JLabel("rating");
+        c.fill = GridBagConstraints.HORIZONTAL;
+        if (shouldWeightX) {
+            c.weightx = 0.5;
+        }
+        c.insets = new Insets(5,5,5,5);  //padding
+        c.gridx = 2;
+        c.gridy = 0;
+        this.add(ratinglabel, c);
+
+        picturelabel = new JLabel("Activity Picture");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
-        c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 1;
-        this.add(label, c);
+        this.add(picturelabel, c);
 
         textarea= new JTextArea("Activity Description");
         textarea.setPreferredSize(new Dimension(100,100));
@@ -50,7 +61,7 @@ public class StoresSinglePanel extends JPanel {
         c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
         c.ipady = 40;       //make this component tall
-        c.gridx = 3;
+        c.gridx = 2;
         c.gridy = 1;
         this.add(textarea, c);
 
@@ -66,7 +77,7 @@ public class StoresSinglePanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
-        c.gridx = 3;
+        c.gridx = 2;
         c.gridy = 2;
         this.add(button, c);
     }
