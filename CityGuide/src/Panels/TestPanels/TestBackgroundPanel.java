@@ -31,12 +31,12 @@ public class TestBackgroundPanel extends JPanel {
     {
         Dimension dim= new Dimension();
         try {
-            ImageResizer.resize("src/resources/BackgroundImages/RomeImage.jpg", "C:\\Users\\thana\\Desktop\\RomeImageResized.jpg", this.getWidth(), this.getHeight());
+            ImageResizer.resize("src/resources/BackgroundImages/RomeImage.jpg", "src/resources/BackgroundImages/RomeImageResized.jpg", this.getWidth(), this.getHeight());
         } catch (IOException e) {
             System.out.println("CANT RESIZE");
             e.printStackTrace();
         }
-        backgroundImage=new ImageIcon("C:\\Users\\thana\\Desktop\\RomeImageResized.jpg").getImage();
+        backgroundImage=new ImageIcon("src/resources/BackgroundImages/RomeImageResized.jpg").getImage();
         dim.width=backgroundImage.getWidth(null);
         dim.height=backgroundImage.getHeight(null);
     }

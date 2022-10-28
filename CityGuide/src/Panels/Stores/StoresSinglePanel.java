@@ -4,7 +4,10 @@ import Repository.ImageResizer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class StoresSinglePanel extends JPanel {
 
@@ -26,22 +29,28 @@ public class StoresSinglePanel extends JPanel {
         if (RIGHT_TO_LEFT) {
             this.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         }
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        this.setBorder(BorderFactory.createRaisedBevelBorder());
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
         labelName = new JLabel("Activity Name");
+        ChangeFont(labelName);
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth=2;
         c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
         c.gridx = 0;
         c.gridy = 0;
         this.add(labelName, c);
 
-        labelRating = new JLabel("Rating");
+        labelRating = new JLabel("4.3");
+        ChangeFont(labelRating);
+        labelRating.setIcon(new ImageIcon("src/resources/ButtonIcons/star-icon.png"));
+        c.anchor=GridBagConstraints.NORTHEAST;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
+        c.gridwidth=1;
+        c.weightx = 0.1;
         c.insets = new Insets(5,5,5,5);  //padding
         c.gridx = 2;
         c.gridy = 0;
@@ -66,8 +75,11 @@ public class StoresSinglePanel extends JPanel {
         this.add(textarea, c);
 
         buttonDetails = new JButton("Details");
+        buttonDetails.setIcon(new ImageIcon("src/resources/ButtonIcons/Logos-Details-icon.png"));
+        //buttonDetails.setVerticalTextPosition(SwingConstants.BOTTOM);
+        //buttonDetails.setHorizontalTextPosition(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.LAST_LINE_START;
+        c.anchor = GridBagConstraints.SOUTHWEST;
         c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
         c.ipady = 15;
@@ -75,9 +87,14 @@ public class StoresSinglePanel extends JPanel {
         c.gridy = 2;
         this.add(buttonDetails, c);
 
+
         buttonSave = new JButton("Save");
+        buttonSave.setIcon(new ImageIcon("src/resources/ButtonIcons/Save-icon.png"));
+        //buttonSave.setVerticalTextPosition(SwingConstants.LEFT);
+        //buttonSave.setHorizontalTextPosition(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.LAST_LINE_END;
+        c.anchor = GridBagConstraints.SOUTHEAST;
+        c.gridwidth=1;
         c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
         c.ipady = 15;
@@ -87,17 +104,41 @@ public class StoresSinglePanel extends JPanel {
 
         this.setVisible(true);
 
-        try {
+        /*try {
             ImageResizer.resize("src/resources/BackgroundImages/Ellinon_Gefseis_cropped.png", "C:\\Users\\thana\\Desktop\\EllinonGefseisResized.jpg", 240, 175);
         } catch (IOException e) {
             System.out.println("CANT RESIZE");
             e.printStackTrace();
         }
-        backgroundImage=new ImageIcon("C:\\Users\\thana\\Desktop\\EllinonGefseisResized.jpg").getImage();
+        */
+        backgroundImage=new ImageIcon("src/resources/BackgroundImages/EllinonGefseisResized.jpg").getImage();
+    }
+
+    private void ChangeFont(JLabel label)
+    {
+        Font font;
+        try {
+
+            InputStream myStream= new BufferedInputStream(new FileInputStream("src/resources/Fonts/CaviarDreams.ttf"));
+            Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
+            font = ttfBase.deriveFont(Font.BOLD,16);
+            System.out.println("FONT CREATED");
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        label.setFont(font);
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroundImage,0,0,null);
+       g.setColor(new Color(108,139,218));
+       g.fillRect(0,0,240,30);
+       //g.drawLine(0,30,240,30);
+       g.drawImage(backgroundImage,0,30,null);
+
+       this.revalidate();
+       this.repaint();
     }
 }

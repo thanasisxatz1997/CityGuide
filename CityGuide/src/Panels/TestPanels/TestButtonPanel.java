@@ -4,9 +4,15 @@ import Forms.MainForm;
 import Forms.TestMainForm;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class TestButtonPanel extends JPanel {
 
@@ -50,8 +56,26 @@ public class TestButtonPanel extends JPanel {
     private void LoadButtons(JButton button,String buttonText)
     {
         button.setText(buttonText);
+        button.setIcon(new ImageIcon("src/resources/ButtonIcons/HomeIcon.png"));
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        /*button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);*/
         SetButtonSize(button);
-        button.setFont(new Font("Times Roman",Font.BOLD,20));
+        Font buttonFont;
+        try {
+
+           InputStream myStream= new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
+           Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
+           buttonFont = ttfBase.deriveFont(Font.BOLD,16);
+           System.out.println("FONT CREATED");
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        button.setFont(buttonFont);
         this.add(button);
     }
 

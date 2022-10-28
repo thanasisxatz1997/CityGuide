@@ -21,6 +21,11 @@ public class StoreDisplayPanel extends JPanel {
         //this.setPreferredSize(new Dimension(250,-1));
         this.setPreferredSize(new Dimension(280,600));
         this.setMaximumSize(new Dimension(280,5000));
+        /*button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);*/
+
+        //this.setBackground(new Color(255,178,102));
         Border margin=new EmptyBorder(10,0,10,10);
         this.setBorder(BorderFactory.createRaisedBevelBorder());
         Border raisedBorder=this.getBorder();
@@ -75,5 +80,16 @@ public class StoreDisplayPanel extends JPanel {
         {
             System.out.println("Wrong Search Parameters! Try again");
         }
+    }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+        this.revalidate();
+        this.repaint();
     }
 }
