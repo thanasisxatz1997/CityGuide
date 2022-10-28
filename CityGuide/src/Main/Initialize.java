@@ -23,7 +23,8 @@ public class Initialize {
             System.out.println("Look  NOT Changed");
         }
         new ConnectToDatabase();
-        new Forms.MainForm();
+        new Forms.TestMainForm();
+        //new Forms.MainForm();
     }
 
     public static void main(String[] args) {
