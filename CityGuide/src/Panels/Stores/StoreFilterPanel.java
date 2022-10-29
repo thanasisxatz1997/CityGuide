@@ -124,6 +124,7 @@ public class StoreFilterPanel extends JPanel {
     private void LoadTypeComboBox(GridBagConstraints c)
     {
         typeComboBox=new JComboBox();
+        typeComboBox.addItem("");
         typeComboBox.addItem("Cafe");
         typeComboBox.addItem("Restaurant");
         typeComboBox.addItem("Market");
@@ -140,6 +141,7 @@ public class StoreFilterPanel extends JPanel {
     private void LoadRatingsComboBox(GridBagConstraints c)
     {
         ratingsComboBox=new JComboBox();
+        ratingsComboBox.addItem("");
         ratingsComboBox.addItem("4+");
         ratingsComboBox.addItem("5+");
         c.insets = new Insets(10,10,450,5);

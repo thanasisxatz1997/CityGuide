@@ -37,9 +37,10 @@ public class StoresSinglePanel extends JPanel {
         labelName = new JLabel("Activity Name");
         ChangeFont(labelName);
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridwidth=2;
-        c.weightx = 0.5;
-        c.insets = new Insets(5,5,5,5);  //padding
+        c.gridwidth=1;
+        c.weightx = 0;
+        c.ipadx=0;
+        c.insets = new Insets(5,0,100,5);  //padding
         c.gridx = 0;
         c.gridy = 0;
         this.add(labelName, c);
@@ -50,21 +51,23 @@ public class StoresSinglePanel extends JPanel {
         c.anchor=GridBagConstraints.NORTHEAST;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth=1;
-        c.weightx = 0.1;
-        c.insets = new Insets(5,5,5,5);  //padding
+        c.weightx = 1;
+        c.ipadx=80;
+        c.insets = new Insets(5,0,100,5);  //padding
         c.gridx = 2;
         c.gridy = 0;
         this.add(labelRating, c);
 
-        labelPicture = new JLabel("Activity Picture");
+        /*labelPicture = new JLabel("Activity Picture");
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth=2;
         c.weightx = 0.5;
         c.insets = new Insets(5,5,5,5);  //padding
         c.gridx = 0;
         c.gridy = 1;
-        this.add(labelPicture, c);
+        this.add(labelPicture, c);*/
 
-        textarea= new JTextArea("Activity Description");
+        /*textarea= new JTextArea("Activity Description");
         textarea.setPreferredSize(new Dimension(100,100));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
@@ -72,30 +75,31 @@ public class StoresSinglePanel extends JPanel {
         c.ipady = 40;       //make this component tall
         c.gridx = 2;
         c.gridy = 1;
-        this.add(textarea, c);
+        this.add(textarea, c);*/
 
-        buttonDetails = new JButton("Details");
+        buttonDetails = new JButton("");
         buttonDetails.setIcon(new ImageIcon("src/resources/ButtonIcons/Logos-Details-icon.png"));
         //buttonDetails.setVerticalTextPosition(SwingConstants.BOTTOM);
         //buttonDetails.setHorizontalTextPosition(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.SOUTHWEST;
-        c.weightx = 0.5;
-        c.insets = new Insets(5,5,5,5);  //padding
+        c.gridwidth=1;
+        c.weightx = 1;
+        c.insets = new Insets(5,5,5,100);  //padding
         c.ipady = 15;
         c.gridx = 0;
         c.gridy = 2;
         this.add(buttonDetails, c);
 
 
-        buttonSave = new JButton("Save");
+        buttonSave = new JButton("");
         buttonSave.setIcon(new ImageIcon("src/resources/ButtonIcons/Save-icon.png"));
         //buttonSave.setVerticalTextPosition(SwingConstants.LEFT);
         //buttonSave.setHorizontalTextPosition(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.SOUTHEAST;
         c.gridwidth=1;
-        c.weightx = 0.5;
+        c.weightx = 1;
         c.insets = new Insets(5,5,5,5);  //padding
         c.ipady = 15;
         c.gridx = 2;
@@ -134,7 +138,7 @@ public class StoresSinglePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
        g.setColor(new Color(108,139,218));
-       g.fillRect(0,0,240,30);
+       //g.fillRect(0,0,240,30);
        //g.drawLine(0,30,240,30);
        g.drawImage(backgroundImage,0,30,null);
 
