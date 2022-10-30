@@ -116,7 +116,7 @@ public class TestButtonPanel extends JPanel {
         mapButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                TestMainForm.mainPanel.backgroundPanel.AddMapPanel();
             }
         });
     }

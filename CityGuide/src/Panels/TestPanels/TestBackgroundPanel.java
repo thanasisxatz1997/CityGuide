@@ -54,6 +54,13 @@ public class TestBackgroundPanel extends JPanel {
         this.revalidate();
         System.out.println("Stores Added");
     }
+    public void AddMapPanel()
+    {
+        this.removeAll();
+        this.add(new TestMapPanel());
+        this.repaint();
+        this.revalidate();
+    }
 
     /*@Override
     public void paintComponents(Graphics g) {
