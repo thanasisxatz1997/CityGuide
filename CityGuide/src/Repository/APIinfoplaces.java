@@ -18,7 +18,7 @@ public class APIinfoplaces {
 		strList=new ArrayList<>();
 		HttpClient client = HttpClient.newHttpClient();
 		//Rome Radius= 4568
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=41.9028%2C12.4964&radius=2000&type=park&key=AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes")).build();
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=41.9028%2C12.4964&radius=2000&type=Restaurant&key=AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes")).build();
 		client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenAccept(s -> strList.add(s)).join();
 		//System.out::println
 		System.out.println("AFTER!");
@@ -38,3 +38,5 @@ public class APIinfoplaces {
 		System.out.println(strList.size());
 	}*/
 }
+
+//

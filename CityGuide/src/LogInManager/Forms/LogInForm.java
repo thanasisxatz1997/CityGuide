@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LogInForm {
-    JFrame frame;
+    public static JFrame frame;
     JButton logInButton;
     JTextField nameTextField;
     JTextField passwordTextField;

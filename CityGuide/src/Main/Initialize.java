@@ -1,7 +1,9 @@
 package Main;
-import Panels.TestPanels.TestMapPanel;
+import LogInManager.Forms.IntroPage;
+import Repository.APIinfoplaces;
 import Repository.ConnectToDatabase;
-import Repository.Filtering;
+import Repository.CurrentUser;
+import Repository.Handlers;
 
 
 import javax.swing.*;
@@ -10,7 +12,7 @@ import javax.swing.*;
 public class Initialize {
     public Initialize()
     {
-
+        Handlers.startTime=System.nanoTime();
         UIManager.LookAndFeelInfo[] looks= UIManager.getInstalledLookAndFeels();
         for (UIManager.LookAndFeelInfo look : looks) {
             System.out.println(look.getClassName());
@@ -25,6 +27,9 @@ public class Initialize {
         }
         new ConnectToDatabase();
         new Forms.TestMainForm();
+        //new IntroPage();
+        new CurrentUser();
+        APIinfoplaces.GetInfoFromAPI();
         //new Forms.MainForm();
     }
 

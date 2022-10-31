@@ -1,6 +1,9 @@
 package LogInManager.Forms;
 
+import Forms.TestMainForm;
 import LogInManager.Managers.DataManager;
+import Panels.TestPanels.UserOptionsPanel;
+import Repository.CurrentUser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +20,7 @@ public class LoginPage extends JFrame{
     private JFrame frame;
 
     public LoginPage() {
-        panel1.setBackground(new Color(60,63,65));
+        panel1.setBackground(new Color(108,139,218));
         frame = new JFrame("Login Frame");
         nameLabel.setIcon(new ImageIcon("user_resized.png"));
         passwordLabel.setIcon(new ImageIcon("password_resized.png"));
@@ -41,9 +44,12 @@ public class LoginPage extends JFrame{
                             "Log In Successful!",
                             "Welcome!",
                             JOptionPane.ERROR_MESSAGE);
+                    CurrentUser.loggedIn=true;
+                    CurrentUser.userName=nameTextField.getText();
+                    CurrentUser.userEmail=DataManager.GetEmail(nameTextField.getText());
+                    TestMainForm.mainPanel.backgroundPanel.AddUserPanel();
                     frame.dispose();
-
-                    new UserForm();
+                    IntroPage.frame.dispose();
                     return;
                 }
                 else

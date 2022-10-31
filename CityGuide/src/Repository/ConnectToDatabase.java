@@ -26,8 +26,9 @@ public class ConnectToDatabase {
                 .build();
         MongoClient mongoClient = MongoClients.create(settings);
         MongoDatabase database = mongoClient.getDatabase("Project_Log_In");
+        Filtering.database=database;
         MongoCollection coll= database.getCollection("Stores");
-        Filtering.collection=coll;
+        //Filtering.collection=coll;
         if(coll!=null)
         {
             System.out.println("CONNECTED TO DATABASE");

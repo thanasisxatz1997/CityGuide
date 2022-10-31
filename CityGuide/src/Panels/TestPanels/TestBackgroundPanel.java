@@ -1,5 +1,6 @@
 package Panels.TestPanels;
 
+import Panels.Favourites.FavouritesPanel;
 import Panels.Stores.StoresPanel;
 import Repository.ImageResizer;
 
@@ -58,6 +59,22 @@ public class TestBackgroundPanel extends JPanel {
     {
         this.removeAll();
         this.add(new TestMapPanel());
+        this.repaint();
+        this.revalidate();
+    }
+
+    public void AddFavouritesPanel()
+    {
+        this.removeAll();
+        this.add(new FavouritesPanel());
+        this.repaint();
+        this.revalidate();
+    }
+
+    public void AddUserPanel()
+    {
+        this.removeAll();
+        this.add(new UserPanel());
         this.repaint();
         this.revalidate();
     }

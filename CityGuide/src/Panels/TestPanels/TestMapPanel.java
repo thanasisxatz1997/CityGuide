@@ -75,14 +75,14 @@ public class TestMapPanel extends JPanel {
         this.add(searchTextField,c);
 
         mapDisplayPanel=new JPanel();
-        mapDisplayPanel.setPreferredSize(new Dimension(550,400));
-        mapDisplayPanel.setMaximumSize(new Dimension(550,400));
+        mapDisplayPanel.setPreferredSize(new Dimension(550,390));
+        mapDisplayPanel.setMaximumSize(new Dimension(550,390));
         mapDisplayPanel.setLayout(new BorderLayout());
         mapDisplayPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 
         c.anchor=GridBagConstraints.NORTH;
         c.fill=GridBagConstraints.BOTH;
-        c.insets=new Insets(0,50,100,50);
+        c.insets=new Insets(0,50,118,50);
         c.weightx=1;
         c.weighty=1;
         c.gridwidth=3;

@@ -13,6 +13,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestButtonPanel extends JPanel {
 
@@ -20,7 +22,10 @@ public class TestButtonPanel extends JPanel {
     private JButton storeButton;
     private JButton favoritesButton;
     private JButton mapButton;
+    private JButton userButton;
+    private JButton exitButton;
     private Dimension buttonDimension;
+    private ApplicationButtonPanel applicationButtonPanel;
     public TestButtonPanel()
     {
         LoadPanel();
@@ -33,7 +38,7 @@ public class TestButtonPanel extends JPanel {
         this.setMinimumSize(new Dimension(150,600));
         this.setBackground(new Color(108,139,218));
 
-        buttonDimension=new Dimension(150,60);
+        buttonDimension=new Dimension(150,66);
 
         this.setBorder(BorderFactory.createRaisedBevelBorder());
         BoxLayout boxLayout=new BoxLayout(this,BoxLayout.Y_AXIS);
@@ -43,20 +48,28 @@ public class TestButtonPanel extends JPanel {
         storeButton=new JButton();
         favoritesButton=new JButton();
         mapButton=new JButton();
+        userButton=new JButton();
+        exitButton=new JButton();
 
-        LoadButtons(homeButton,"Home");
-        LoadButtons(storeButton,"Stores");
-        LoadButtons(favoritesButton,"Favorites");
-        LoadButtons(mapButton,"Map");
+        LoadButtons(homeButton,"Home","src/resources/ButtonIcons/HomeIcon.png");
+        LoadButtons(storeButton,"Stores","src/resources/ButtonIcons/storeIcon32px.png");
+        LoadButtons(favoritesButton,"Favorites","src/resources/ButtonIcons/favoritesIcon32px.png");
+        LoadButtons(mapButton,"Map","src/resources/ButtonIcons/mapIcon32px.png");
+        LoadButtons(new JButton(),"","");
+        LoadButtons(new JButton(),"","");
+        LoadButtons(new JButton(),"","");
+        LoadButtons(userButton,"USER","src/resources/ButtonIcons/userIcon32px.png");
+        LoadButtons(exitButton,"EXIT","src/resources/ButtonIcons/exitIcon32px.png");
+
 
         AddButtonListeners();
         this.setVisible(true);
     }
 
-    private void LoadButtons(JButton button,String buttonText)
+    private void LoadButtons(JButton button,String buttonText,String IconPath)
     {
         button.setText(buttonText);
-        button.setIcon(new ImageIcon("src/resources/ButtonIcons/HomeIcon.png"));
+        button.setIcon(new ImageIcon(IconPath));
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         /*button.setOpaque(false);
@@ -65,11 +78,9 @@ public class TestButtonPanel extends JPanel {
         SetButtonSize(button);
         Font buttonFont;
         try {
-
            InputStream myStream= new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
            Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
            buttonFont = ttfBase.deriveFont(Font.BOLD,16);
-           System.out.println("FONT CREATED");
         } catch (FontFormatException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -109,7 +120,7 @@ public class TestButtonPanel extends JPanel {
         favoritesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                TestMainForm.mainPanel.backgroundPanel.AddFavouritesPanel();
             }
         });
 
@@ -117,6 +128,22 @@ public class TestButtonPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TestMainForm.mainPanel.backgroundPanel.AddMapPanel();
+            }
+        });
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<Frame> frameArrayList=new ArrayList<>();
+                frameArrayList.addAll(List.of(Frame.getFrames()));
+                for (Frame f:frameArrayList) {
+                    f.dispose();
+                }
+            }
+        });
+        userButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TestMainForm.mainPanel.backgroundPanel.AddUserPanel();
             }
         });
     }

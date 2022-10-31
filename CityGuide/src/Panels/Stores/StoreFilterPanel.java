@@ -34,6 +34,7 @@ public class StoreFilterPanel extends JPanel {
         this.setBorder(BorderFactory.createRaisedBevelBorder());
         this.setLayout(new GridBagLayout());
 
+
         GridBagConstraints c = new GridBagConstraints();
         LoadFilterButton(c);
         LoadSearchTextField(c);
@@ -142,8 +143,11 @@ public class StoreFilterPanel extends JPanel {
     {
         ratingsComboBox=new JComboBox();
         ratingsComboBox.addItem("");
-        ratingsComboBox.addItem("4+");
-        ratingsComboBox.addItem("5+");
+        ratingsComboBox.addItem("1");
+        ratingsComboBox.addItem("2");
+        ratingsComboBox.addItem("3");
+        ratingsComboBox.addItem("4");
+        ratingsComboBox.addItem("5");
         c.insets = new Insets(10,10,450,5);
         c.weightx=0.9;
         c.weighty=1;

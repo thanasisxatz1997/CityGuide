@@ -8,6 +8,10 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class StoreDisplayPanel extends JPanel {
@@ -15,6 +19,8 @@ public class StoreDisplayPanel extends JPanel {
     private ArrayList<StoresSinglePanel> singleStorePanelList;
     public StoreFilterPanel connectedFilterPanel;
     private static String searchedText;
+    private JLabel storesLabel;
+    private Font customFont;
 
     StoreDisplayPanel()
     {
@@ -32,7 +38,13 @@ public class StoreDisplayPanel extends JPanel {
         this.setBorder(new CompoundBorder(raisedBorder,margin));
         BoxLayout boxLayout=new BoxLayout(this,BoxLayout.Y_AXIS);
         this.setLayout(boxLayout);
-
+        LoadFont();
+        storesLabel=new JLabel();
+        storesLabel.setText("Stores");
+        storesLabel.setFont(customFont);
+        storesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(storesLabel);
+        this.revalidate();
         this.setVisible(true);
     }
 
@@ -45,6 +57,8 @@ public class StoreDisplayPanel extends JPanel {
         this.removeAll();
         this.repaint();
         this.revalidate();
+        storesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(storesLabel);
         int listSize = 0;
         for (StoresSinglePanel singlePanel : singleStorePanelList) {
             listSize++;
@@ -58,20 +72,32 @@ public class StoreDisplayPanel extends JPanel {
             this.add(singlePanel);
         }
     }
+
     void DisplayPanels() //can be called only from classes inside of pachage
     {
         if(Filtering.CheckSearchedFilters(this.connectedFilterPanel.searchTextField.getText()))
         {
             System.out.println("RestaurantsCheck!");
             storesDocList=new ArrayList<Document>();
-            System.out.println("1New list= "+Filtering.FindStoreType(this.connectedFilterPanel.searchTextField.getText()));
-            storesDocList.addAll(Filtering.FindStoreType(this.connectedFilterPanel.searchTextField.getText()));
+            //System.out.println("1New list= "+Filtering.FindStoreType(this.connectedFilterPanel.searchTextField.getText()));
+            String searchedType=(String) this.connectedFilterPanel.typeComboBox.getItemAt(this.connectedFilterPanel.typeComboBox.getSelectedIndex());
+            String searchedRating=(String) this.connectedFilterPanel.ratingsComboBox.getItemAt(this.connectedFilterPanel.ratingsComboBox.getSelectedIndex());
+            String searchedText=(String) this.connectedFilterPanel.searchTextField.getText();
+            System.out.println("1New list= "+Filtering.FilterStores(searchedType,searchedRating,searchedText));
+            storesDocList.addAll(Filtering.FilterStores(searchedType,searchedRating,searchedText));
+            //storesDocList.addAll(Filtering.FindStoreType(this.connectedFilterPanel.searchTextField.getText()));
 
             singleStorePanelList=new ArrayList<StoresSinglePanel>();
             for (Document doc:storesDocList) {
                 StoresSinglePanel singleStore =new StoresSinglePanel();
+
                 System.out.println((String)doc.get("name"));
                 singleStore.labelName.setText((String) doc.get("name"));
+                double storeRating= (double) doc.get("rating");
+                singleStore.labelRating.setText(String.valueOf(storeRating));
+
+                String imageUrl="";
+
                 singleStorePanelList.add(singleStore);
             }
             AddSinglePanels();
@@ -79,6 +105,19 @@ public class StoreDisplayPanel extends JPanel {
         else
         {
             System.out.println("Wrong Search Parameters! Try again");
+        }
+    }
+
+    private void LoadFont()
+    {
+        try {
+            InputStream myStream= new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
+            Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
+            customFont = ttfBase.deriveFont(Font.BOLD,16);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

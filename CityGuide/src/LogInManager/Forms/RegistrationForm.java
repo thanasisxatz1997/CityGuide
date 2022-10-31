@@ -26,7 +26,7 @@ public class RegistrationForm extends JDialog {
 
     public RegistrationForm(JFrame parent) {
         super(parent);
-        registerPanel.setBackground(new Color(60,63,65));
+        registerPanel.setBackground(new Color(108,139,218));
         setSize(630,410);
         //nameLabel.setIcon(new ImageIcon("user_resized.png"));
         //passwordLabel.setIcon(new ImageIcon("password_resized.png"));
@@ -88,7 +88,7 @@ public class RegistrationForm extends JDialog {
         String password = String.valueOf(pfPassword.getPassword());
         String confirmPassword = String.valueOf(pfConfirmPassword.getPassword());
 
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || chkboxTerms.isSelected()) {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Please enter all fields",
                     "Try again",
