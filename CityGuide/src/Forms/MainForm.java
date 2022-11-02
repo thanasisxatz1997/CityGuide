@@ -2,15 +2,12 @@ package Forms;
 import Panels.Stores.StoresSinglePanel;
 import Repository.Filtering;
 import org.bson.Document;
-import org.intellij.lang.annotations.Flow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import static java.awt.GridBagConstraints.RELATIVE;
 
 public class MainForm extends JFrame{
     private JPanel panel1;
@@ -33,8 +30,7 @@ public class MainForm extends JFrame{
     private JTextField textField2;
     private JTable table1;
     private JButton saveButton;
-    private JButton registerButton;
-    private JButton logInButton;
+    private JButton userButton;
     private JPanel storesDisplayPanel;
     private JPanel storesPanel;
     private JScrollPane storesDisplayPane;
@@ -67,11 +63,17 @@ public class MainForm extends JFrame{
         this.setVisible(true);
         this.add(panel1);
         this.setSize(new Dimension(800,800));
-
-
-
+        LoadListeners();
         InitializeStoreDisplayPanel();
         InitializeStoreFiltersPanel();
+        LoadStoreFilterComboBoxes(); // Placeholder in this class
+    }
+
+    private void LoadStoreFilterComboBoxes() // Placeholder in this class
+    {
+        comboBox3.addItem("");
+        comboBox3.addItem("Restaurants");
+        comboBox3.addItem("Cafes");
     }
 
     private void InitializeStoreDisplayPanel()
@@ -107,7 +109,7 @@ public class MainForm extends JFrame{
             for (Document doc:storesDocList) {
                 StoresSinglePanel singleStore =new StoresSinglePanel();
                 System.out.println((String)doc.get("name"));
-                singleStore.label.setText((String) doc.get("name"));
+                singleStore.labelName.setText((String) doc.get("name"));
                 singleStorePanelList.add(singleStore);
             }
             AddSinglePanels();
@@ -116,9 +118,19 @@ public class MainForm extends JFrame{
         {
             System.out.println("Wrong Search Parameters! Try again");
         }
+    }
 
+    private void LoadListeners(){
+        LoadActionListeners();
+    }
 
-
+    private void LoadActionListeners(){
+        userButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LogInManager.Managers.Initialize();
+            }
+        });
     }
 
     public void AddSinglePanels()
@@ -126,24 +138,14 @@ public class MainForm extends JFrame{
         storesDisplayPanel.removeAll();
         storesDisplayPanel.repaint();
         storesDisplayPanel.revalidate();
-
-
         listSize = 0;
-
         for (StoresSinglePanel singlePanel:singleStorePanelList)
         {
             listSize++;
             System.out.println("size added");
             System.out.println("Size is : "+listSize);
         }
-
         storesDisplayPanel.setPreferredSize(new Dimension(400,listSize*180+20));
-
-        //storesDisplayPane.setPreferredSize(new Dimension(400,800));
-        //storesDisplayPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        //BoxLayout boxLayout=new BoxLayout(storesDisplayPanel,BoxLayout.Y_AXIS);
-        //storesDisplayPanel.setLayout(boxLayout);
-
         System.out.println("List is:"+singleStorePanelList);
         for (StoresSinglePanel singlePanel:singleStorePanelList)
         {
@@ -151,6 +153,11 @@ public class MainForm extends JFrame{
             storesDisplayPanel.add(singlePanel);
         }
 
+
+        //storesDisplayPane.setPreferredSize(new Dimension(400,800));
+        //storesDisplayPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        //BoxLayout boxLayout=new BoxLayout(storesDisplayPanel,BoxLayout.Y_AXIS);
+        //storesDisplayPanel.setLayout(boxLayout);
         /*
 
         storesDisplayPane.setPreferredSize(new Dimension(400,0));
@@ -221,6 +228,5 @@ public class MainForm extends JFrame{
         c.gridheight=6;
         c.gridy=5;*/
     }
-
 
 }
