@@ -12,4 +12,12 @@ public class CurrentUser {
     {
         return loggedIn;
     }
+    private void LogOut()
+    {
+        loggedIn=false;
+        userName=null;
+        userEmail=null;
+    }
 }
+
+
