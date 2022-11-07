@@ -1,5 +1,6 @@
 package Repository;
 
+import Panels.TestPanels.HomeHintsPanel;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -27,11 +28,13 @@ public class ConnectToDatabase {
         MongoClient mongoClient = MongoClients.create(settings);
         MongoDatabase database = mongoClient.getDatabase("Project_Log_In");
         Filtering.database=database;
+        DataManager.SetDatabase(database);
         MongoCollection coll= database.getCollection("Stores");
         //Filtering.collection=coll;
         if(coll!=null)
         {
             System.out.println("CONNECTED TO DATABASE");
         }
+        HomeHintsPanel.collection=database.getCollection("Facts");
     }
 }

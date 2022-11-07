@@ -29,7 +29,7 @@ public class Initialize {
         new Forms.TestMainForm();
         //new IntroPage();
         new CurrentUser();
-        APIinfoplaces.GetInfoFromAPI();
+        //APIinfoplaces.GetInfoFromAPI();
         //new Forms.MainForm();
     }
 

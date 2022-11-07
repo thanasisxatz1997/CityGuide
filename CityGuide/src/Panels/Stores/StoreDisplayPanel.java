@@ -3,6 +3,7 @@ package Panels.Stores;
 import Repository.Filtering;
 import org.bson.Document;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -12,7 +13,12 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class StoreDisplayPanel extends JPanel {
     public  ArrayList<Document> storesDocList;
@@ -95,9 +101,10 @@ public class StoreDisplayPanel extends JPanel {
                 singleStore.labelName.setText((String) doc.get("name"));
                 double storeRating= (double) doc.get("rating");
                 singleStore.labelRating.setText(String.valueOf(storeRating));
-
-                String imageUrl="";
-
+                if(doc.containsKey("photos"))
+                {
+                    singleStore.backgroundImage=GetStoreImage(doc);
+                }
                 singleStorePanelList.add(singleStore);
             }
             AddSinglePanels();
@@ -107,6 +114,49 @@ public class StoreDisplayPanel extends JPanel {
             System.out.println("Wrong Search Parameters! Try again");
         }
     }
+
+    private Image GetStoreImage(Document doc)
+    {
+        final String[] photoStr = new String[1];
+        photoStr[0] = doc.getList("photos", Map.class).stream().map(map -> photoStr[0] =map.toString()).collect(Collectors.toList()).toString();
+        System.out.println("Height: "+ photoStr[0]);
+
+        System.out.println("String exists in position: "+ photoStr[0].lastIndexOf("height"));
+        char[] photoCharArray=photoStr[0].toCharArray();
+        int photorefeRenceStrStart=photoStr[0].lastIndexOf("photo_reference=")+16;
+        if(photorefeRenceStrStart!=-1)
+        {
+            System.out.println("String exists in position: "+ photorefeRenceStrStart);
+            ArrayList<Character> photoReference = new ArrayList<>();
+            for(int i=photorefeRenceStrStart;photoCharArray[i]!=',';i++)
+            {
+                photoReference.add(photoCharArray[i]);
+            }
+            String photoReferenceStr;
+            StringBuilder builder = new StringBuilder(photoReference.size());
+            for(Character ch: photoReference)
+            {
+                builder.append(ch);
+            }
+            photoReferenceStr=builder.toString();
+            System.out.println("THE PHOTO REFERENCE IS: "+ photoReference);
+            String photoFullStr="https://maps.googleapis.com/maps/api/place/photo?photoreference="+photoReferenceStr+"&sensor=false&maxheight="+"250"+"&maxwidth="+"250"+"&key="+"AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
+            System.out.println("THE PHOTO STRING IS: "+photoFullStr);
+            Image singleStoreImage=null;
+            try {
+                URL photoUrl=new URL(photoFullStr);
+                singleStoreImage= ImageIO.read(photoUrl);
+
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return singleStoreImage;
+        }
+        return null;
+    }
+
 
     private void LoadFont()
     {

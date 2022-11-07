@@ -1,9 +1,13 @@
 package Panels.Stores;
 
+import Repository.CurrentUser;
+import Repository.DataManager;
 import Repository.ImageResizer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -104,6 +108,22 @@ public class StoresSinglePanel extends JPanel {
         c.gridx = 2;
         c.gridy = 2;
         this.add(buttonSave, c);
+        buttonSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(CurrentUser.IsLoggedIn())
+                {
+                    System.out.println("Saving Store to favourites!");
+                    if(DataManager.StoreExistsInFavourites(labelName.getText()))
+                    {
+                    }
+                }
+                else
+                {
+                    System.out.println("Please Log in to add store to favourites!");
+                }
+            }
+        });
 
         this.setVisible(true);
 

@@ -5,13 +5,14 @@ import Panels.Stores.StoresPanel;
 import Repository.ImageResizer;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
 
 public class TestBackgroundPanel extends JPanel {
 
+    private HomeHintsPanel hintsPanel;
     private Image backgroundImage;
+    private Image logoImage;
     public TestBackgroundPanel()
     {
         LoadPanel();
@@ -23,9 +24,19 @@ public class TestBackgroundPanel extends JPanel {
         this.setMaximumSize(new Dimension(750,600));
         this.setMinimumSize(new Dimension(750,600));
         this.setSize(new Dimension(750,600));
-        LoadBackgroundImage();
         this.setLayout(new BorderLayout());
+        LoadBackgroundImage();
+        LoadLogoImage();
+        LoadHintsPanel();
         this.setVisible(true);
+        System.out.println("Panel Added");
+
+    }
+
+    public void LoadHintsPanel()
+    {
+        hintsPanel=new HomeHintsPanel();
+        this.add(hintsPanel,BorderLayout.SOUTH);
     }
 
     private void LoadBackgroundImage()
@@ -41,10 +52,21 @@ public class TestBackgroundPanel extends JPanel {
         dim.width=backgroundImage.getWidth(null);
         dim.height=backgroundImage.getHeight(null);
     }
+    private void LoadLogoImage()
+    {
+        logoImage=new ImageIcon("src/resources/Logos/LOGOcrTrNewpng.png").getImage();
+    }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage,0,0,null);
+        g.drawImage(logoImage,220,15,null);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .0f));
+
+        this.revalidate();
+        this.repaint();
     }
 
     public void AddStorePanel()
