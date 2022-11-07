@@ -17,6 +17,7 @@ public class TestMainForm extends JFrame {
     {
         LoadForm();
     }
+
     private void LoadForm()
     {
         this.setTitle("Rome City Guide");
