@@ -13,6 +13,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class StoreDisplayPanel extends JPanel {
     public  ArrayList<Document> storesDocList;
@@ -96,11 +99,20 @@ public class StoreDisplayPanel extends JPanel {
                 double storeRating= (double) doc.get("rating");
                 singleStore.labelRating.setText(String.valueOf(storeRating));
 
-                String imageUrl="";
-
+                String photoStr;
+                photoStr= doc.getList("photos", Map.class).stream().map(map -> (Integer) map.get("height")).collect(Collectors.toList()).toString();
+                System.out.println("Height: "+ photoStr);
+                char[] photoCharArr=photoStr.toCharArray();
+                //for(int i=0;i<photoCharArr.length;i++)
+                //{
+                //}
+                //final Integer[] photoWidth = {null};
+                //doc.getList("photos", Map.class).stream().map(map -> photoWidth[0] =(Integer) map.get("width")).collect(Collectors.toList());
+                //System.out.println("Width: "+ photoHeight[0]);
                 singleStorePanelList.add(singleStore);
             }
             AddSinglePanels();
+
         }
         else
         {

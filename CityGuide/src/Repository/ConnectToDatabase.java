@@ -1,5 +1,6 @@
 package Repository;
 
+import Panels.TestPanels.HomeHintsPanel;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -33,5 +34,6 @@ public class ConnectToDatabase {
         {
             System.out.println("CONNECTED TO DATABASE");
         }
+        HomeHintsPanel.collection=database.getCollection("Facts");
     }
 }

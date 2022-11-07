@@ -105,6 +105,7 @@ public class TestButtonPanel extends JPanel {
                 TestMainForm.mainPanel.backgroundPanel.removeAll();
                 TestMainForm.mainPanel.backgroundPanel.repaint();
                 TestMainForm.mainPanel.backgroundPanel.revalidate();
+                TestMainForm.mainPanel.backgroundPanel.LoadHintsPanel();
             }
         });
 
