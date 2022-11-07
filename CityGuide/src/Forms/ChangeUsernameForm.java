@@ -22,9 +22,9 @@ import java.sql.PreparedStatement;
 public class ChangeUsernameForm extends JFrame{
 
     private JPanel mainPanel;
-    JLabel oldusernameLabel;
+    JLabel orgusernameLabel;
     private Font customSmallFont;
-    JLabel oldusernameTextField;
+    JLabel orgusernameTextField;
     JLabel newusernameLabel;
     JTextField newusernameTextField;
     JLabel passwordLabel;
@@ -106,8 +106,8 @@ public class ChangeUsernameForm extends JFrame{
     }
 
     private void LoadLabels(GridBagConstraints c) {
-        oldusernameLabel = new JLabel("Current Username");
-        oldusernameLabel.setFont(customSmallFont);
+        orgusernameLabel = new JLabel("Current Username");
+        orgusernameLabel.setFont(customSmallFont);
         c.insets=new Insets(1,1,1,20);
         c.weightx=1;
         c.weighty=0.5;
@@ -144,8 +144,8 @@ public class ChangeUsernameForm extends JFrame{
     private void LoadTextFields(GridBagConstraints c) {
 
         c.insets=new Insets(5,0,0,0);
-        oldusernameTextField=new JLabel(CurrentUser.userName);
-        oldusernameTextField.setFont(customSmallFont);
+        orgusernameTextField=new JLabel(CurrentUser.userName);
+        orgusernameTextField.setFont(customSmallFont);
         c.fill=GridBagConstraints.HORIZONTAL;
         c.weightx=1;
         c.weighty=0.1;

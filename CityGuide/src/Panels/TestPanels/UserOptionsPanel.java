@@ -36,7 +36,7 @@ public class UserOptionsPanel extends JPanel {
     private JLabel emailDisplayLabel;
     private JLabel sessionRuntimeLabel;
     private JButton usernameChangeButton;
-    private JButton emailChangeButton;
+    private JButton ChangeEmailButton;
     private JButton passwordChangeButton;
     private JLabel passwordDisplayLabel;
 
@@ -178,7 +178,7 @@ public class UserOptionsPanel extends JPanel {
         c.gridx=2;
         c.gridy=2;
         this.add(emailChangeButton,c);
-        emailChangeButton.addActionListener(new ActionListener() {
+        ChangeEmailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ChangeEmailForm(new JFrame(String.valueOf(getParent())));

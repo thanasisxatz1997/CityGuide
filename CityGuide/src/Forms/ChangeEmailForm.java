@@ -16,9 +16,9 @@ import java.io.InputStream;
 public class ChangeEmailForm extends JFrame{
 
     private JPanel mainPanel;
-    JLabel oldemailLabel;
+    JLabel orgemailLabel;
     private Font customSmallFont;
-    JLabel oldemailTextField;
+    JLabel orgemailTextField;
     JLabel newemailLabel;
     JTextField newemailTextField;
     JLabel passwordLabel;
@@ -99,8 +99,8 @@ public class ChangeEmailForm extends JFrame{
     }
 
     private void LoadLabels(GridBagConstraints c) {
-        oldemailLabel = new JLabel("Current Email");
-        oldemailLabel.setFont(customSmallFont);
+        orgemailLabel = new JLabel("Current Email");
+        orgemailLabel.setFont(customSmallFont);
         c.insets=new Insets(1,1,1,20);
         c.weightx=1;
         c.weighty=0.5;
@@ -138,8 +138,8 @@ public class ChangeEmailForm extends JFrame{
     private void LoadTextFields(GridBagConstraints c) {
 
         c.insets=new Insets(5,0,0,0);
-        oldemailTextField=new JLabel(CurrentUser.userEmail);
-        oldemailTextField.setFont(customSmallFont);
+        orgemailTextField=new JLabel(CurrentUser.userEmail);
+        orgemailTextField.setFont(customSmallFont);
         c.fill=GridBagConstraints.HORIZONTAL;
         c.weightx=1;
         c.weighty=0.1;
