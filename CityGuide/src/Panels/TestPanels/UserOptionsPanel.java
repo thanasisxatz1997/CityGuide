@@ -162,14 +162,10 @@ public class UserOptionsPanel extends JPanel {
         usernameChangeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*int a = JOptionPane.showConfirmDialog(usernameChangeButton, "New Username:");
-                //InputDialogInFrame frame = new InputDialogInFrame();
-                //int a = JOptionPane.showInputDialog(frame, "New Username:");
-                if (a == JOptionPane.YES_OPTION) {
-
-                }*/
+                new ChangeUsernameForm(new JFrame(String.valueOf(getParent())));
             }
         });
+
 
         emailDisplayLabel=new JLabel("Email: "+CurrentUser.userEmail);
         c.insets=new Insets(5,0,0,0);
@@ -182,6 +178,12 @@ public class UserOptionsPanel extends JPanel {
         c.gridx=2;
         c.gridy=2;
         this.add(emailChangeButton,c);
+        emailChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangeEmailForm(new JFrame(String.valueOf(getParent())));
+            }
+        });
 
         passwordDisplayLabel=new JLabel("Password: "+CurrentUser.userPassword);
         c.insets=new Insets(5,0,0,0);
