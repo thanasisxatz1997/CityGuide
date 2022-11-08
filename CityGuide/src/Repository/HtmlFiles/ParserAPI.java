@@ -31,14 +31,16 @@ public class ParserAPI {
                 // See if Business is Operational
                 if (business_status.equals("OPERATIONAL")) {
                     System.out.println("Business status:" + business_status);
+                    tempDoc.put("Business status", business_status);
                     // Name of place
                     String name = (String) jsonObject1.get("name");
                     System.out.println("Name: " + name);
+                    tempDoc.put("Name", name);
 
                     //place id
                     String placeId = (String) jsonObject1.get("place_id");
                     System.out.println("Place ID: " + placeId);
-                    tempDoc.put("Name", name);
+                    tempDoc.put("Place ID", placeId);
 
                     // Open right now
 
