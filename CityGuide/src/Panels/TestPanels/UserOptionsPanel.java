@@ -120,8 +120,8 @@ public class UserOptionsPanel extends JPanel {
                         invalidate();
                         validate();
                         repaint();
-                        Forms.TestMainForm obj = new Forms.TestMainForm();
-                        obj.setVisible(true);
+                        //Forms.TestMainForm obj = new Forms.TestMainForm();
+                        //obj.setVisible(true);
                     }
 
                     //dispose();

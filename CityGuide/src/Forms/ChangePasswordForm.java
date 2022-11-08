@@ -5,6 +5,8 @@ import LogInManager.Managers.DataManager;
 import Repository.ConnectToDatabase;
 import Repository.CurrentUser;
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 
@@ -18,6 +20,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
+//import com.mongodb.MongoClient;
+//import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 
 public class ChangePasswordForm extends JFrame{
 
@@ -37,6 +45,8 @@ public class ChangePasswordForm extends JFrame{
         super();
         Load();
     }
+
+    public static MongoCollection DbCollection;
 
     private void Load() {
 
@@ -84,16 +94,25 @@ public class ChangePasswordForm extends JFrame{
         c.gridheight=1;
         c.gridx=2;
         c.gridy=4;
+        this.add(applychangesButton,c);
         applychangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String newpassword = newpasswordTextField.getText();
                 CurrentUser.userPassword = newpasswordTextField.getText();
-                DataManager.DbCollection.insertOne(new Document("password",newpassword));
+                //DataManager.DbCollection.insertOne(new Document("password",newpassword));
+
+                Document found = (Document) DataManager.DbCollection.find(new Document("password",CurrentUser.userPassword)).first();
+
+                if(found != null){
+                    Bson updatedvalue = new Document("password", newpassword);
+                    Bson updateoperation = new Document("$set", updatedvalue);
+                    DataManager.DbCollection.updateOne(found,updateoperation);
+                }
+
                 dispose();
             }
         });
-        this.add(applychangesButton,c);
     }
 
     private void LoadLabels(GridBagConstraints c) {
