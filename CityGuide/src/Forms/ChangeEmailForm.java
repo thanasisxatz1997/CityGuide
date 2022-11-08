@@ -3,6 +3,7 @@ package Forms;
 import LogInManager.Managers.DataManager;
 import Repository.CurrentUser;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +17,9 @@ import java.io.InputStream;
 public class ChangeEmailForm extends JFrame{
 
     private JPanel mainPanel;
-    JLabel orgemailLabel;
+    JLabel oldemailLabel;
     private Font customSmallFont;
-    JLabel orgemailTextField;
+    JLabel oldemailTextField;
     JLabel newemailLabel;
     JTextField newemailTextField;
     JLabel passwordLabel;
@@ -82,16 +83,15 @@ public class ChangeEmailForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String newemail = newemailTextField.getText();
-                //String pswrd = String.valueOf(passwordField.getPassword());
-                //DataManager.DbCollection.updateOne(CurrentUser.userName);
                 CurrentUser.userEmail = newemailTextField.getText();
-                /*try{
-                    PreparedStatement st = (PreparedStatement) con.prepareStatement();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }*/
-                //LogInManager.Managers.DataManager.PushData(String newname);
-                DataManager.DbCollection.insertOne(new Document("email",newemail));
+
+                Document found = (Document) DataManager.DbCollection.find(new Document("name",CurrentUser.userEmail)).first();
+
+                if(found != null){
+                    Bson updatevalue = new Document("name",newemail);
+                    Bson updateoperation = new Document("$set",updatevalue);
+                    DataManager.DbCollection.updateOne(found,updateoperation);
+                }
                 dispose();
             }
         });
@@ -99,8 +99,8 @@ public class ChangeEmailForm extends JFrame{
     }
 
     private void LoadLabels(GridBagConstraints c) {
-        orgemailLabel = new JLabel("Current Email");
-        orgemailLabel.setFont(customSmallFont);
+        oldemailLabel = new JLabel("Current Email");
+        oldemailLabel.setFont(customSmallFont);
         c.insets=new Insets(1,1,1,20);
         c.weightx=1;
         c.weighty=0.5;
@@ -132,14 +132,9 @@ public class ChangeEmailForm extends JFrame{
         c.gridy=2;
         this.add(passwordLabel,c);*/
 
-
-    }
-
-    private void LoadTextFields(GridBagConstraints c) {
-
         c.insets=new Insets(5,0,0,0);
-        orgemailTextField=new JLabel(CurrentUser.userEmail);
-        orgemailTextField.setFont(customSmallFont);
+        oldemailTextField=new JLabel(CurrentUser.userEmail);
+        oldemailTextField.setFont(customSmallFont);
         c.fill=GridBagConstraints.HORIZONTAL;
         c.weightx=1;
         c.weighty=0.1;
@@ -150,6 +145,9 @@ public class ChangeEmailForm extends JFrame{
         c.gridy=0;
         this.add(oldemailTextField,c);
 
+    }
+
+    private void LoadTextFields(GridBagConstraints c) {
 
         newemailTextField = new JTextField();
         c.insets = new Insets(1,1,1,1);

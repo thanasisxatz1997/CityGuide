@@ -1,15 +1,11 @@
 package Forms;
 
-import LogInManager.Managers.ConnectToDataBase;
 import LogInManager.Managers.DataManager;
-import Repository.ConnectToDatabase;
 import Repository.CurrentUser;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,14 +13,13 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.PreparedStatement;
 
 public class ChangeUsernameForm extends JFrame{
 
     private JPanel mainPanel;
-    JLabel orgusernameLabel;
+    JLabel oldusernameLabel;
     private Font customSmallFont;
-    JLabel orgusernameTextField;
+    JLabel oldusernameTextField;
     JLabel newusernameLabel;
     JTextField newusernameTextField;
     JLabel passwordLabel;
@@ -88,17 +83,14 @@ public class ChangeUsernameForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String newname = newusernameTextField.getText();
-                String email = CurrentUser.userEmail;
-                //String pswrd = String.valueOf(passwordField.getPassword());
-                //DataManager.DbCollection.updateOne(CurrentUser.userName);
                 CurrentUser.userName = newusernameTextField.getText();
-                /*try{
-                    PreparedStatement st = (PreparedStatement) con.prepareStatement();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }*/
-                //LogInManager.Managers.DataManager.PushData(String newname);
-                DataManager.DbCollection.insertOne(new Document("name",newname));
+                Document found = (Document) DataManager.DbCollection.find(new Document("name",CurrentUser.userName)).first();
+
+                if(found != null){
+                    Bson updatevalue = new Document("name",newname);
+                    Bson updateoperation = new Document("$set",updatevalue);
+                    DataManager.DbCollection.updateOne(found,updateoperation);
+                }
                 dispose();
             }
         });
@@ -106,8 +98,8 @@ public class ChangeUsernameForm extends JFrame{
     }
 
     private void LoadLabels(GridBagConstraints c) {
-        orgusernameLabel = new JLabel("Current Username");
-        orgusernameLabel.setFont(customSmallFont);
+        oldusernameLabel = new JLabel("Current Username");
+        oldusernameLabel.setFont(customSmallFont);
         c.insets=new Insets(1,1,1,20);
         c.weightx=1;
         c.weighty=0.5;
@@ -139,13 +131,9 @@ public class ChangeUsernameForm extends JFrame{
         c.gridy=2;
         this.add(passwordLabel,c);*/
 
-    }
-
-    private void LoadTextFields(GridBagConstraints c) {
-
         c.insets=new Insets(5,0,0,0);
-        orgusernameTextField=new JLabel(CurrentUser.userName);
-        orgusernameTextField.setFont(customSmallFont);
+        oldusernameTextField=new JLabel(CurrentUser.userName);
+        oldusernameTextField.setFont(customSmallFont);
         c.fill=GridBagConstraints.HORIZONTAL;
         c.weightx=1;
         c.weighty=0.1;
@@ -156,6 +144,9 @@ public class ChangeUsernameForm extends JFrame{
         c.gridy=0;
         this.add(oldusernameTextField,c);
 
+    }
+
+    private void LoadTextFields(GridBagConstraints c) {
 
         newusernameTextField = new JTextField();
         c.insets = new Insets(1,1,1,1);
