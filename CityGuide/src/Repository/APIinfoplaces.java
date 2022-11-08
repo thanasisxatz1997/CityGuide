@@ -1,42 +1,39 @@
 package Repository;
 
+import Repository.HtmlFiles.ParserAPI;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
-public class APIinfoplaces {
-	private static String str;
-	private static ArrayList<String> strList;
-	
+
+public class APIinfoplaces{
+
+	public static ArrayList<String> JSONstrList;
+	private static String testStr;
+
 	private static HttpURLConnection connection;
+	public static void main( String[] args) throws ParseException {
 
-	public static void GetInfoFromAPI()
-	{
-		strList=new ArrayList<>();
+		JSONstrList=new ArrayList<>();
 		HttpClient client = HttpClient.newHttpClient();
-		//Rome Radius= 4568
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=41.9028%2C12.4964&radius=2000&type=Restaurant&key=AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes")).build();
-		client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenAccept(s -> strList.add(s)).join();
-		//System.out::println
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=41.9027835%2C12.4963655&radius=4658&type=art_gallery&key=AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes")).build();
+		client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenAccept(s -> testStr=s).join();
+		//JSONstrList.add(s)
+		//.thenAccept((Consumer<? super String>) ParserAPI.parse(String.valueOf(JSONstrList)))
+
+		//ParseAPI.getstrList();
 		System.out.println("AFTER!");
-		System.out.println(strList);
-		System.out.println(strList.size());
+		System.out.println(testStr);
+		System.out.println("DONE");
+		ParserAPI.Parse(testStr);
 	}
-
-	/*public static void main( String[] args) {
-		strList=new ArrayList<>();
-		HttpClient client = HttpClient.newHttpClient();
-		//Rome Radius= 4568
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=41.9028%2C12.4964&radius=2000&type=park&key=AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes")).build();
-		client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenAccept(s -> strList.add(s)).join();
-		//System.out::println
-		System.out.println("AFTER!");
-		System.out.println(strList);
-		System.out.println(strList.size());
-	}*/
 }
-
-//
