@@ -63,7 +63,6 @@ public class HomeHintsPanel extends JPanel {
     {
         System.out.println("Collection is: "+collection.getNamespace());
 
-
         FindIterable<Document> iterDoc = collection.find();
         Iterator it = iterDoc.iterator();
         while (it.hasNext()) {

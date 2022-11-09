@@ -92,6 +92,13 @@ public class TestBackgroundPanel extends JPanel {
         this.repaint();
         this.revalidate();
     }
+    public void AddRecommendedPanel()
+    {
+        this.removeAll();
+        this.add(new RecommendedPanel());
+        this.repaint();
+        this.revalidate();
+    }
 
     public void AddUserPanel()
     {

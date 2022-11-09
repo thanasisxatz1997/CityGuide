@@ -22,6 +22,7 @@ public class TestButtonPanel extends JPanel {
     private JButton storeButton;
     private JButton favoritesButton;
     private JButton mapButton;
+    private JButton recommendedButton;
     private JButton userButton;
     private JButton exitButton;
     private Dimension buttonDimension;
@@ -48,6 +49,7 @@ public class TestButtonPanel extends JPanel {
         storeButton=new JButton();
         favoritesButton=new JButton();
         mapButton=new JButton();
+        recommendedButton=new JButton();
         userButton=new JButton();
         exitButton=new JButton();
 
@@ -55,7 +57,8 @@ public class TestButtonPanel extends JPanel {
         LoadButtons(storeButton,"Stores","src/resources/ButtonIcons/storeIcon32px.png");
         LoadButtons(favoritesButton,"Favorites","src/resources/ButtonIcons/favoritesIcon32px.png");
         LoadButtons(mapButton,"Map","src/resources/ButtonIcons/mapIcon32px.png");
-        LoadButtons(new JButton(),"","");
+        LoadButtons(recommendedButton,"Recommended","src/resources/Icons/recomendedIcon.png");
+        recommendedButton.setFont(LoadFontWithFontSize(12));
         LoadButtons(new JButton(),"","");
         LoadButtons(new JButton(),"","");
         LoadButtons(userButton,"USER","src/resources/ButtonIcons/userIcon32px.png");
@@ -87,6 +90,21 @@ public class TestButtonPanel extends JPanel {
         }
         button.setFont(buttonFont);
         this.add(button);
+    }
+
+    private Font LoadFontWithFontSize(int fontSize)
+    {
+        Font customFont;
+        try {
+            InputStream myStream= new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
+            Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
+            customFont = ttfBase.deriveFont(Font.BOLD,fontSize);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return customFont;
     }
 
     private void SetButtonSize(JButton button)
@@ -128,6 +146,12 @@ public class TestButtonPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TestMainForm.mainPanel.backgroundPanel.AddMapPanel();
+            }
+        });
+        recommendedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TestMainForm.mainPanel.backgroundPanel.AddRecommendedPanel();
             }
         });
         exitButton.addActionListener(new ActionListener() {
