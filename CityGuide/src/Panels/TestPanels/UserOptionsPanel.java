@@ -1,5 +1,7 @@
 package Panels.TestPanels;
 
+import Forms.ChagneInfoForms.ChangeEmailForm;
+import Forms.ChagneInfoForms.ChangeUsernameForm;
 import LogInManager.Forms.IntroPage;
 import Repository.CurrentUser;
 import Repository.Handlers;
@@ -131,6 +133,12 @@ public class UserOptionsPanel extends JPanel {
         c.insets=new Insets(0,0,0,50);
         c.gridx=2;
         c.gridy=1;
+        usernameChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangeUsernameForm(new JFrame(String.valueOf(getParent())));
+            }
+        });
         this.add(usernameChangeButton,c);
 
         emailDisplayLabel=new JLabel("Email: "+CurrentUser.userEmail);
@@ -143,6 +151,12 @@ public class UserOptionsPanel extends JPanel {
         c.insets=new Insets(0,0,0,50);
         c.gridx=2;
         c.gridy=2;
+        emailChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangeEmailForm(new JFrame(String.valueOf(getParent())));
+            }
+        });
         this.add(emailChangeButton,c);
 
         sessionRuntimeLabel=new JLabel("Logged in for: "+ Handlers.ShowCurrentRunTime()+"seconds");
