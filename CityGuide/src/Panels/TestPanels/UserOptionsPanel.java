@@ -1,6 +1,7 @@
 package Panels.TestPanels;
 
 import Forms.ChagneInfoForms.ChangeEmailForm;
+import Forms.ChagneInfoForms.ChangePasswordForm;
 import Forms.ChagneInfoForms.ChangeUsernameForm;
 import LogInManager.Forms.IntroPage;
 import Repository.CurrentUser;
@@ -32,6 +33,7 @@ public class UserOptionsPanel extends JPanel {
     private JButton usernameChangeButton;
     private JButton emailChangeButton;
     private JButton passwordChangeButton;
+    private JLabel passwordDisplayLabel;
 
 
     public UserOptionsPanel()
@@ -104,6 +106,21 @@ public class UserOptionsPanel extends JPanel {
             logIn_OutButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    int a = JOptionPane.showConfirmDialog(logIn_OutButton, "Are you sure?");
+                    // JOptionPane.setRootFrame(null);
+                    if (a == JOptionPane.YES_OPTION) {
+                        CurrentUser.LogOut();
+                        //TestMainForm.dispose();
+                        invalidate();
+                        validate();
+                        repaint();
+                        //Forms.TestMainForm obj = new Forms.TestMainForm();
+                        //obj.setVisible(true);
+                    }
+
+                    //dispose();
+                    //Forms.TestMainForm obj = new Forms.TestMainForm();
+                    //obj.setVisible(true);
                 }
             });
         }
@@ -159,11 +176,29 @@ public class UserOptionsPanel extends JPanel {
         });
         this.add(emailChangeButton,c);
 
+        passwordDisplayLabel=new JLabel("Password: ");
+        c.insets=new Insets(5,0,0,0);
+        passwordDisplayLabel.setFont(customSmallFont);
+        c.gridx=0;
+        c.gridy=3;
+        this.add(passwordDisplayLabel,c);
+        passwordChangeButton=new JButton("Change");
+        c.insets=new Insets(0,0,0,50);
+        c.gridx=2;
+        c.gridy=3;
+        this.add(passwordChangeButton,c);
+        passwordChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangePasswordForm(new JFrame(String.valueOf(getParent())));
+            }
+        });
+
         sessionRuntimeLabel=new JLabel("Logged in for: "+ Handlers.ShowCurrentRunTime()+"seconds");
         sessionRuntimeLabel.setFont(customSmallFont);
         c.insets=new Insets(0,0,400,0);
         c.gridx=0;
-        c.gridy=3;
+        c.gridy=4;
         this.add(sessionRuntimeLabel,c);
         LoadSessionTimer();
     }

@@ -24,6 +24,8 @@ public class ChangeEmailForm extends JFrame {
     JLabel passwordLabel;
     JPasswordField passwordField;
     JButton applychangesButton;
+    JLabel label;
+    private Font customLargeFont;
 
     public ChangeEmailForm(JFrame parent) {
         super();
@@ -111,6 +113,18 @@ public class ChangeEmailForm extends JFrame {
     }
 
     private void LoadLabels(GridBagConstraints c) {
+        label = new JLabel("Change Email");
+        label.setFont(customLargeFont);
+        label.setForeground(Color.WHITE);
+        c.insets=new Insets(15,1,1,1);
+        c.weightx=1;
+        c.weighty=0;
+        c.gridwidth=3;
+        c.gridheight=1;
+        c.gridx=0;
+        c.gridy=0;
+        this.add(label,c);
+
         oldemailLabel = new JLabel("Current Email");
         oldemailLabel.setFont(customSmallFont);
         oldemailLabel.setForeground(Color.WHITE);
@@ -120,7 +134,7 @@ public class ChangeEmailForm extends JFrame {
         c.gridwidth=1;
         c.gridheight=1;
         c.gridx=0;
-        c.gridy=0;
+        c.gridy=1;
         this.add(oldemailLabel,c);
 
         newemailLabel = new JLabel("New Email");
@@ -132,7 +146,7 @@ public class ChangeEmailForm extends JFrame {
         c.gridwidth=1;
         c.gridheight=1;
         c.gridx=0;
-        c.gridy=1;
+        c.gridy=2;
         this.add(newemailLabel,c);
 
         /*passwordLabel = new JLabel("Enter your password to confirm ");
@@ -157,7 +171,7 @@ public class ChangeEmailForm extends JFrame {
         c.ipadx=1;
         c.ipady=0;
         c.gridx=1;
-        c.gridy=0;
+        c.gridy=1;
         this.add(oldemailTextField,c);
 
     }
@@ -165,7 +179,7 @@ public class ChangeEmailForm extends JFrame {
     private void LoadTextFields(GridBagConstraints c) {
 
         newemailTextField = new JTextField();
-        c.insets = new Insets(1,1,1,1);
+        c.insets = new Insets(1,1,1,20);
         c.fill=GridBagConstraints.HORIZONTAL;
         c.weightx=1;
         c.weighty=0.1;
@@ -173,7 +187,7 @@ public class ChangeEmailForm extends JFrame {
         c.ipadx=1;
         c.ipady=0;
         c.gridx=1;
-        c.gridy=1;
+        c.gridy=2;
         this.add(newemailTextField,c);
 
     }
@@ -205,6 +219,17 @@ public class ChangeEmailForm extends JFrame {
         }
     }
 
+    private void LoadLargeFont(String path) {
+        try {
+            InputStream myStream = new BufferedInputStream(new FileInputStream(path));
+            Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
+            customLargeFont = ttfBase.deriveFont(Font.BOLD, 48);
+        } catch (FontFormatException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
 

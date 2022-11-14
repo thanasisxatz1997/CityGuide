@@ -1,8 +1,8 @@
 package Forms.ChagneInfoForms;
 
 import LogInManager.Managers.DataManager;
-import Panels.TestPanels.UserOptionsPanel;
 import Repository.CurrentUser;
+import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -15,28 +15,32 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ChangeUsernameForm extends JFrame {
+public class ChangePasswordForm extends JFrame{
+
     private JPanel mainPanel;
-    JLabel oldusernameLabel;
+    JLabel oldpasswordLabel;
     private Font customSmallFont;
-    JLabel oldusernameTextField;
-    JLabel newusernameLabel;
-    JTextField newusernameTextField;
+    JLabel oldpasswordTextField;
+    JLabel newpasswordLabel;
+    JTextField newpasswordTextField;
     JLabel passwordLabel;
     JPasswordField passwordField;
     JButton applychangesButton;
     JLabel label;
     private Font customLargeFont;
 
-    public ChangeUsernameForm(JFrame parent) {
+
+    public ChangePasswordForm(JFrame parent) {
         super();
         Load();
     }
 
+    public static MongoCollection DbCollection;
+
     private void Load() {
 
         setSize(new Dimension(400,400));
-        setTitle("Change Username");
+        setTitle("Change Password");
         getContentPane().setBackground(new Color(108,139,219));
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -81,34 +85,33 @@ public class ChangeUsernameForm extends JFrame {
         c.gridheight=1;
         c.gridx=0;
         c.gridy=4;
+        this.add(applychangesButton,c);
         applychangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!newusernameTextField.getText().trim().isEmpty())
+                if(!newpasswordTextField.getText().trim().isEmpty())
                 {
-                    Document found = (Document) DataManager.DbCollection.find(new Document("name",CurrentUser.userName)).first();
+                    Document found = (Document) DataManager.DbCollection.find(new Document("name",CurrentUser.userPassword)).first();
                     if(found != null){
-                        String newname = newusernameTextField.getText();
-                        Bson updatevalue = new Document("name",newname);
-                        Bson updateoperation = new Document("$set",updatevalue);
+                        String newpassword = newpasswordTextField.getText();
+                        Bson updatedvalue = new Document("password", newpassword);
+                        Bson updateoperation = new Document("$set", updatedvalue);
                         DataManager.DbCollection.updateOne(found,updateoperation);
-                        CurrentUser.userName = newname;
-                        JOptionPane.showMessageDialog(null,"Name Changed Successfully","Done",JOptionPane.ERROR_MESSAGE );
+                        CurrentUser.userPassword = newpassword;
+                        JOptionPane.showMessageDialog(null,"Password Changed Successfully","Done",JOptionPane.ERROR_MESSAGE );
                         dispose();
                     }
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null,"No new username has been given","Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"No new password has been given","Error",JOptionPane.ERROR_MESSAGE);
                 }
-
             }
         });
-        this.add(applychangesButton,c);
     }
 
     private void LoadLabels(GridBagConstraints c) {
-        label = new JLabel("Change Username");
+        label = new JLabel("Change Password");
         label.setFont(customLargeFont);
         label.setForeground(Color.WHITE);
         c.insets=new Insets(15,1,1,1);
@@ -120,9 +123,9 @@ public class ChangeUsernameForm extends JFrame {
         c.gridy=0;
         this.add(label,c);
 
-        oldusernameLabel = new JLabel("Current Username:");
-        oldusernameLabel.setFont(customSmallFont);
-        oldusernameLabel.setForeground(Color.WHITE);
+        oldpasswordLabel = new JLabel("Current Password");
+        oldpasswordLabel.setFont(customSmallFont);
+        oldpasswordLabel.setForeground(Color.WHITE);
         c.insets=new Insets(1,1,1,20);
         c.weightx=1;
         c.weighty=0.5;
@@ -130,11 +133,11 @@ public class ChangeUsernameForm extends JFrame {
         c.gridheight=1;
         c.gridx=0;
         c.gridy=1;
-        this.add(oldusernameLabel,c);
+        this.add(oldpasswordLabel,c);
 
-        newusernameLabel = new JLabel("New Username");
-        newusernameLabel.setFont(customSmallFont);
-        newusernameLabel.setForeground(Color.WHITE);
+        newpasswordLabel = new JLabel("New Password");
+        newpasswordLabel.setFont(customSmallFont);
+        newpasswordLabel.setForeground(Color.WHITE);
         c.insets=new Insets(1,1,1,20);
         c.weightx=1;
         c.weighty=0.5;
@@ -142,7 +145,7 @@ public class ChangeUsernameForm extends JFrame {
         c.gridheight=1;
         c.gridx=0;
         c.gridy=2;
-        this.add(newusernameLabel,c);
+        this.add(newpasswordLabel,c);
 
         /*passwordLabel = new JLabel("Enter your password to confirm ");
         passwordLabel.setFont(customSmallFont);
@@ -156,9 +159,9 @@ public class ChangeUsernameForm extends JFrame {
         this.add(passwordLabel,c);*/
 
         c.insets=new Insets(5,0,0,0);
-        oldusernameTextField=new JLabel(CurrentUser.userName);
-        oldusernameTextField.setFont(customSmallFont);
-        oldusernameTextField.setForeground(Color.WHITE);
+        oldpasswordTextField=new JLabel(CurrentUser.userPassword);
+        oldpasswordTextField.setFont(customSmallFont);
+        oldpasswordTextField.setForeground(Color.WHITE);
         c.fill=GridBagConstraints.HORIZONTAL;
         c.weightx=1;
         c.weighty=0.1;
@@ -167,13 +170,11 @@ public class ChangeUsernameForm extends JFrame {
         c.ipady=0;
         c.gridx=1;
         c.gridy=1;
-        this.add(oldusernameTextField,c);
-
+        this.add(oldpasswordTextField,c);
     }
 
     private void LoadTextFields(GridBagConstraints c) {
-
-        newusernameTextField = new JTextField();
+        newpasswordTextField = new JTextField();
         c.insets = new Insets(1,1,1,20);
         c.fill=GridBagConstraints.HORIZONTAL;
         c.weightx=1;
@@ -183,7 +184,7 @@ public class ChangeUsernameForm extends JFrame {
         c.ipady=0;
         c.gridx=1;
         c.gridy=2;
-        this.add(newusernameTextField,c);
+        this.add(newpasswordTextField,c);
 
     }
 
@@ -211,8 +212,4 @@ public class ChangeUsernameForm extends JFrame {
             throw new RuntimeException(e);
         }
     }
-
-
 }
-
-
