@@ -18,6 +18,7 @@ public class CurrentUser {
         loggedIn=false;
         userName=null;
         userEmail=null;
+        userPassword=null;
     }
 }
 
