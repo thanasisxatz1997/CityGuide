@@ -90,12 +90,14 @@ public class ChangePasswordForm extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String pass = passwordField.getPassword().toString();
-                if (pass == CurrentUser.userPassword){
+                String encKey= DataManager.GenerateEncryptionKey();
+                String decryptpass = DataManager.Decrypt(CurrentUser.userPassword,encKey);
+                if (pass == decryptpass){
                     if(!newpasswordTextField.getText().trim().isEmpty())
                     {
                         Document found = (Document) DataManager.DbCollection.find(new Document("name",CurrentUser.userPassword)).first();
                         if(found != null){
-                            String newpassword = newpasswordTextField.getText();
+                            String newpassword = DataManager.Encrypt(newpasswordTextField.getText(),encKey);
                             Bson updatedvalue = new Document("password", newpassword);
                             Bson updateoperation = new Document("$set", updatedvalue);
                             DataManager.DbCollection.updateOne(found,updateoperation);

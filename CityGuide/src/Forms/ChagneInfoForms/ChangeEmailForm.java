@@ -84,7 +84,9 @@ public class ChangeEmailForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String pass = passwordField.getPassword().toString();
-                if (pass == CurrentUser.userPassword){
+                String encKey= DataManager.GenerateEncryptionKey();
+                String decryptpass = DataManager.Decrypt(CurrentUser.userPassword,encKey);
+                if (pass == decryptpass){
                     if(!newemailTextField.getText().trim().isEmpty())
                     {
                         if(ValidEmailAddress(newemailTextField.getText()))
