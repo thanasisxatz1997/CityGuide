@@ -49,7 +49,6 @@ public class LoginPage extends JFrame{
                     Handlers.startTime=System.nanoTime();
                     CurrentUser.userName=nameTextField.getText();
                     CurrentUser.userEmail=DataManager.GetEmail(nameTextField.getText());
-                    CurrentUser.userPassword=passwordTextField.getText();
                     TestMainForm.mainPanel.backgroundPanel.AddUserPanel();
                     frame.dispose();
                     IntroPage.frame.dispose();

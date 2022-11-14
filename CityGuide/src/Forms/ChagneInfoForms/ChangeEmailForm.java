@@ -22,7 +22,7 @@ public class ChangeEmailForm extends JFrame {
     JLabel newemailLabel;
     JTextField newemailTextField;
     JLabel passwordLabel;
-    JPasswordField passwordField;
+    JTextField passwordField;
     JButton applychangesButton;
     JLabel label;
     JLabel testPasswordLabel;
@@ -83,10 +83,11 @@ public class ChangeEmailForm extends JFrame {
         applychangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String pass = passwordField.getPassword().toString();
-                String encKey= DataManager.GenerateEncryptionKey();
-                String decryptpass = DataManager.Decrypt(CurrentUser.userPassword,encKey);
-                if (pass == decryptpass){
+                String pass = passwordField.getText().toString();
+                String enctyptpass = DataManager.GetEncPass(CurrentUser.userName);
+                String encKey = DataManager.GetEncKey(CurrentUser.userName);
+                String decryptpass = DataManager.Decrypt(enctyptpass,encKey);
+                if (pass.equals(decryptpass)){
                     if(!newemailTextField.getText().trim().isEmpty())
                     {
                         if(ValidEmailAddress(newemailTextField.getText()))
@@ -98,7 +99,7 @@ public class ChangeEmailForm extends JFrame {
                                 Bson updateoperation = new Document("$set",updatevalue);
                                 DataManager.DbCollection.updateOne(found,updateoperation);
                                 CurrentUser.userEmail = newemail;
-                                JOptionPane.showMessageDialog(null,"Email Changed Successfully","Done",JOptionPane.ERROR_MESSAGE );
+                                JOptionPane.showMessageDialog(null,"Email Changed Successfully","Done",JOptionPane.WARNING_MESSAGE );
                                 dispose();}
 
                         }

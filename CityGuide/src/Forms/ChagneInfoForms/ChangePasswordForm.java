@@ -24,7 +24,7 @@ public class ChangePasswordForm extends JFrame{
     JLabel newpasswordLabel;
     JTextField newpasswordTextField;
     JLabel passwordLabel;
-    JPasswordField passwordField;
+    JTextField passwordField;
     JButton applychangesButton;
     JLabel label;
     JLabel testPasswordLabel;
@@ -89,21 +89,23 @@ public class ChangePasswordForm extends JFrame{
         applychangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String pass = passwordField.getPassword().toString();
-                String encKey= DataManager.GenerateEncryptionKey();
-                String decryptpass = DataManager.Decrypt(CurrentUser.userPassword,encKey);
-                if (pass == decryptpass){
+                String pass = passwordField.getText().toString();
+                String enctyptpass = DataManager.GetEncPass(CurrentUser.userName);
+                String encKey = DataManager.GetEncKey(CurrentUser.userName);
+                String decryptpass = DataManager.Decrypt(enctyptpass,encKey);
+                if (pass.equals(decryptpass)){
                     if(!newpasswordTextField.getText().trim().isEmpty())
                     {
-                        Document found = (Document) DataManager.DbCollection.find(new Document("name",CurrentUser.userPassword)).first();
-                        if(found != null){
+                        Document found = (Document) DataManager.DbCollection.find(new Document("password",pass)).first();
+                        if(!found.equals(null)){
                             String newpassword = DataManager.Encrypt(newpasswordTextField.getText(),encKey);
                             Bson updatedvalue = new Document("password", newpassword);
                             Bson updateoperation = new Document("$set", updatedvalue);
                             DataManager.DbCollection.updateOne(found,updateoperation);
-                            CurrentUser.userPassword = newpassword;
-                            JOptionPane.showMessageDialog(null,"Password Changed Successfully","Done",JOptionPane.ERROR_MESSAGE );
+                            pass = newpassword;
+                            JOptionPane.showMessageDialog(null,"Password Changed Successfully","Done",JOptionPane.WARNING_MESSAGE );
                             dispose();
+                            System.out.println("Passsword " + decryptpass +" runs" +" runs!");
                         }
                     }
                     else
@@ -155,7 +157,10 @@ public class ChangePasswordForm extends JFrame{
         this.add(newpasswordLabel,c);
 
         c.insets=new Insets(5,0,0,0);
-        oldpasswordTextField=new JLabel(CurrentUser.userPassword);
+        String enctyptpass = DataManager.GetEncPass(CurrentUser.userName);
+        String encKey = DataManager.GetEncKey(CurrentUser.userName);
+        String decryptpass = DataManager.Decrypt(enctyptpass,encKey);
+        oldpasswordTextField=new JLabel(decryptpass);
         oldpasswordTextField.setFont(customSmallFont);
         oldpasswordTextField.setForeground(Color.WHITE);
         c.fill=GridBagConstraints.HORIZONTAL;

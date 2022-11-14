@@ -23,7 +23,7 @@ public class ChangeUsernameForm extends JFrame {
     JLabel newusernameLabel;
     JTextField newusernameTextField;
     JLabel passwordLabel;
-    JPasswordField passwordField;
+    JTextField passwordField;
     JButton applychangesButton;
     JLabel label;
     JLabel testPasswordLabel;
@@ -84,11 +84,12 @@ public class ChangeUsernameForm extends JFrame {
         applychangesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //GetEncPass(name).equals(Encrypt(password, GetEncKey(name)));
-                String pass = passwordField.getPassword().toString();
-                String encKey= DataManager.GenerateEncryptionKey();
-                String decryptpass = DataManager.Decrypt(CurrentUser.userPassword,encKey);
-                if (pass == decryptpass){
+                String pass = passwordField.getText().toString();
+                String enctyptpass = DataManager.GetEncPass(CurrentUser.userName);
+                String encKey = DataManager.GetEncKey(CurrentUser.userName);
+                String decryptpass = DataManager.Decrypt(enctyptpass,encKey);
+                //System.out.println("Passsword " + decryptpass);
+                if (pass.equals(decryptpass)){
                     if(!newusernameTextField.getText().trim().isEmpty())
                     {
                         Document found = (Document) DataManager.DbCollection.find(new Document("name",CurrentUser.userName)).first();
@@ -98,7 +99,7 @@ public class ChangeUsernameForm extends JFrame {
                             Bson updateoperation = new Document("$set",updatevalue);
                             DataManager.DbCollection.updateOne(found,updateoperation);
                             CurrentUser.userName = newname;
-                            JOptionPane.showMessageDialog(null,"Name Changed Successfully","Done",JOptionPane.ERROR_MESSAGE );
+                            JOptionPane.showMessageDialog(null,"Name Changed Successfully","Done",JOptionPane.WARNING_MESSAGE );
                             dispose();
                         }
                     } else {
@@ -176,7 +177,7 @@ public class ChangeUsernameForm extends JFrame {
         c.gridy=3;
         this.add(passwordLabel,c);
 
-        testPasswordLabel = new JLabel("Password " + CurrentUser.userPassword);
+        /*testPasswordLabel = new JLabel("Password " + decryptpass);
         testPasswordLabel.setFont(customSmallFont);
         testPasswordLabel.setForeground(Color.WHITE);
         c.insets=new Insets(1,1,1,1);
@@ -186,7 +187,7 @@ public class ChangeUsernameForm extends JFrame {
         c.gridheight=1;
         c.gridx=0;
         c.gridy=6;
-        this.add(testPasswordLabel,c);
+        this.add(testPasswordLabel,c);*/
 
     }
 
