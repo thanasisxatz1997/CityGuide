@@ -132,7 +132,7 @@ public class ChangePasswordForm extends JFrame{
         c.gridy=0;
         this.add(label,c);
 
-        oldpasswordLabel = new JLabel("Current Password");
+        /*oldpasswordLabel = new JLabel("Current Password");
         oldpasswordLabel.setFont(customSmallFont);
         oldpasswordLabel.setForeground(Color.WHITE);
         c.insets=new Insets(1,1,1,20);
@@ -142,7 +142,7 @@ public class ChangePasswordForm extends JFrame{
         c.gridheight=1;
         c.gridx=0;
         c.gridy=1;
-        this.add(oldpasswordLabel,c);
+        this.add(oldpasswordLabel,c);*/
 
         newpasswordLabel = new JLabel("New Password");
         newpasswordLabel.setFont(customSmallFont);
@@ -156,7 +156,7 @@ public class ChangePasswordForm extends JFrame{
         c.gridy=2;
         this.add(newpasswordLabel,c);
 
-        c.insets=new Insets(5,0,0,0);
+       /* c.insets=new Insets(5,0,0,0);
         String enctyptpass = DataManager.GetEncPass(CurrentUser.userName);
         String encKey = DataManager.GetEncKey(CurrentUser.userName);
         String decryptpass = DataManager.Decrypt(enctyptpass,encKey);
@@ -171,9 +171,9 @@ public class ChangePasswordForm extends JFrame{
         c.ipady=0;
         c.gridx=1;
         c.gridy=1;
-        this.add(oldpasswordTextField,c);
+        this.add(oldpasswordTextField,c);*/
 
-        passwordLabel = new JLabel("Enter your password to confirm ");
+        passwordLabel = new JLabel("Enter old password to confirm ");
         passwordLabel.setFont(customSmallFont);
         passwordLabel.setForeground(Color.WHITE);
         c.insets=new Insets(1,1,1,1);
