@@ -24,7 +24,7 @@ public class StoresPanel extends JPanel {
         storeFilterPanel.SetConnectedStoreDisplayPanel(storeDisplayPanel);
 
         storesDisplayScrollPane=new JScrollPane(storeDisplayPanel);
-        storesDisplayScrollPane.setPreferredSize(new Dimension(285,100));
+        storesDisplayScrollPane.setPreferredSize(new Dimension(485,100));
         storesDisplayScrollPane.setHorizontalScrollBar(null);
         storesDisplayScrollPane.setVisible(true);
 

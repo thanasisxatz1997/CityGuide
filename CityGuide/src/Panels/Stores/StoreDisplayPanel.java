@@ -1,6 +1,9 @@
 package Panels.Stores;
 
+import Panels.Recommended.TestRectButton;
+import Repository.DataManager;
 import Repository.Filtering;
+import Repository.ImageResizer;
 import org.bson.Document;
 
 import javax.imageio.ImageIO;
@@ -31,25 +34,28 @@ public class StoreDisplayPanel extends JPanel {
     StoreDisplayPanel()
     {
         //this.setPreferredSize(new Dimension(250,-1));
-        this.setPreferredSize(new Dimension(280,600));
-        this.setMaximumSize(new Dimension(280,5000));
+        this.setPreferredSize(new Dimension(480,600));
+
+        this.setMaximumSize(new Dimension(480,5000));
         /*button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);*/
-
         //this.setBackground(new Color(255,178,102));
         Border margin=new EmptyBorder(10,0,10,10);
         this.setBorder(BorderFactory.createRaisedBevelBorder());
         Border raisedBorder=this.getBorder();
         this.setBorder(new CompoundBorder(raisedBorder,margin));
-        BoxLayout boxLayout=new BoxLayout(this,BoxLayout.Y_AXIS);
-        this.setLayout(boxLayout);
+        //BoxLayout boxLayout=new BoxLayout(this,BoxLayout.Y_AXIS); //for StorePanels
+        //this.setLayout(boxLayout); //for StorePanels
+        this.setLayout(new FlowLayout());// for StoreButtons
+        AddRandomStores();
+        this.setPreferredSize(new Dimension(480,this.getPreferredSize().height*5));
         LoadFont();
         storesLabel=new JLabel();
         storesLabel.setText("Stores");
         storesLabel.setFont(customFont);
         storesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.add(storesLabel);
+        //this.add(storesLabel);
         this.revalidate();
         this.setVisible(true);
     }
@@ -59,23 +65,39 @@ public class StoreDisplayPanel extends JPanel {
         connectedFilterPanel=filterPanel;
     }
 
+    public void AddRandomStores()
+    {
+        for(int i=0;i<10;i++)
+        {
+            Document storeDoc=DataManager.GetRandomRecommendedStoreTest();
+            TestRectButton testRectButton=new TestRectButton(400,250);
+            testRectButton.backgroundImage=DataManager.GetRandomStoreImage(storeDoc);
+            this.add(testRectButton);
+        }
+
+
+    }
     public void AddSinglePanels() {
         this.removeAll();
         this.repaint();
         this.revalidate();
         storesLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.add(storesLabel);
+        //this.add(storesLabel);
         int listSize = 0;
         for (StoresSinglePanel singlePanel : singleStorePanelList) {
             listSize++;
             System.out.println("size added");
             System.out.println("Size is : " + listSize);
         }
-        this.setPreferredSize(new Dimension(280, listSize * 180 + 20));
+        this.setPreferredSize(new Dimension(280, listSize * 280 + 20));
         System.out.println("List is:" + singleStorePanelList);
         for (StoresSinglePanel singlePanel : singleStorePanelList) {
             System.out.println("added stores!");
-            this.add(singlePanel);
+            TestRectButton testRectButton=new TestRectButton(400,250);
+            testRectButton.backgroundImage=singlePanel.backgroundImage;
+            testRectButton.setMaximumSize(new Dimension(400,250));
+            this.add(testRectButton);
+            //this.add(singlePanel);
         }
     }
 
@@ -139,8 +161,54 @@ public class StoreDisplayPanel extends JPanel {
                 builder.append(ch);
             }
             photoReferenceStr=builder.toString();
+
+            char[] photoWidthArray=photoStr[0].toCharArray();
+            int photoWidthStrStart=photoStr[0].lastIndexOf("width=")+6;
+            ArrayList<Character> photoWidth = new ArrayList<>();
+            for(int i=photoWidthStrStart;photoWidthArray[i]!='}';i++)
+            {
+                photoWidth.add(photoWidthArray[i]);
+            }
+            String photoWidthStr;
+            StringBuilder widthBuilder = new StringBuilder(photoWidth.size());
+            for(Character ch: photoWidth)
+            {
+                widthBuilder.append(ch);
+            }
+            photoWidthStr=builder.toString();
+
+
+            char[] photoHeightArray=photoStr[0].toCharArray();
+            int photoHeightStrStart=photoStr[0].lastIndexOf("height=")+7;
+            ArrayList<Character> photoHeight = new ArrayList<>();
+            for(int i=photoHeightStrStart;photoHeightArray[i]!=',';i++)
+            {
+                photoHeight.add(photoHeightArray[i]);
+            }
+            String photoHeightStr;
+            StringBuilder heightBuilder = new StringBuilder(photoHeight.size());
+            for(Character ch: photoHeight)
+            {
+                heightBuilder.append(ch);
+            }
+            photoHeightStr=builder.toString();
+
+
             System.out.println("THE PHOTO REFERENCE IS: "+ photoReference);
-            String photoFullStr="https://maps.googleapis.com/maps/api/place/photo?photoreference="+photoReferenceStr+"&sensor=false&maxheight="+"250"+"&maxwidth="+"250"+"&key="+"AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
+            System.out.println("THE PHOTO WIDTH IS: "+ photoWidth);
+            System.out.println("THE PHOTO HEIGHT IS: "+ photoHeight);
+            String lastPhotoWidthStr="";
+            String lastPhotoHeightStr="";
+            for (char c:photoWidth)
+            {
+                    lastPhotoWidthStr=lastPhotoWidthStr+c;
+            }
+            for (char c:photoHeight)
+            {
+                lastPhotoHeightStr=lastPhotoHeightStr+c;
+            }
+
+            String photoFullStr="https://maps.googleapis.com/maps/api/place/photo?photoreference="+photoReferenceStr+"&sensor=false&maxheight="+lastPhotoHeightStr +"&maxwidth="+lastPhotoWidthStr+"&key="+"AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
             System.out.println("THE PHOTO STRING IS: "+photoFullStr);
             Image singleStoreImage=null;
             try {

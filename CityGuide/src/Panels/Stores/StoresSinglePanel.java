@@ -1,5 +1,6 @@
 package Panels.Stores;
 
+import Repository.ComponentStyling.RoundedBorder;
 import Repository.CurrentUser;
 import Repository.DataManager;
 import Repository.ImageResizer;
@@ -24,8 +25,8 @@ public class StoresSinglePanel extends JPanel {
     public StoresSinglePanel()
     {
 
-        this.setPreferredSize(new Dimension(240,175));
-        this.setMaximumSize(new Dimension(240,175));
+        this.setPreferredSize(new Dimension(400,175));
+        this.setMaximumSize(new Dimension(400,175));
         final boolean shouldFill = true;
         final boolean shouldWeightX = true;
         final boolean RIGHT_TO_LEFT = false;
@@ -40,10 +41,10 @@ public class StoresSinglePanel extends JPanel {
         labelName = new JLabel("Activity Name");
         ChangeFont(labelName);
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridwidth=1;
+        c.gridwidth=3;
         c.weightx = 0;
         c.ipadx=0;
-        c.insets = new Insets(5,0,100,5);  //padding
+        c.insets = new Insets(5,200,0,5);  //padding
         c.gridx = 0;
         c.gridy = 0;
         this.add(labelName, c);
@@ -56,9 +57,9 @@ public class StoresSinglePanel extends JPanel {
         c.gridwidth=1;
         c.weightx = 1;
         c.ipadx=80;
-        c.insets = new Insets(5,0,100,5);  //padding
+        c.insets = new Insets(5,0,0,5);  //padding
         c.gridx = 2;
-        c.gridy = 0;
+        c.gridy = 1;
         this.add(labelRating, c);
 
         /*labelPicture = new JLabel("Activity Picture");
@@ -88,7 +89,7 @@ public class StoresSinglePanel extends JPanel {
         c.anchor = GridBagConstraints.SOUTHWEST;
         c.gridwidth=1;
         c.weightx = 1;
-        c.insets = new Insets(5,5,5,100);  //padding
+        c.insets = new Insets(5,200,5,100);  //padding
         c.ipady = 15;
         c.gridx = 0;
         c.gridy = 2;
@@ -159,7 +160,7 @@ public class StoresSinglePanel extends JPanel {
        g.setColor(new Color(108,139,218));
        //g.fillRect(0,0,240,30);
        //g.drawLine(0,30,240,30);
-       g.drawImage(backgroundImage,0,30,null);
+       g.drawImage(backgroundImage,0,0,null);
 
        this.revalidate();
        this.repaint();

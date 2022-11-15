@@ -2,7 +2,6 @@ package LogInManager.Forms;
 
 import Forms.TestMainForm;
 import LogInManager.Managers.DataManager;
-import Panels.TestPanels.UserOptionsPanel;
 import Repository.CurrentUser;
 import Repository.Handlers;
 
