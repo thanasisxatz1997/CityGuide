@@ -25,6 +25,8 @@ public class TestButtonPanel extends JPanel {
     private JButton recommendedButton;
     private JButton userButton;
     private JButton exitButton;
+
+    private JButton tipsButton;
     private Dimension buttonDimension;
     private ApplicationButtonPanel applicationButtonPanel;
     public TestButtonPanel()
@@ -52,6 +54,7 @@ public class TestButtonPanel extends JPanel {
         recommendedButton=new JButton();
         userButton=new JButton();
         exitButton=new JButton();
+        tipsButton=new JButton();
 
         LoadButtons(homeButton,"Home","src/resources/ButtonIcons/HomeIcon.png");
         LoadButtons(storeButton,"Stores","src/resources/ButtonIcons/storeIcon32px.png");
@@ -60,7 +63,7 @@ public class TestButtonPanel extends JPanel {
         LoadButtons(recommendedButton,"Recommended","src/resources/Icons/recomendedIcon.png");
         recommendedButton.setFont(LoadFontWithFontSize(12));
         LoadButtons(new JButton(),"","");
-        LoadButtons(new JButton(),"","");
+        LoadButtons(tipsButton,"TIPS","src/resources/ButtonIcons/TipsIcon.png");
         LoadButtons(userButton,"USER","src/resources/ButtonIcons/userIcon32px.png");
         LoadButtons(exitButton,"EXIT","src/resources/ButtonIcons/exitIcon32px.png");
         AddButtonListeners();
@@ -168,6 +171,12 @@ public class TestButtonPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TestMainForm.mainPanel.backgroundPanel.AddUserPanel();
+            }
+        });
+        tipsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TestMainForm.mainPanel.backgroundPanel.AddTipsPanel();
             }
         });
     }
