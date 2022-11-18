@@ -97,12 +97,15 @@ public class ChangePasswordForm extends JFrame{
                     if(!newpasswordTextField.getText().trim().isEmpty())
                     {
                         Document found = (Document) DataManager.DbCollection.find(new Document("password",pass)).first();
-                        if(!found.equals(null)){
-                            String newpassword = DataManager.Encrypt(newpasswordTextField.getText(),encKey);
-                            Bson updatedvalue = new Document("password", newpassword);
+                        System.out.println("Passsword " + decryptpass +" runs" +" 1!");
+                        if(!found.isEmpty()){
+                            //String newpassword = DataManager.Encrypt(newpasswordTextField.getText(),encKey);
+                            String newpassword = newpasswordTextField.getText();
+                            String encryptnewpassword = DataManager.Encrypt(newpassword,encKey);
+                            Bson updatedvalue = new Document("password", encryptnewpassword);
                             Bson updateoperation = new Document("$set", updatedvalue);
                             DataManager.DbCollection.updateOne(found,updateoperation);
-                            pass = newpassword;
+                            pass = encryptnewpassword;
                             JOptionPane.showMessageDialog(null,"Password Changed Successfully","Done",JOptionPane.WARNING_MESSAGE );
                             dispose();
                             System.out.println("Passsword " + decryptpass +" runs" +" runs!");
