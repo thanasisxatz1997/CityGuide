@@ -36,8 +36,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-//import Panels.TestPanels.util.BrowserUtil; //get license
-//import Panels.TestPanels.version.Version; //get license
+import com.kingaspx.util.BrowserUtil; //get license
+import com.kingaspx.version.Version; //get license
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.dom.By;
 import com.teamdev.jxbrowser.chromium.dom.DOMDocument;
@@ -51,7 +51,7 @@ import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 
 
 public class TestMapPanel extends JPanel {
-    public  JFXPanel fxPanel;
+    public JFXPanel fxPanel;
     private JPanel mapDisplayPanel;
     private Image backgroundImage;
     private JButton searchButton;
@@ -160,6 +160,29 @@ public class TestMapPanel extends JPanel {
                 fxPanel.setScene(new Scene(webView));
                 webView.getEngine().load("https://maps.google.com");
             });*/
+            BrowserUtil.setVersion(Version.V6_22);
+
+            browser = new Browser();
+            view = new BrowserView(browser);
+
+            mapDisplayPanel.add(view, BorderLayout.CENTER);
+
+            browser.addTitleListener((TitleEvent evt) -> {
+                //setTitle(evt.getTitle());
+            });
+
+            browser.addConsoleListener((ConsoleEvent evt) -> {
+                System.out.println("LOG: " + evt.getMessage());
+            });
+
+            browser.addLoadListener(new LoadAdapter() {
+                @Override
+                public void onFinishLoadingFrame(FinishLoadingEvent evt) {
+                    evt.getBrowser().setZoomLevel(-2);
+                }
+            });
+
+            browser.loadURL("src/Repository/HtmlFiles/simple_map.html");
         });
     }
 
@@ -187,8 +210,8 @@ public class TestMapPanel extends JPanel {
     Browser browser;
     BrowserView view;
 
-    private void open_site() {
-        //BrowserUtil.setVersion(Version.V6_22);
+    /*private void open_site() {
+        BrowserUtil.setVersion(Version.V6_22);
 
         browser = new Browser();
         view = new BrowserView(browser);
@@ -210,7 +233,7 @@ public class TestMapPanel extends JPanel {
             }
         });
 
-        browser.loadURL("D:\\Files\\Desktop\\HtmlFiles\\simple_map.html");
-    }
+        browser.loadURL("src/Repository/HtmlFiles/simple_map.html");
+    }*/
 
 }
