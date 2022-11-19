@@ -1,7 +1,7 @@
 package Repository;
 
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -64,22 +64,6 @@ public class ImageResizer {
         int scaledWidth = (int) (inputImage.getWidth() * percent);
         int scaledHeight = (int) (inputImage.getHeight() * percent);
         resize(inputImagePath, outputImagePath, scaledWidth, scaledHeight);
-    }
-
-    public static Image resize(Image inputImage, int scaledWidth, int scaledHeight)
-            throws IOException {
-        // reads input image
-        BufferedImage bufferedInputImage = (BufferedImage) inputImage;
-
-        // creates output image
-        BufferedImage outputImage = new BufferedImage(scaledWidth, scaledHeight, bufferedInputImage.getType());
-
-        // scales the input image to the output image
-        Graphics2D g2d = outputImage.createGraphics();
-        g2d.drawImage(bufferedInputImage, 0, 0, scaledWidth, scaledHeight, null);
-        g2d.dispose();
-
-        return outputImage;
     }
 
     /**

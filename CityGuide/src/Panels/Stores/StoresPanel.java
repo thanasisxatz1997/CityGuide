@@ -24,7 +24,7 @@ public class StoresPanel extends JPanel {
         storeFilterPanel.SetConnectedStoreDisplayPanel(storeDisplayPanel);
 
         storesDisplayScrollPane=new JScrollPane(storeDisplayPanel);
-        storesDisplayScrollPane.setPreferredSize(new Dimension(550,100));
+        storesDisplayScrollPane.setPreferredSize(new Dimension(285,100));
         storesDisplayScrollPane.setHorizontalScrollBar(null);
         storesDisplayScrollPane.setVisible(true);
 
@@ -48,7 +48,7 @@ public class StoresPanel extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
 
         this.revalidate();
         this.repaint();
