@@ -54,9 +54,9 @@ public class ConnectToDatabase {
         MongoDatabase database = mongoClient.getDatabase("CityGuideCollection");
         Filtering.database = database;
         DataManager.SetDatabase(database);
-        MongoCollection coll = database.getCollection("Stores");
         //Filtering.collection=coll;
-        if (coll != null) {
+        APIinfoplaces.database=database;
+        if (database != null) {
             System.out.println("CONNECTED TO DATABASE");
         }
         HomeHintsPanel.collection = database.getCollection("Facts");
