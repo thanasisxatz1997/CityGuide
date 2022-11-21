@@ -1,5 +1,6 @@
 package Panels.TestPanels;
 
+import Panels.Activities.ActivitiesDisplayPanel;
 import Panels.Favourites.FavouritesPanel;
 import Panels.Home.HomeHintsPanel;
 import Panels.Map.TestMapPanel;
@@ -120,7 +121,13 @@ public class TestBackgroundPanel extends JPanel {
         this.repaint();
         this.revalidate();
     }
-
+    public void AddActivitiesPanel()
+    {
+        this.removeAll();
+        this.add(new ActivitiesDisplayPanel());
+        this.repaint();
+        this.revalidate();
+    }
     /*@Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);

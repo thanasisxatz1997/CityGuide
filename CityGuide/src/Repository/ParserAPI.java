@@ -15,140 +15,106 @@ import java.util.ArrayList;
 
 
 public class ParserAPI {
-    public static ArrayList<String> strList;
-    public static MongoCollection dbCollection;
-    public static   MongoDatabase database;
-
-    public static void Parse(String strToParse) {
-        strList=new ArrayList<>();
+    public static ArrayList<Document> Parse(String strToParse) {
         JSONParser jsonParser=new JSONParser();
-        Document tempDoc = new Document();
+        ArrayList<Document> docList=new ArrayList<>();
         try {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(strToParse);
             JSONArray jsonArray = (JSONArray) jsonObject.get("results");
             System.out.println("THE STRING IS: " + strToParse);
-            ArrayList<Document> docList=new ArrayList<>();
+
 
             for (int i = 0; i < jsonArray.size(); i++) {
+                Document tempDoc = new Document();
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
                 //  Business Status
-                String business_status = (String) jsonObject1.get("business_status");
-
-                // See if Business is Operational
-                if (business_status.equals("OPERATIONAL")) {
-                    System.out.println("Business status:" + business_status);
-                    tempDoc.put("Business status", business_status);
-
-                    // Name of place
-                    String name = (String) jsonObject1.get("name");
-                    System.out.println("Name: " + name);
-                    tempDoc.put("Name", name);
-
-                    //place id
-                    String placeId = (String) jsonObject1.get("place_id");
-                    System.out.println("Place ID: " + placeId);
-                    tempDoc.put("Place ID", placeId);
-
-                    // Icon
-                    String icon = (String) jsonObject1.get("icon");
-                    System.out.println("Icon: " + icon);
-                    tempDoc.put("Icon", icon);
-
-                    // Icon Background Color
-                    String icon_background_color = (String) jsonObject1.get("icon_background_color");
-                    System.out.println("icon_background_color: " + icon_background_color);
-                    tempDoc.put("icon_background_color", icon_background_color);
-
-                    // Icon Mask Base URI
-                    String icon_mask_base_uri = (String) jsonObject1.get("icon_mask_base_uri");
-                    System.out.println("icon_mask_base_uri: " + icon_mask_base_uri);
-                    tempDoc.put("icon_mask_base_uri", icon_mask_base_uri);
-
-                    // Photo
-                    if (jsonObject1.containsKey("photos")) {
-                        String photo = jsonObject1.get("photos").toString();
-                        System.out.println("Photos: " + photo);
-                        tempDoc.put("Photos", photo);
-                    }
-
-                    // Open right now
-                    if (jsonObject1.containsKey("opening_hours")) {
-                        String opening_hours = jsonObject1.get("opening_hours").toString();
-                        System.out.println("Opening hours:" + opening_hours);
-                        tempDoc.put("Opening hours", opening_hours);
-                    }
-
-                    // Rating
-                    if (jsonObject1.containsKey("rating")) {
-                        Double rating = (Double) jsonObject1.get("rating");
-                        System.out.println("Rating:" + rating);
-                        tempDoc.put("Rating", rating);
-                    }
-
-                    // Users Rating
-                    if (jsonObject1.containsKey("user_ratings_total")) {
-                        String user_ratings_total = (String) jsonObject1.get("user_ratings_total").toString();
-                        System.out.println("users_ratings_total:" + user_ratings_total);
-                        tempDoc.put("users_ratings_total", user_ratings_total);
-                    }
-
-                    // Preice Level
-                    if (jsonObject1.containsKey("price_level")) {
-                        String price_level =(String) jsonObject1.get("price_level").toString();
-                        System.out.println("price_level:" + price_level);
-                        tempDoc.put("price_level", price_level);
-                    }
-
-                    // Type
-                    if (jsonObject1.containsKey("types")) {
-                        String type = jsonObject1.get("types").toString();
-                        System.out.println("Types: " + type);
-                        tempDoc.put("Type", type);
-                    }
-
-                    //Geometry
-                    if (jsonObject1.containsKey("geometry")) {
-                        //JSONObject geometry = (JSONObject) jsonObject1.get("geometry");
-                        //System.out.println("Geometry: " + geometry);
-                        tempDoc.put("geometry",jsonObject1.get("geometry"));
-                    }
-
-                    // Plus Code
-                    if (jsonObject1.containsKey("plus_code")) {
-                        String plus_code = jsonObject1.get("plus_code").toString();
-                        System.out.println("Plus code: " + plus_code);
-                        tempDoc.put("Plus code", plus_code);
-                    }
-
-                    // Scope
-                    String scope = (String) jsonObject1.get("scope");
-                    System.out.println("Scope: " + scope);
-                    tempDoc.put("Scope", jsonObject1.get("scope"));
-
-                    // Reference
-                    String reference = (String) jsonObject1.get("reference");
-                    System.out.println("reference: " + reference);
-                    tempDoc.put("reference", reference);
-
-                    // Vicinity Address
-                    String vicinity = (String) jsonObject1.get("vicinity");
-                    System.out.println("Vicinity: " + vicinity);
-                    tempDoc.put("Vicinity", jsonObject1.get("vicinity"));
-
-                    System.out.println("DOC IS::::::::::::::::::::::::::::: "+tempDoc);
-                    docList.add(tempDoc);
+                if (jsonObject1.containsKey("business_status"))
+                {
+                    tempDoc.put("business_status", jsonObject1.get("business_status"));
                 }
-            }
-            /*database.listCollectionNames();
-            for (String s:database.listCollectionNames()) {
-                System.out.println(s);
+                // Name of place
 
-            }
-            dbCollection=database.getCollection("night_club");
-            for (Document doc: docList) {
-                dbCollection.insertOne(doc);
-            }*/
+                if (jsonObject1.containsKey("name")) {
+                    tempDoc.put("name", jsonObject1.get("name"));
+                }
+                //place id
 
+                if (jsonObject1.containsKey("place_id")) {
+                    tempDoc.put("place_id", jsonObject1.get("place_id"));
+                }
+                // Icon
+
+                if (jsonObject1.containsKey("icon")) {
+                    tempDoc.put("icon", jsonObject1.get("icon"));
+                }
+                // Icon Background Color
+
+                if (jsonObject1.containsKey("icon_background_color")) {
+                    tempDoc.put("icon_background_color", jsonObject1.get("icon_background_color"));
+                }
+                // Icon Mask Base URI
+                if (jsonObject1.containsKey("icon_mask_base_uri")) {
+                    tempDoc.put("icon_mask_base_uri", jsonObject1.get("icon_mask_base_uri"));
+                }
+                // Photo
+                if (jsonObject1.containsKey("photos")) {
+                    tempDoc.put("photos", jsonObject1.get ("photos"));
+                }
+
+                // Open right now
+                if (jsonObject1.containsKey("opening_hours")) {
+                    tempDoc.put("opening_hours", jsonObject1.get ("opening_hours"));
+                }
+
+                // Rating
+                if (jsonObject1.containsKey("rating")) {
+                    tempDoc.put("rating",jsonObject1.get ("rating"));
+                }
+
+                // Users Rating
+                if (jsonObject1.containsKey("user_ratings_total")) {
+                    tempDoc.put("users_ratings_total",jsonObject1.get ("user_ratings_total"));
+                }
+
+                // Preice Level
+                if (jsonObject1.containsKey("price_level")) {
+                    tempDoc.put("price_level",jsonObject1.get ("price_level"));
+                }
+
+                // Type
+                if (jsonObject1.containsKey("types")) {
+                    tempDoc.put("types", jsonObject1.get("types"));
+                }
+
+                //Geometry
+                if (jsonObject1.containsKey("geometry")) {
+                    tempDoc.put("geometry",jsonObject1.get("geometry"));
+                }
+
+                // Plus Code
+                if (jsonObject1.containsKey("plus_code")) {
+                    tempDoc.put("plus_code",jsonObject1.get ("plus_code"));
+                }
+
+                // Scope
+                if (jsonObject1.containsKey("scope")) {
+                    tempDoc.put("Scope", jsonObject1.get("scope"));
+                }
+                // Reference
+                if (jsonObject1.containsKey("reference")) {
+                    tempDoc.put("reference", jsonObject1.get("reference"));
+                }
+
+                // Vicinity Address
+                if (jsonObject1.containsKey("vicinity")) {
+                    tempDoc.put("vicinity", jsonObject1.get("vicinity"));
+                }
+                System.out.println("DOC IS::::::::::::::::::::::::::::: "+tempDoc);
+                docList.add(tempDoc);
+                System.out.println(docList);
+            }
+            System.out.println("final: "+ docList);
+            return docList;
         }
         catch (ParseException e) {
             throw new RuntimeException(e);

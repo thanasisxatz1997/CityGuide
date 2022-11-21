@@ -95,7 +95,7 @@ public class Filtering {
             System.out.println("Type s is :"+s);
             filter=Filters.and(filter,Filters.eq("types",s));
         }
-        FindIterable<Document> iterable = collection.find(filter).projection(projectionFields);
+        FindIterable<Document> iterable = collection.find(filter).projection(projectionFields).limit(200);
         System.out.println("Iterable is : "+iterable);
         //FindIterable<Document> iterable = collection.find(gte("rating",ratingNum)).projection(projectionFields);
         //FindIterable<Document> iterable = collection.find(new Document("name","Villa Pirandello Hotel & Caf?"));

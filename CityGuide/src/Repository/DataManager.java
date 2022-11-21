@@ -34,10 +34,17 @@ public class DataManager {
     }
 
 
+    public static void AddStoreToFavourites()
+    {
+        MongoCollection collection=database.getCollection("Users");
+        Document doc=new Document();
+        doc.append("name","reppas");
+        collection.insertOne(doc);
+    }
+
     public static boolean StoreExistsInFavourites(String storeName)
     {
-        MongoCollection storeCollection=database.getCollection("Stores");
-        MongoCollection userCollection=database.getCollection("User");
+        MongoCollection userCollection=database.getCollection("Users");
 
         if(UserExistsInFavourites())
         {
@@ -134,7 +141,7 @@ public class DataManager {
 
     public static Document GetRandomRecommendedStoreTest()
     {
-        MongoCollection recommendedStoreCollection= database.getCollection("random_stores");
+        MongoCollection recommendedStoreCollection= database.getCollection("recommended_stores");
         Document storeDoc;
 
         ArrayList<String> storeNameList= new ArrayList<>();

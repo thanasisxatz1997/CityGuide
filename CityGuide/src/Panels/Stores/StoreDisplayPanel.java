@@ -1,6 +1,7 @@
 package Panels.Stores;
 
 import Panels.Recommended.TestRectButton;
+import Panels.Stores.StoreDetails.StoreDetailsFrame;
 import Repository.DataManager;
 import Repository.Filtering;
 import Repository.ImageResizer;
@@ -12,6 +13,8 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -80,6 +83,7 @@ public class StoreDisplayPanel extends JPanel {
             testRectButton.backgroundImage=DataManager.GetRandomStoreImage(storeDoc);
             testRectButton.text= (String) storeDoc.get("name");
             this.add(testRectButton);
+            CreateButtonListener(testRectButton,storeDoc,testRectButton.backgroundImage);
         }
 
 
@@ -95,13 +99,17 @@ public class StoreDisplayPanel extends JPanel {
         this.setPreferredSize(new Dimension(520, storesDocList.size() * 180 + 20));
         for(int i=0;i<storesDocList.size();i++)
         {
+            System.out.println("Added Panel: "+i);
             Document doc=storesDocList.get(i);
             TestRectButton testRectButton=new TestRectButton(240,180);
             testRectButton.backgroundImage=GetStoreImage(doc);
             testRectButton.text= doc.get("name").toString();
             testRectButton.setMaximumSize(new Dimension(250,180));
             this.add(testRectButton);
+            CreateButtonListener(testRectButton,doc,testRectButton.backgroundImage);
+
         }
+
         /*for (StoresSinglePanel singlePanel : singleStorePanelList) {
             listSize++;
             System.out.println("size added");
@@ -118,6 +126,17 @@ public class StoreDisplayPanel extends JPanel {
             this.add(testRectButton);
             //this.add(singlePanel);
         }*/
+    }
+    private void CreateButtonListener(JButton button,Document finalStoreDoc, Image backgroundImage)
+    {
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StoreDetailsFrame storeDetailsFrame=new StoreDetailsFrame();
+                storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
+                storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetComponentsDetails(finalStoreDoc.get("name").toString(),(double)finalStoreDoc.get("rating"),(int)finalStoreDoc.get("user_ratings_total"),"");
+            }
+        });
     }
 
     void DisplayPanels() //can be called only from classes inside of pachage
@@ -168,88 +187,81 @@ public class StoreDisplayPanel extends JPanel {
 
     private Image GetStoreImage(Document doc)
     {
-        final String[] photoStr = new String[1];
-        System.out.println("Doc is: "+doc);
-        photoStr[0] = doc.getList("photos", Map.class).stream().map(map -> photoStr[0] =map.toString()).collect(Collectors.toList()).toString();
-        System.out.println("Height: "+ photoStr[0]);
-        System.out.println("String exists in position: "+ photoStr[0].lastIndexOf("height"));
-        char[] photoCharArray=photoStr[0].toCharArray();
-        int photorefeRenceStrStart=photoStr[0].lastIndexOf("photo_reference=")+16;
-        if(photorefeRenceStrStart!=-1)
-        {
-            System.out.println("String exists in position: "+ photorefeRenceStrStart);
-            ArrayList<Character> photoReference = new ArrayList<>();
-            for(int i=photorefeRenceStrStart;photoCharArray[i]!=',';i++)
-            {
-                photoReference.add(photoCharArray[i]);
-            }
-            String photoReferenceStr;
-            StringBuilder builder = new StringBuilder(photoReference.size());
-            for(Character ch: photoReference)
-            {
-                builder.append(ch);
-            }
-            photoReferenceStr=builder.toString();
+        if(doc.get("photos")!=null) {
+            final String[] photoStr = new String[1];
+            System.out.println("Doc is: " + doc);
+            photoStr[0] = doc.getList("photos", Map.class).stream().map(map -> photoStr[0] = map.toString()).collect(Collectors.toList()).toString();
+            System.out.println("Height: " + photoStr[0]);
+            System.out.println("String exists in position: " + photoStr[0].lastIndexOf("height"));
+            char[] photoCharArray = photoStr[0].toCharArray();
+            int photorefeRenceStrStart = photoStr[0].lastIndexOf("photo_reference=") + 16;
+            if (photorefeRenceStrStart != -1) {
+                System.out.println("String exists in position: " + photorefeRenceStrStart);
+                ArrayList<Character> photoReference = new ArrayList<>();
+                for (int i = photorefeRenceStrStart; photoCharArray[i] != ','; i++) {
+                    photoReference.add(photoCharArray[i]);
+                }
+                String photoReferenceStr;
+                StringBuilder builder = new StringBuilder(photoReference.size());
+                for (Character ch : photoReference) {
+                    builder.append(ch);
+                }
+                photoReferenceStr = builder.toString();
 
-            char[] photoWidthArray=photoStr[0].toCharArray();
-            int photoWidthStrStart=photoStr[0].lastIndexOf("width=")+6;
-            ArrayList<Character> photoWidth = new ArrayList<>();
-            for(int i=photoWidthStrStart;photoWidthArray[i]!='}';i++)
-            {
-                photoWidth.add(photoWidthArray[i]);
-            }
-            String photoWidthStr;
-            StringBuilder widthBuilder = new StringBuilder(photoWidth.size());
-            for(Character ch: photoWidth)
-            {
-                widthBuilder.append(ch);
-            }
-            photoWidthStr=builder.toString();
+                char[] photoWidthArray = photoStr[0].toCharArray();
+                int photoWidthStrStart = photoStr[0].lastIndexOf("width=") + 6;
+                ArrayList<Character> photoWidth = new ArrayList<>();
+                for (int i = photoWidthStrStart; photoWidthArray[i] != '}' && photoWidthArray[i] != ','; i++) {
+                    photoWidth.add(photoWidthArray[i]);
+                }
+                String photoWidthStr;
+                StringBuilder widthBuilder = new StringBuilder(photoWidth.size());
+                for (Character ch : photoWidth) {
+                    widthBuilder.append(ch);
+                }
+                photoWidthStr = builder.toString();
 
 
-            char[] photoHeightArray=photoStr[0].toCharArray();
-            int photoHeightStrStart=photoStr[0].lastIndexOf("height=")+7;
-            ArrayList<Character> photoHeight = new ArrayList<>();
-            for(int i=photoHeightStrStart;photoHeightArray[i]!=',';i++)
-            {
-                photoHeight.add(photoHeightArray[i]);
-            }
-            String photoHeightStr;
-            StringBuilder heightBuilder = new StringBuilder(photoHeight.size());
-            for(Character ch: photoHeight)
-            {
-                heightBuilder.append(ch);
-            }
-            photoHeightStr=builder.toString();
+                char[] photoHeightArray = photoStr[0].toCharArray();
+                int photoHeightStrStart = photoStr[0].lastIndexOf("height=") + 7;
+                ArrayList<Character> photoHeight = new ArrayList<>();
+                for (int i = photoHeightStrStart; photoHeightArray[i] != ',' && photoHeightArray[i] != '}'; i++) {
+                    photoHeight.add(photoHeightArray[i]);
+                }
+                String photoHeightStr;
+                StringBuilder heightBuilder = new StringBuilder(photoHeight.size());
+                for (Character ch : photoHeight) {
+                    heightBuilder.append(ch);
+                }
+                photoHeightStr = builder.toString();
 
 
-            System.out.println("THE PHOTO REFERENCE IS: "+ photoReference);
-            System.out.println("THE PHOTO WIDTH IS: "+ photoWidth);
-            System.out.println("THE PHOTO HEIGHT IS: "+ photoHeight);
-            String lastPhotoWidthStr="";
-            String lastPhotoHeightStr="";
-            for (char c:photoWidth)
-            {
-                    lastPhotoWidthStr=lastPhotoWidthStr+c;
-            }
-            for (char c:photoHeight)
-            {
-                lastPhotoHeightStr=lastPhotoHeightStr+c;
-            }
+                System.out.println("THE PHOTO REFERENCE IS: " + photoReference);
+                System.out.println("THE PHOTO WIDTH IS: " + photoWidth);
+                System.out.println("THE PHOTO HEIGHT IS: " + photoHeight);
+                String lastPhotoWidthStr = "";
+                String lastPhotoHeightStr = "";
+                for (char c : photoWidth) {
+                    lastPhotoWidthStr = lastPhotoWidthStr + c;
+                }
+                for (char c : photoHeight) {
+                    lastPhotoHeightStr = lastPhotoHeightStr + c;
+                }
 
-            String photoFullStr="https://maps.googleapis.com/maps/api/place/photo?photoreference="+photoReferenceStr+"&sensor=false&maxheight="+lastPhotoHeightStr +"&maxwidth="+lastPhotoWidthStr+"&key="+"AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
-            System.out.println("THE PHOTO STRING IS: "+photoFullStr);
-            Image singleStoreImage=null;
-            try {
-                URL photoUrl=new URL(photoFullStr);
-                singleStoreImage= ImageIO.read(photoUrl);
+                String photoFullStr = "https://maps.googleapis.com/maps/api/place/photo?photoreference=" + photoReferenceStr + "&sensor=false&maxheight=" + lastPhotoHeightStr + "&maxwidth=" + lastPhotoWidthStr + "&key=" + "AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
+                System.out.println("THE PHOTO STRING IS: " + photoFullStr);
+                Image singleStoreImage = new ImageIcon("src/resources/BackgroundImages/colosseum.png").getImage();
+                try {
+                    URL photoUrl = new URL(photoFullStr);
+                    singleStoreImage = ImageIO.read(photoUrl.openStream());
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
 
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return singleStoreImage;
             }
-            return singleStoreImage;
         }
         return null;
     }
