@@ -1,19 +1,24 @@
 package Panels.Map;
 
 
-import Main.Initialize;
 import Panels.TestPanels.TestBackgroundPanel;
 import Repository.ConnectToCityGuideDB;
 import Repository.ConnectToDatabase;
 import com.mongodb.client.DistinctIterable;
-import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.geojson.Position;
+import com.mongodb.client.model.Field;
+import com.mongodb.client.model.Projections;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
+import com.mongodb.client.model.Sorts;
+
+import static com.mongodb.client.model.Filters.all;
+import static com.mongodb.client.model.Filters.eq;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,13 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.web.WebView;
 import org.bson.Document;
-
-import javax.swing.*;
+import org.bson.conversions.Bson;
 
 /*import com.sun.javafx.application.PlatformImpl;
 import javafx.application.Platform;
@@ -37,13 +37,9 @@ import javafx.scene.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;*/
 
-import java.awt.*;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class TestMapPanel extends JPanel {
@@ -56,6 +52,8 @@ public class TestMapPanel extends JPanel {
     private MongoDatabase database;
 
     private ConnectToCityGuideDB connectToDB;
+
+
 
 
     public TestMapPanel()
@@ -82,7 +80,7 @@ public class TestMapPanel extends JPanel {
                 // if user type some keyword to search
                 if (searchTextField.getText().length() > 0){
                     // then get locations from db
-                    List<POI> locations = getDBData(searchTextField.getText());
+                    List<POI> locations = getDBNameData(searchTextField.getText());
 
                     // convert locations to formatted string
                     String str_locations = convertLocationToString(locations);
@@ -217,23 +215,33 @@ public class TestMapPanel extends JPanel {
     private List<POI> getDBData(String key)
     {
         database= ConnectToDatabase.mainDatabase;
-        MongoCollection<Document> collection = database.getCollection(key);
+        MongoCollection<Document> collection = database.getCollection(getName());
         DistinctIterable<Document> geo = collection.distinct("geometry.location", Document.class);
+        Bson projection = Projections.fields(Projections.include("name","geometry.location.lat","geometry.location.lng"));
         List<Document> geo_results = new ArrayList<>();
+        List<Document> name_results = new ArrayList<>();
         geo.into(geo_results);
+
         // List<Point> locations = new ArrayList<>();
         List<POI> locations = new ArrayList<>();
-        for (int i = 0; i < geo_results.size(); i++) {
-            Double lat  = (Double)geo_results.get(i).get("lat");
-            Double lng = (Double)geo_results.get(i).get("lng");
-            // locations.add(new Point(null, new Position(lat, lng)));
-            locations.add(new POI(lat, lng));
+        int i;
+        for (i = 0; i < geo_results.size(); i++) {
+
+            if(key.trim().contentEquals((CharSequence) projection.toBsonDocument())){
+
+            }
+                Double lat  = (Double)geo_results.get(i).get("lat");
+                Double lng = (Double)geo_results.get(i).get("lng");
+                // locations.add(new Point(null, new Position(lat, lng)));
+                locations.add(new POI(lat, lng));
         }
-        //names.into(names_results);
+
+
         /*List<POI> locations = new ArrayList<>();
         for(int i = 0; i < geo_results.size(); i++)
         {
-            String name = (String)names_results.get(i).get("name");
+            if(searchTextField.getText().contentEquals())
+
             Double lat  = (Double)geo_results.get(i).get("lat");
             Double lng = (Double)geo_results.get(i).get("lng");
             locations.add(new POI(name, lat, lng));
@@ -244,8 +252,35 @@ public class TestMapPanel extends JPanel {
         }*/
 
         //System.out.println(results);
+
+
         return locations;
     }
+
+    private List<POI> getDBNameData(String key) {
+        database = ConnectToDatabase.mainDatabase;
+        MongoCollection<Document> collection = database.getCollection("casino");
+        Bson projectionFields = Projections.fields(Projections.include("name", "geometry.location.lat", "geometry.location.lng"), Projections.excludeId());
+        Bson projectionFieldsLat = Projections.fields(Projections.include("geometry.location.lat"), Projections.excludeId());
+        Bson projectionFieldsLng = Projections.fields(Projections.include("geometry.location.lng"), Projections.excludeId());
+        Document doc = collection.find(eq("name", key)).projection(projectionFields).first();
+        Document latitude = collection.find().projection(projectionFieldsLat).first();
+        Document longitude = collection.find().projection(projectionFieldsLng).first();
+
+        if (doc == null) {
+            System.out.println("No results found.");
+        } else {
+            System.out.println("found lat lng " + doc.toJson());
+            System.out.println("lat " + latitude.toJson());
+            System.out.println("lng " + longitude.toJson());
+        }
+        List<POI> locations = new ArrayList<>();
+        Double lat = (Double) latitude.get("lat");
+        Double lng = (Double) longitude.get("lng");
+        locations.add(new POI(lat, lng));
+        return locations;
+    }
+
 
     private void LoadMap()
     {
