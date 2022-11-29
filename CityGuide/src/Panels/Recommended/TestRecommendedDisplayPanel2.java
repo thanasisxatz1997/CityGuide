@@ -105,6 +105,7 @@ public class TestRecommendedDisplayPanel2 extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 StoreDetailsFrame storeDetailsFrame=new StoreDetailsFrame();
+                storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetDoc(finalStoreDoc);
                 storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetComponentsDetails(finalStoreDoc.get("name").toString(),(double)finalStoreDoc.get("rating"),(int)finalStoreDoc.get("user_ratings_total"),"");
             }

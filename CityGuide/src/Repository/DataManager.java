@@ -6,6 +6,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -34,84 +36,62 @@ public class DataManager {
     }
 
 
-    public static void AddStoreToFavourites()
+    public static void AddStoreToFavourites(Document doc)
     {
-        MongoCollection collection=database.getCollection("Users");
-        Document doc=new Document();
-        doc.append("name","reppas");
-        collection.insertOne(doc);
-    }
-
-    public static boolean StoreExistsInFavourites(String storeName)
-    {
-        MongoCollection userCollection=database.getCollection("Users");
-
+        MongoCollection collection=database.getCollection("Favourites");
         if(UserExistsInFavourites())
         {
-            System.out.println("User Exists.");
-            System.out.println("current user name!!!!!!!!: "+ CurrentUser.userName);
-            try {
-                //Document result= (Document) DbCollection.find(new Document("name",name)).first();
-                //return result.get("email").toString();
-
-                Document doc = (Document) userCollection.find(new Document("name",CurrentUser.userName)).first();
-                if (doc==null)
-                {
-                    System.out.println("null doc");
-                }
-                else
-                {
-                    System.out.println("not null doc");
-                }
-                String tempName = doc.get("name").toString();
-                System.out.println("Tempname= " + tempName);
-
-                //ArrayList<Objects> storeDocList = new ArrayList<>();
-                //storeDocList.addAll((Collection<? extends Objects>) doc.get("favourites"));
-                //System.out.println("Stores List is: "+storeDocList);
-
-                //List<Document> storeDocList;
-                //storeDocList.addAll((List<Document>) doc.get("favourites"));
-                //System.out.println("Stores List is: "+storeDocList);
-
-                /*if(storeDocList==null)
-                {
-                    System.out.println("Stores null");
-                }
-                else
-                {
-                    System.out.println("Stores not null");
-                }*/
-                //for (Document d: storeDocList) {
-                    //System.out.println("One doc: "+d);
-                //}
-                //objectArr.add(doc.getList("favourites",Object.class));
-                //for (Object obj:objectArr) {
-                //    System.out.println("object: "+obj);
-                //}
-            }
-            catch(Exception e)
+            if(!StoreExistsInFavourites(doc.get("place_id").toString()))
             {
+                collection.findOneAndUpdate(Filters.eq("name",CurrentUser.userName),Updates.push("stores",doc));
+                System.out.println("Doc added to favourites under name: "+CurrentUser.userName);
+            }
+            else
+            {
+                System.out.println("Store Already in favourites!");
             }
         }
-        else {
-            System.out.println("User does not exist.");
+        else
+        {
+            AddUserToFavourites();
+            AddStoreToFavourites(doc);
         }
+    }
 
+    public static void AddUserToFavourites()
+    {
+        MongoCollection collection=database.getCollection("Favourites");
+        Document doc=new Document();
+        doc.append("name",CurrentUser.userName);
+        collection.insertOne(doc);
+        ArrayList<String> emptyList =new ArrayList<>();
+        collection.findOneAndUpdate(Filters.eq("name",CurrentUser.userName), Updates.pushEach("stores",emptyList));
+    }
+
+    public static boolean StoreExistsInFavourites(String storeId)
+    {
+        MongoCollection collection=database.getCollection("Favourites");
+        Document doc= (Document) collection.find(Filters.eq("name",CurrentUser.userName)).first();
+        ArrayList<Document> storeDocs;
+        storeDocs= (ArrayList<Document>) doc.getList("stores",Document.class);
+        for(int i=0;i<storeDocs.size();i++)
+        {
+            if (storeDocs.get(i).get("place_id").equals(storeId))
+            {
+                return true;
+            }
+        }
         return false;
     }
 
     public static boolean UserExistsInFavourites()
     {
-        MongoCollection userCollection=database.getCollection("User");
-        String userName=CurrentUser.userName;
-        if(userCollection.find(new Document("name",userName)).first()==null)
+        MongoCollection coll=database.getCollection("Favourites");
+        if(coll.find(new Document("name",CurrentUser.userName)).first()!=null)
         {
-            return false;
-        }
-        else {
             return true;
         }
+        return false;
     }
 
     public static Document GetRandomRecommendedStore()
@@ -162,6 +142,15 @@ public class DataManager {
         System.out.println("The Random store is: "+storeDoc);
 
         return storeDoc;
+    }
+
+    public static ArrayList<Document> GetFavouriteStores()
+    {
+        ArrayList<Document> storeList;
+        MongoCollection collection=database.getCollection("Favourites");
+        Document doc= (Document) collection.find(Filters.eq("name",CurrentUser.userName)).first();
+        storeList= (ArrayList<Document>) doc.getList("stores",Document.class);
+        return storeList;
     }
 
     public static Image GetRandomStoreImage(Document doc)

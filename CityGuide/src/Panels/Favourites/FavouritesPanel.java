@@ -26,7 +26,7 @@ public class FavouritesPanel extends JPanel {
         favouritesFilterPanel.SetConnectedFavouritesDisplayPanel(favouritesDisplayPanel);
 
         favouritesDisplayScrollPane=new JScrollPane(favouritesDisplayPanel);
-        favouritesDisplayScrollPane.setPreferredSize(new Dimension(285,100));
+        favouritesDisplayScrollPane.setPreferredSize(new Dimension(550,100));
         favouritesDisplayScrollPane.setHorizontalScrollBar(null);
         favouritesDisplayScrollPane.setVisible(true);
 

@@ -1,13 +1,20 @@
 package Panels.Stores.StoreDetails;
 
+import Repository.CurrentUser;
+import Repository.DataManager;
+import org.bson.Document;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class StoreDetailsDisplayPanel extends JPanel {
+    private Document storeDoc;
     private JLabel nameLabel;
     private JLabel ratingLabel;
     private JButton saveButton;
@@ -28,6 +35,7 @@ public class StoreDetailsDisplayPanel extends JPanel {
         customSmallFont=LoadSmallFontWithSize(14);
         GridBagConstraints c=new GridBagConstraints();
         AddComponents(c);
+        LoadListeners();
         this.revalidate();
         this.repaint();
         this.setVisible(true);
@@ -75,6 +83,24 @@ public class StoreDetailsDisplayPanel extends JPanel {
         c.gridheight=3;
         this.add(commentsScrollPane,c);
     }
+
+    private void LoadListeners()
+    {
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(CurrentUser.IsLoggedIn())
+                {
+                    DataManager.AddStoreToFavourites(storeDoc);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Please log in for more features!","Not Logged In!",JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
+    }
     public void SetComponentsDetails(String storeName,double ratingsScore,int ratingsCount,String website)
     {
         this.nameLabel.setText(storeName);
@@ -108,6 +134,11 @@ public class StoreDetailsDisplayPanel extends JPanel {
             throw new RuntimeException(e);
         }
         return customFont;
+    }
+
+    public void SetDoc(Document doc)
+    {
+        this.storeDoc=doc;
     }
 
     protected void paintComponent(Graphics g) {

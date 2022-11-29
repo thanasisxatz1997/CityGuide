@@ -58,7 +58,34 @@ public class Filtering {
 
     public static boolean CheckSearchedFilters(String filterStr)
     {
-        if(filterStr.equals("Restaurants")||filterStr.equals("Cafes")||filterStr.equals("restaurant")||filterStr.equals("cafe"))
+        ArrayList<String> availableTypes=new ArrayList<String>();
+        availableTypes.add("restaurant");
+        availableTypes.add("cafe");
+        availableTypes.add("casino");
+        availableTypes.add("bakery");
+        availableTypes.add("library");
+        availableTypes.add("movie_theater");
+        availableTypes.add("park");
+        availableTypes.add("spa");
+        availableTypes.add("shopping_mall");
+        availableTypes.add("stadium");
+        availableTypes.add("theatres");
+        availableTypes.add("activities");
+        availableTypes.add("bus_station");
+        availableTypes.add("airport");
+        availableTypes.add("activities");
+        availableTypes.add("random_stores");
+        availableTypes.add("night_club");
+        availableTypes.add("hospital");
+        availableTypes.add("church");
+        availableTypes.add("art_gallery");
+        availableTypes.add("subway_station");
+        availableTypes.add("zoo");
+        availableTypes.add("taxi_stand");
+        availableTypes.add("transit_station");
+        availableTypes.add("museum");
+        availableTypes.add("tourist_attraction");
+        if(availableTypes.contains(filterStr))
         {
             return true;
         }
