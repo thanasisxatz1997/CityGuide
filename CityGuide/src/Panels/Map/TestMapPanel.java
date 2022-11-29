@@ -9,6 +9,7 @@ import com.mongodb.client.DistinctIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Field;
 import com.mongodb.client.model.geojson.Position;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -46,6 +47,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Sorts;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Aggregates.*;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Projections.computed;
+import static java.util.Arrays.*;
+import static com.mongodb.client.model.Projections.include;
+
 public class TestMapPanel extends JPanel {
     public  JFXPanel fxPanel;
     public WebView webView;
@@ -81,8 +97,11 @@ public class TestMapPanel extends JPanel {
 
                 // if user type some keyword to search
                 if (searchTextField.getText().length() > 0){
+                    // search for a single store
+                    List<POI> locations = getDBNameData(searchTextField.getText());
+
                     // then get locations from db
-                    List<POI> locations = getDBData(searchTextField.getText());
+                    //List<POI> locations = getDBData(searchTextField.getText());
 
                     // convert locations to formatted string
                     String str_locations = convertLocationToString(locations);
@@ -96,6 +115,7 @@ public class TestMapPanel extends JPanel {
                     }
 
                 }
+
             }
         });
         c.anchor=GridBagConstraints.LINE_END;
@@ -246,6 +266,33 @@ public class TestMapPanel extends JPanel {
         //System.out.println(results);
         return locations;
     }
+    private List<POI> getDBNameData(String key) {
+        database = ConnectToDatabase.mainDatabase;
+        MongoCollection<Document> collection = database.getCollection("cafe");
+        Bson projectionFields = Projections.fields(Projections.include("name", "geometry.location.lat", "geometry.location.lng"), Projections.excludeId());
+        Bson projectionFieldsLat = Projections.fields(Projections.include("geometry.location.lat"), Projections.excludeId());
+        Bson projectionFieldsLng = Projections.fields(Projections.include("geometry.location.lng"), Projections.excludeId());
+        Document doc = collection.find(eq("name", key)).projection(projectionFields).first();
+        Document latitude = collection.find().projection(projectionFieldsLat).first();
+        Document longitude = collection.find().projection(projectionFieldsLng).first();
+
+        if (doc == null) {
+            System.out.println("No results found.");
+        } else {
+            System.out.println("found lat lng " + doc.toJson());
+            System.out.println("lat " + latitude.toJson());
+            System.out.println("lng " + longitude.toJson());
+        }
+
+        List<POI> locations = new ArrayList<>();
+        Double lat = collection.distinct("geometry.location.lat", eq("name",key), Double.class).first();
+        System.out.println("get lat " + lat);
+        Double lng = collection.distinct("geometry.location.lng", eq("name",key), Double.class).first();
+        System.out.println("get lng " + lng);
+        locations.add(new POI(lat, lng));
+        return locations;
+    }
+
 
     private void LoadMap()
     {
