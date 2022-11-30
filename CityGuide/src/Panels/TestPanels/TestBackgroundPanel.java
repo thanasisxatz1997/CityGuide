@@ -1,13 +1,7 @@
 package Panels.TestPanels;
 
-import Panels.Activities.ActivitiesDisplayPanel;
 import Panels.Favourites.FavouritesPanel;
-import Panels.Home.HomeHintsPanel;
-import Panels.Map.TestMapPanel;
-import Panels.Recommended.RecommendedPanel;
 import Panels.Stores.StoresPanel;
-import Panels.Tips.TipsPanel;
-import Panels.User.UserPanel;
 import Repository.ImageResizer;
 
 import javax.swing.*;
@@ -114,20 +108,6 @@ public class TestBackgroundPanel extends JPanel {
         this.revalidate();
     }
 
-    public void AddTipsPanel()
-    {
-        this.removeAll();
-        this.add(new TipsPanel());
-        this.repaint();
-        this.revalidate();
-    }
-    public void AddActivitiesPanel()
-    {
-        this.removeAll();
-        this.add(new ActivitiesDisplayPanel());
-        this.repaint();
-        this.revalidate();
-    }
     /*@Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g);

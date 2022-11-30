@@ -34,17 +34,10 @@ public class DataManager {
     }
 
 
-    public static void AddStoreToFavourites()
-    {
-        MongoCollection collection=database.getCollection("Users");
-        Document doc=new Document();
-        doc.append("name","reppas");
-        collection.insertOne(doc);
-    }
-
     public static boolean StoreExistsInFavourites(String storeName)
     {
-        MongoCollection userCollection=database.getCollection("Users");
+        MongoCollection storeCollection=database.getCollection("Stores");
+        MongoCollection userCollection=database.getCollection("User");
 
         if(UserExistsInFavourites())
         {
@@ -117,31 +110,6 @@ public class DataManager {
     public static Document GetRandomRecommendedStore()
     {
         MongoCollection recommendedStoreCollection= database.getCollection("Recomended");
-        Document storeDoc;
-
-        ArrayList<String> storeNameList= new ArrayList<>();
-
-        FindIterable<Document> iterDoc = recommendedStoreCollection.find();
-        Iterator it = iterDoc.iterator();
-        int count=0;
-        while (it.hasNext()) {
-            count++;
-            Document nextDoc= (Document)it.next();
-            storeNameList.add(nextDoc.get("name").toString());
-        }
-        System.out.println(storeNameList);
-        System.out.println("NUMBER OF DOCS IS: "+storeNameList.size());
-        int randomNum= (int) Math.floor(Math.random()*(storeNameList.size()-1-1+1)+1);
-        String randomStoreName= storeNameList.get(randomNum);
-        storeDoc= (Document) recommendedStoreCollection.find(new Document("name",randomStoreName)).first();
-        System.out.println("The Random store is: "+storeDoc);
-
-        return storeDoc;
-    }
-
-    public static Document GetRandomRecommendedStoreTest()
-    {
-        MongoCollection recommendedStoreCollection= database.getCollection("recommended_stores");
         Document storeDoc;
 
         ArrayList<String> storeNameList= new ArrayList<>();

@@ -2,10 +2,6 @@ package Panels.Favourites;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import static Repository.DataManager.AddStoreToFavourites;
 
 public class FavouritesFilterPanel extends JPanel {
     public FavouritesDisplayPanel connectedFavouritesDisplayPanel;
@@ -58,11 +54,6 @@ public class FavouritesFilterPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 0;
         this.add(applyFiltersButton, c);
-        applyFiltersButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
     }
 
     private void LoadSearchTextField (GridBagConstraints c)
