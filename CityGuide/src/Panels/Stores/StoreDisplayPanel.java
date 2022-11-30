@@ -107,7 +107,6 @@ public class StoreDisplayPanel extends JPanel {
             testRectButton.setMaximumSize(new Dimension(250,180));
             this.add(testRectButton);
             CreateButtonListener(testRectButton,doc,testRectButton.backgroundImage);
-
         }
 
         /*for (StoresSinglePanel singlePanel : singleStorePanelList) {
@@ -134,6 +133,7 @@ public class StoreDisplayPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 StoreDetailsFrame storeDetailsFrame=new StoreDetailsFrame();
                 storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
+                storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetDoc(finalStoreDoc);
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetComponentsDetails(finalStoreDoc.get("name").toString(),(double)finalStoreDoc.get("rating"),(int)finalStoreDoc.get("user_ratings_total"),"");
             }
         });
