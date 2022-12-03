@@ -68,8 +68,11 @@ public class TestMapPanel extends JPanel {
     private JPanel mapDisplayPanel;
     private Image backgroundImage;
     private JButton searchButton;
+    private JButton searchButton2;
     private JTextField searchTextField;
+    private JTextField searchTextField2;
     private MongoDatabase database;
+    private JComboBox cmBox;
 
     private ConnectToCityGuideDB connectToDB;
 
@@ -98,17 +101,23 @@ public class TestMapPanel extends JPanel {
                 // if user type some keyword to search
                 if (searchTextField.getText().length() > 0){
                     // search for a single store
-                    List<POI> locations = getDBNameData(searchTextField.getText());
+                    //List<POI> singlelocation = getDBNameData(searchTextField.getText());
 
                     // then get locations from db
-                    //List<POI> locations = getDBData(searchTextField.getText());
+                    List<POI> locations = getDBData(searchTextField.getText());
 
                     // convert locations to formatted string
+                    //String str_singlelocation = convertLocationToString(singlelocation);
                     String str_locations = convertLocationToString(locations);
 
                     // write locations to html file
                     try {
                         writeToHtml(str_locations);
+//                        if (searchTextField.getText().length() > 0){
+//                            writeToHtml(str_singlelocation);
+//                        } else {
+//                            writeToHtml(str_locations);
+//                        }
 
                     } catch (IOException eio) {
                         eio.printStackTrace();
@@ -125,7 +134,74 @@ public class TestMapPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridy=0;
         c.gridx=0;
+
         this.add(searchButton,c);
+
+        // searchButton2 for single store search
+        searchButton2=new JButton("");
+        searchButton2.setIcon(new ImageIcon("src/resources/Icons/searchIcon.png"));
+        // add listener to button to handle the click event
+        searchButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // if user type some keyword to search
+                if (searchTextField2.getText().length() > 0){
+                    // search for a single store
+                    List<POI> singlelocation = getDBNameData(searchTextField2.getText(),searchTextField.getText());
+
+                    // then get locations from db
+                    //List<POI> locations = getDBData(searchTextField.getText());
+
+                    // convert locations to formatted string
+                    String str_singlelocation = convertLocationToString(singlelocation);
+                    //String str_locations = convertLocationToString(locations);
+
+                    // write locations to html file
+                    try {
+                        writeToHtml(str_singlelocation);
+//                        if (searchTextField2.getText().length() > 0){
+//                            writeToHtml(str_singlelocation);
+//                        } else {
+//                            writeToHtml(str_locations);
+//                        }
+
+                    } catch (IOException eio) {
+                        eio.printStackTrace();
+                    }
+
+                }
+
+            }
+        });
+        c.anchor=GridBagConstraints.LINE_END;
+        c.weightx=0.1;
+        c.insets=new Insets(0,100,0,0);
+        c.gridwidth=1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridy=1;
+        c.gridx=0;
+
+        this.add(searchButton2,c);
+
+//        String[] valString = {"cafe","casino"};
+//        cmBox=new JComboBox(valString);
+//        c.anchor=GridBagConstraints.LINE_START;
+//        c.insets=new Insets(50,0,0,0);
+//        c.weightx=0.1;
+//        c.fill = GridBagConstraints.HORIZONTAL;
+//        c.gridwidth=1;
+//        c.gridy=0;
+//        c.gridx=1;
+//        cmBox.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String data = (String) cmBox.getItemAt(cmBox.getSelectedIndex());
+//                //label.setText(data);
+//
+//            }
+//        });
+//        this.add(cmBox,c);
 
         searchTextField=new JTextField();
         c.anchor=GridBagConstraints.LINE_START;
@@ -138,6 +214,19 @@ public class TestMapPanel extends JPanel {
         c.gridx=1;
 
         this.add(searchTextField,c);
+
+        // searchTextField2  for single store
+        searchTextField2=new JTextField();
+        c.anchor=GridBagConstraints.LINE_START;
+        c.insets=new Insets(0,0,0,100);
+        c.weightx=0.9;
+        c.ipady=10;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth=2;
+        c.gridy=1;
+        c.gridx=1;
+
+        this.add(searchTextField2,c);
 
         mapDisplayPanel=new JPanel();
         mapDisplayPanel.setPreferredSize(new Dimension(550,390));
@@ -154,7 +243,7 @@ public class TestMapPanel extends JPanel {
         c.gridheight=3;
         c.ipady=600;
         c.gridx=0;
-        c.gridy=1;
+        c.gridy=3;
         this.add(mapDisplayPanel,c);
 
         // connect to database
@@ -266,9 +355,10 @@ public class TestMapPanel extends JPanel {
         //System.out.println(results);
         return locations;
     }
-    private List<POI> getDBNameData(String key) {
+    private List<POI> getDBNameData(String key,  String key2) {
         database = ConnectToDatabase.mainDatabase;
-        MongoCollection<Document> collection = database.getCollection("cafe");
+        MongoCollection<Document> collection = database.getCollection(key2);
+        //MongoCollection<Document> collectioncasino = database.getCollection("casino");
         Bson projectionFields = Projections.fields(Projections.include("name", "geometry.location.lat", "geometry.location.lng"), Projections.excludeId());
         Bson projectionFieldsLat = Projections.fields(Projections.include("geometry.location.lat"), Projections.excludeId());
         Bson projectionFieldsLng = Projections.fields(Projections.include("geometry.location.lng"), Projections.excludeId());
@@ -276,21 +366,21 @@ public class TestMapPanel extends JPanel {
         Document latitude = collection.find().projection(projectionFieldsLat).first();
         Document longitude = collection.find().projection(projectionFieldsLng).first();
 
-        if (doc == null) {
+        List<POI> singlelocation = new ArrayList<>();
+        Double lat = collection.distinct("geometry.location.lat", eq("name",key), Double.class).first();
+        Double lng = collection.distinct("geometry.location.lng", eq("name",key), Double.class).first();
+
+        singlelocation.add(new POI(lat, lng));
+
+        if (doc == null || lat == null || lng == null) {
             System.out.println("No results found.");
         } else {
             System.out.println("found lat lng " + doc.toJson());
-            System.out.println("lat " + latitude.toJson());
-            System.out.println("lng " + longitude.toJson());
+            System.out.println("get lat " + lat);
+            System.out.println("get lng " + lng);
         }
 
-        List<POI> locations = new ArrayList<>();
-        Double lat = collection.distinct("geometry.location.lat", eq("name",key), Double.class).first();
-        System.out.println("get lat " + lat);
-        Double lng = collection.distinct("geometry.location.lng", eq("name",key), Double.class).first();
-        System.out.println("get lng " + lng);
-        locations.add(new POI(lat, lng));
-        return locations;
+        return singlelocation;
     }
 
 
