@@ -2,7 +2,6 @@ package Panels.TestPanels;
 
 import Forms.MainForm;
 import Forms.TestMainForm;
-import Repository.MapHandler;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -10,10 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,57 +22,50 @@ public class TestButtonPanel extends JPanel {
     private JButton recommendedButton;
     private JButton userButton;
     private JButton exitButton;
-    private JButton activitiesButton;
-
-
-    private JButton tipsButton;
     private Dimension buttonDimension;
     private ApplicationButtonPanel applicationButtonPanel;
-
-    public TestButtonPanel() {
+    public TestButtonPanel()
+    {
         LoadPanel();
     }
 
-    private void LoadPanel() {
-        this.setPreferredSize(new Dimension(150, 600));
-        this.setMaximumSize(new Dimension(150, 600));
-        this.setMinimumSize(new Dimension(150, 600));
-        this.setBackground(new Color(108, 139, 218));
+    private void LoadPanel()
+    {
+        this.setPreferredSize(new Dimension(150,600));
+        this.setMaximumSize(new Dimension(150,600));
+        this.setMinimumSize(new Dimension(150,600));
+        this.setBackground(new Color(108,139,218));
 
-        buttonDimension = new Dimension(150, 66);
+        buttonDimension=new Dimension(150,66);
 
         this.setBorder(BorderFactory.createRaisedBevelBorder());
-        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+        BoxLayout boxLayout=new BoxLayout(this,BoxLayout.Y_AXIS);
         this.setLayout(boxLayout);
 
-        homeButton = new JButton();
-        storeButton = new JButton();
-        favoritesButton = new JButton();
-        mapButton = new JButton();
-        recommendedButton = new JButton();
-        userButton = new JButton();
-        exitButton = new JButton();
-        tipsButton = new JButton();
-        activitiesButton = new JButton();
+        homeButton=new JButton();
+        storeButton=new JButton();
+        favoritesButton=new JButton();
+        mapButton=new JButton();
+        recommendedButton=new JButton();
+        userButton=new JButton();
+        exitButton=new JButton();
 
-
-        LoadButtons(homeButton, "Home", "src/resources/ButtonIcons/HomeIcon.png");
-        LoadButtons(storeButton, "Stores", "src/resources/ButtonIcons/storeIcon32px.png");
-        LoadButtons(activitiesButton, "ACTIVITIES", "src/resources/ButtonIcons/attractions32px.png");
-        LoadButtons(favoritesButton, "Favorites", "src/resources/ButtonIcons/favoritesIcon32px.png");
-        LoadButtons(mapButton, "Map", "src/resources/ButtonIcons/mapIcon32px.png");
-        LoadButtons(recommendedButton, "Recommended", "src/resources/Icons/recomendedIcon.png");
+        LoadButtons(homeButton,"Home","src/resources/ButtonIcons/HomeIcon.png");
+        LoadButtons(storeButton,"Stores","src/resources/ButtonIcons/storeIcon32px.png");
+        LoadButtons(favoritesButton,"Favorites","src/resources/ButtonIcons/favoritesIcon32px.png");
+        LoadButtons(mapButton,"Map","src/resources/ButtonIcons/mapIcon32px.png");
+        LoadButtons(recommendedButton,"Recommended","src/resources/Icons/recomendedIcon.png");
         recommendedButton.setFont(LoadFontWithFontSize(12));
-
-        LoadButtons(tipsButton, "TIPS", "src/resources/ButtonIcons/TipsIcon.png");
-        LoadButtons(userButton, "USER", "src/resources/ButtonIcons/userIcon32px.png");
-        LoadButtons(exitButton, "EXIT", "src/resources/ButtonIcons/exitIcon32px.png");
-
+        LoadButtons(new JButton(),"","");
+        LoadButtons(new JButton(),"","");
+        LoadButtons(userButton,"USER","src/resources/ButtonIcons/userIcon32px.png");
+        LoadButtons(exitButton,"EXIT","src/resources/ButtonIcons/exitIcon32px.png");
         AddButtonListeners();
         this.setVisible(true);
     }
 
-    private void LoadButtons(JButton button, String buttonText, String IconPath) {
+    private void LoadButtons(JButton button,String buttonText,String IconPath)
+    {
         button.setText(buttonText);
         button.setIcon(new ImageIcon(IconPath));
         button.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -88,9 +77,9 @@ public class TestButtonPanel extends JPanel {
         Font buttonFont;
         button.setBackground(new Color(208, 184, 168));
         try {
-            InputStream myStream = new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
-            Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
-            buttonFont = ttfBase.deriveFont(Font.BOLD, 16);
+           InputStream myStream= new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
+           Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
+           buttonFont = ttfBase.deriveFont(Font.BOLD,16);
         } catch (FontFormatException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -100,12 +89,13 @@ public class TestButtonPanel extends JPanel {
         this.add(button);
     }
 
-    private Font LoadFontWithFontSize(int fontSize) {
+    private Font LoadFontWithFontSize(int fontSize)
+    {
         Font customFont;
         try {
-            InputStream myStream = new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
+            InputStream myStream= new BufferedInputStream(new FileInputStream("src/resources/Fonts/Roman SD.ttf"));
             Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, myStream);
-            customFont = ttfBase.deriveFont(Font.BOLD, fontSize);
+            customFont = ttfBase.deriveFont(Font.BOLD,fontSize);
         } catch (FontFormatException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -114,14 +104,16 @@ public class TestButtonPanel extends JPanel {
         return customFont;
     }
 
-    private void SetButtonSize(JButton button) {
+    private void SetButtonSize(JButton button)
+    {
         button.setPreferredSize(buttonDimension);
         button.setMinimumSize(buttonDimension);
         button.setMaximumSize(buttonDimension);
         button.setSize(buttonDimension);
     }
 
-    private void AddButtonListeners() {
+    private void AddButtonListeners()
+    {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,7 +142,6 @@ public class TestButtonPanel extends JPanel {
         mapButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MapHandler.ClearMapData();
                 TestMainForm.mainPanel.backgroundPanel.AddMapPanel();
             }
         });
@@ -163,13 +154,12 @@ public class TestButtonPanel extends JPanel {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MapHandler.ClearMapData();
-                ArrayList<Frame> frameArrayList = new ArrayList<>();
+                clearMapData();
+                ArrayList<Frame> frameArrayList=new ArrayList<>();
                 frameArrayList.addAll(List.of(Frame.getFrames()));
-                for (Frame f : frameArrayList) {
+                for (Frame f:frameArrayList) {
                     f.dispose();
                 }
-                System.exit(0);
             }
         });
         userButton.addActionListener(new ActionListener() {
@@ -178,19 +168,65 @@ public class TestButtonPanel extends JPanel {
                 TestMainForm.mainPanel.backgroundPanel.AddUserPanel();
             }
         });
-        tipsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TestMainForm.mainPanel.backgroundPanel.AddTipsPanel();
-            }
-        });
-        activitiesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TestMainForm.mainPanel.backgroundPanel.AddActivitiesPanel();
-            }
-        });
-
-
     }
+
+    private void clearMapData()
+    {
+        String prefix = "<!DOCTYPE html>\n" +
+                "<html><body style=\"padding:0; margin:0;\">\n" +
+                "\n" +
+                "<div id=\"googleMap\" style=\"width:100%;height:390px; position=relative; left:0px; top:0px; padding:0; margin:0;\" ></div>\n" +
+                "\n" +
+                "<script>\n" +
+                "function myMap() {\n" +
+                "\n" +
+                "var locations = [";
+
+        String postfix = "];\n" +
+                "\n" +
+                "var mapProp= {\n" +
+                "  center:new google.maps.LatLng(41.90,12.49),\n" +
+                "  zoom:10,\n" +
+                "};\n" +
+                "\n" +
+                "var map = new google.maps.Map(document.getElementById(\"googleMap\"),mapProp);\n" +
+                "var infowindow = new google.maps.InfoWindow();\n" +
+                "var marker, i;\n" +
+                "\n" +
+                "for (i=0; i<locations.length; i++) {\n" +
+                "    marker = new google.maps.Marker({\n" +
+                "        position: new google.maps.LatLng(locations[i][1], locations[i][2]), map: map });\n" +
+                "\n" +
+                "    google.maps.event.addListener(marker, 'click', (function(marker, i) {\n" +
+                "        return function() {\n" +
+                "            infowindow.setContent(locations[i][0]);\n" +
+                "            infowindow.open(map, marker);\n" +
+                "        }\n" +
+                "    })(marker, i));\n" +
+                "}\n" +
+                "}\n" +
+                "</script>\n" +
+                "\n" +
+                "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyArkQ61IThme_qefwNNMustbwQ3Ms9kalg&callback=myMap\"></script>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>";
+
+        String locations = "";
+        String filename = "src/Repository/HtmlFiles/mapInfo2.html";
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename, false));
+            writer.write("");
+            writer.close();
+            writer = new BufferedWriter(new FileWriter(filename, true));
+            writer.write(prefix);
+            writer.append(locations);
+            writer.append(postfix);
+
+            writer.close();
+        } catch (IOException eio){
+            eio.printStackTrace();
+        }
+    }
+
 }

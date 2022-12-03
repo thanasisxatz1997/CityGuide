@@ -62,6 +62,12 @@ public class StoreFilterPanel extends JPanel {
         applyFiltersButton.addActionListener(buttonPressed);
         applyFiltersButton.getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW).put(javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), "=ENTER_pressed");
         applyFiltersButton.getActionMap().put("=ENTER_pressed",buttonPressed);
+        applyFiltersButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                connectedStoreDisplayPanel.DisplayPanels();
+            }
+        });
     }
 
     private void LoadFilterButton(GridBagConstraints c)

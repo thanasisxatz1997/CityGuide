@@ -1,9 +1,6 @@
 package Main;
 import LogInManager.Forms.IntroPage;
-import Repository.APIinfoplaces;
-import Repository.ConnectToDatabase;
-import Repository.CurrentUser;
-import Repository.Handlers;
+import Repository.*;
 
 
 import javax.swing.*;
@@ -26,6 +23,9 @@ public class Initialize {
             System.out.println("Look  NOT Changed");
         }
         new ConnectToDatabase();
+        // connect to city guide db
+        // new ConnectToCityGuideDB();
+
         new Forms.TestMainForm();
         //new IntroPage();
         new CurrentUser();

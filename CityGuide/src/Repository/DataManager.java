@@ -6,19 +6,16 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import javax.imageio.ImageIO;
 import javax.management.Query;
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -37,63 +34,77 @@ public class DataManager {
     }
 
 
-    public static void AddStoreToFavourites(Document doc)
+    public static boolean StoreExistsInFavourites(String storeName)
     {
-        MongoCollection collection=database.getCollection("Favourites");
+        MongoCollection storeCollection=database.getCollection("Stores");
+        MongoCollection userCollection=database.getCollection("User");
+
         if(UserExistsInFavourites())
         {
-            System.out.println("THE DOC TO BE ADDED IS:  "+doc);
-            if(!StoreExistsInFavourites(doc.get("place_id").toString()))
-            {
-                collection.findOneAndUpdate(Filters.eq("name",CurrentUser.userName),Updates.push("stores",doc));
-                System.out.println("Doc added to favourites under name: "+CurrentUser.userName);
-            }
-            else
-            {
-                System.out.println("Store Already in favourites!");
-            }
-        }
-        else
-        {
-            AddUserToFavourites();
-            AddStoreToFavourites(doc);
-        }
-    }
+            System.out.println("User Exists.");
+            System.out.println("current user name!!!!!!!!: "+ CurrentUser.userName);
+            try {
+                //Document result= (Document) DbCollection.find(new Document("name",name)).first();
+                //return result.get("email").toString();
 
-    public static void AddUserToFavourites()
-    {
-        MongoCollection collection=database.getCollection("Favourites");
-        Document doc=new Document();
-        doc.append("name",CurrentUser.userName);
-        collection.insertOne(doc);
-        ArrayList<String> emptyList =new ArrayList<>();
-        collection.findOneAndUpdate(Filters.eq("name",CurrentUser.userName), Updates.pushEach("stores",emptyList));
-    }
+                Document doc = (Document) userCollection.find(new Document("name",CurrentUser.userName)).first();
+                if (doc==null)
+                {
+                    System.out.println("null doc");
+                }
+                else
+                {
+                    System.out.println("not null doc");
+                }
+                String tempName = doc.get("name").toString();
+                System.out.println("Tempname= " + tempName);
 
-    public static boolean StoreExistsInFavourites(String storeId)
-    {
-        MongoCollection collection=database.getCollection("Favourites");
-        Document doc= (Document) collection.find(Filters.eq("name",CurrentUser.userName)).first();
-        ArrayList<Document> storeDocs;
-        storeDocs= (ArrayList<Document>) doc.getList("stores",Document.class);
-        for(int i=0;i<storeDocs.size();i++)
-        {
-            if (storeDocs.get(i).get("place_id").equals(storeId))
+                //ArrayList<Objects> storeDocList = new ArrayList<>();
+                //storeDocList.addAll((Collection<? extends Objects>) doc.get("favourites"));
+                //System.out.println("Stores List is: "+storeDocList);
+
+                //List<Document> storeDocList;
+                //storeDocList.addAll((List<Document>) doc.get("favourites"));
+                //System.out.println("Stores List is: "+storeDocList);
+
+                /*if(storeDocList==null)
+                {
+                    System.out.println("Stores null");
+                }
+                else
+                {
+                    System.out.println("Stores not null");
+                }*/
+                //for (Document d: storeDocList) {
+                    //System.out.println("One doc: "+d);
+                //}
+                //objectArr.add(doc.getList("favourites",Object.class));
+                //for (Object obj:objectArr) {
+                //    System.out.println("object: "+obj);
+                //}
+            }
+            catch(Exception e)
             {
-                return true;
             }
         }
+        else {
+            System.out.println("User does not exist.");
+        }
+
         return false;
     }
 
     public static boolean UserExistsInFavourites()
     {
-        MongoCollection coll=database.getCollection("Favourites");
-        if(coll.find(new Document("name",CurrentUser.userName)).first()!=null)
+        MongoCollection userCollection=database.getCollection("User");
+        String userName=CurrentUser.userName;
+        if(userCollection.find(new Document("name",userName)).first()==null)
         {
+            return false;
+        }
+        else {
             return true;
         }
-        return false;
     }
 
     public static Document GetRandomRecommendedStore()
@@ -119,145 +130,6 @@ public class DataManager {
         System.out.println("The Random store is: "+storeDoc);
 
         return storeDoc;
-    }
-
-    public static Document GetRandomRecommendedStoreTest()
-    {
-        MongoCollection recommendedStoreCollection= database.getCollection("recommended_stores");
-        Document storeDoc;
-
-        ArrayList<String> storeNameList= new ArrayList<>();
-
-        FindIterable<Document> iterDoc = recommendedStoreCollection.find();
-        Iterator it = iterDoc.iterator();
-        int count=0;
-        while (it.hasNext()) {
-            count++;
-            Document nextDoc= (Document)it.next();
-            storeNameList.add(nextDoc.get("name").toString());
-        }
-        System.out.println(storeNameList);
-        System.out.println("NUMBER OF DOCS IS: "+storeNameList.size());
-        int randomNum= (int) Math.floor(Math.random()*(storeNameList.size()-1-1+1)+1);
-        String randomStoreName= storeNameList.get(randomNum);
-        storeDoc= (Document) recommendedStoreCollection.find(new Document("name",randomStoreName)).first();
-        System.out.println("The Random store is: "+storeDoc);
-
-        return storeDoc;
-    }
-
-    public static ArrayList<Document> GetFavouriteStores()
-    {
-        ArrayList<Document> storeList;
-        MongoCollection collection=database.getCollection("Favourites");
-        Document doc= (Document) collection.find(Filters.eq("name",CurrentUser.userName)).first();
-        storeList= (ArrayList<Document>) doc.getList("stores",Document.class);
-        return storeList;
-    }
-
-    public static Image GetActivitiesImage(Document doc)
-    {
-        Image singleStoreImage = new ImageIcon("src/resources/BackgroundImages/colosseum.png").getImage();
-        try {
-            URL photoUrl = new URL((String) doc.get("photo"));
-            singleStoreImage = ImageIO.read(photoUrl.openStream());
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return singleStoreImage;
-    }
-
-    public static Image GetStoreImage(Document doc)
-    {
-        if(doc.get("photos")!=null) {
-            final String[] photoStr = new String[1];
-            System.out.println("Doc is: " + doc);
-            photoStr[0] = doc.getList("photos", Map.class).stream().map(map -> photoStr[0] = map.toString()).collect(Collectors.toList()).toString();
-            System.out.println("Height: " + photoStr[0]);
-            System.out.println("String exists in position: " + photoStr[0].lastIndexOf("height"));
-            char[] photoCharArray = photoStr[0].toCharArray();
-            int photorefeRenceStrStart = photoStr[0].lastIndexOf("photo_reference=") + 16;
-            if (photorefeRenceStrStart != -1) {
-                System.out.println("String exists in position: " + photorefeRenceStrStart);
-                ArrayList<Character> photoReference = new ArrayList<>();
-                for (int i = photorefeRenceStrStart; photoCharArray[i] != ','; i++) {
-                    photoReference.add(photoCharArray[i]);
-                }
-                String photoReferenceStr;
-                StringBuilder builder = new StringBuilder(photoReference.size());
-                for (Character ch : photoReference) {
-                    builder.append(ch);
-                }
-                photoReferenceStr = builder.toString();
-
-                char[] photoWidthArray = photoStr[0].toCharArray();
-                int photoWidthStrStart = photoStr[0].lastIndexOf("width=") + 6;
-                ArrayList<Character> photoWidth = new ArrayList<>();
-                for (int i = photoWidthStrStart; photoWidthArray[i] != '}' && photoWidthArray[i] != ','; i++) {
-                    photoWidth.add(photoWidthArray[i]);
-                }
-                String photoWidthStr;
-                StringBuilder widthBuilder = new StringBuilder(photoWidth.size());
-                for (Character ch : photoWidth) {
-                    widthBuilder.append(ch);
-                }
-                photoWidthStr = builder.toString();
-
-
-                char[] photoHeightArray = photoStr[0].toCharArray();
-                int photoHeightStrStart = photoStr[0].lastIndexOf("height=") + 7;
-                ArrayList<Character> photoHeight = new ArrayList<>();
-                for (int i = photoHeightStrStart; photoHeightArray[i] != ',' && photoHeightArray[i] != '}'; i++) {
-                    photoHeight.add(photoHeightArray[i]);
-                }
-                String photoHeightStr;
-                StringBuilder heightBuilder = new StringBuilder(photoHeight.size());
-                for (Character ch : photoHeight) {
-                    heightBuilder.append(ch);
-                }
-                photoHeightStr = builder.toString();
-
-
-                System.out.println("THE PHOTO REFERENCE IS: " + photoReference);
-                System.out.println("THE PHOTO WIDTH IS: " + photoWidth);
-                System.out.println("THE PHOTO HEIGHT IS: " + photoHeight);
-                String lastPhotoWidthStr = "";
-                String lastPhotoHeightStr = "";
-                for (char c : photoWidth) {
-                    lastPhotoWidthStr = lastPhotoWidthStr + c;
-                }
-                for (char c : photoHeight) {
-                    lastPhotoHeightStr = lastPhotoHeightStr + c;
-                }
-
-                String photoFullStr = "https://maps.googleapis.com/maps/api/place/photo?photoreference=" + photoReferenceStr + "&sensor=false&maxheight=" + lastPhotoHeightStr + "&maxwidth=" + lastPhotoWidthStr + "&key=" + "AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
-                System.out.println("THE PHOTO STRING IS: " + photoFullStr);
-                Image singleStoreImage = new ImageIcon("src/resources/BackgroundImages/colosseum.png").getImage();
-                try {
-                    URL photoUrl = new URL(photoFullStr);
-                    singleStoreImage = ImageIO.read(photoUrl.openStream());
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                return singleStoreImage;
-            }
-        }
-        return null;
-    }
-
-    public static ArrayList<Document> GetActivities()
-    {
-        MongoCollection collection=database.getCollection("activities");
-        ArrayList<Document> results = new ArrayList<Document>();
-        FindIterable<Document> iterable = collection.find(new Document());
-        iterable.into(results);
-        return results;
     }
 
     public static Image GetRandomStoreImage(Document doc)
