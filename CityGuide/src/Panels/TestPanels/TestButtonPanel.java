@@ -2,6 +2,7 @@ package Panels.TestPanels;
 
 import Forms.MainForm;
 import Forms.TestMainForm;
+import Panels.Stores.StoreDisplayPanel;
 import Repository.MapHandler;
 
 import javax.swing.*;
@@ -135,7 +136,10 @@ public class TestButtonPanel extends JPanel {
         storeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(StoreDisplayPanel.t2!=null &&StoreDisplayPanel.t2.isAlive())
+                {
+                    StoreDisplayPanel.t2.stop();
+                }
                 TestMainForm.mainPanel.backgroundPanel.AddStorePanel();
             }
         });

@@ -83,7 +83,6 @@ public class FavouritesDisplayPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 StoreDetailsFrame storeDetailsFrame=new StoreDetailsFrame();
                 storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
-                storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetComponentsDetails(finalStoreDoc.get("name").toString(),(double)finalStoreDoc.get("rating"),(int)finalStoreDoc.get("user_ratings_total"),"");
             }
         });
     }

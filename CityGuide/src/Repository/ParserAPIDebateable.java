@@ -9,20 +9,18 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 
 public class ParserAPIDebateable {
-    public static <tempDoc> ArrayList<Document> Parse(String strToParse) {
+    public static ArrayList<Document> Parse(String strToParse) throws RuntimeException {
         JSONParser jsonParser = new JSONParser();
         ArrayList<Document> docList = new ArrayList<>();
-        ArrayList<Document> piList = new ArrayList<>();
         try {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(strToParse);
             JSONArray jsonArray = (JSONArray) jsonObject.get("results");
             System.out.println("THE STRING IS: " + strToParse);
-
-
             for (int i = 0; i < jsonArray.size(); i++) {
                 Document tempDoc = new Document();
-                Document piDoc = new Document();
                 JSONObject jsonObject1 = (JSONObject) jsonArray.get(i);
+                jsonObject1= (JSONObject) jsonObject1.get("result");
+                System.out.println("JSONOBJECT NOW IS :::::: "+jsonObject1);
 
                 //  Business Status
                 if (jsonObject1.containsKey("business_status")) {
@@ -142,19 +140,12 @@ public class ParserAPIDebateable {
                 if (jsonObject1.containsKey("website")) {
                     tempDoc.put("website", jsonObject1.get("website"));
                 }
-
-                System.out.println("DOC IS::::::::::::::::::::::::::::: "+tempDoc);
+                System.out.println("DOC HERE IS::::::::::::::::::::::::::::: "+tempDoc);
                 docList.add(tempDoc);
                 System.out.println(docList);
-
-                //System.out.println("DOC PLACES ID IS::::::::::::::::::::::::::::: " + piDoc);
-                //piList.add(piDoc);
-                //System.out.println(piList);
-
             }
             System.out.println("final: "+ docList);
             return docList;
-
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

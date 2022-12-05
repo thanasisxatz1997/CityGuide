@@ -4,6 +4,8 @@ import Repository.APIinfoplaces;
 import Repository.ConnectToDatabase;
 import Repository.CurrentUser;
 import Repository.Handlers;
+import chrriis.dj.nativeswing.NativeSwing;
+import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 
 
 import javax.swing.*;
@@ -12,6 +14,7 @@ import javax.swing.*;
 public class Initialize {
     public Initialize()
     {
+        //NativeSwing.initialize();
         Handlers.startTime=System.nanoTime();
         UIManager.LookAndFeelInfo[] looks= UIManager.getInstalledLookAndFeels();
         for (UIManager.LookAndFeelInfo look : looks) {

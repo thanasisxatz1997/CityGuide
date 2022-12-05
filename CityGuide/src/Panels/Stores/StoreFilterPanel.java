@@ -56,6 +56,10 @@ public class StoreFilterPanel extends JPanel {
         AbstractAction buttonPressed = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(StoreDisplayPanel.t2!=null && StoreDisplayPanel.t2.isAlive())
+                {
+                    StoreDisplayPanel.t2.stop();
+                }
                 connectedStoreDisplayPanel.DisplayPanels();
             }
         };

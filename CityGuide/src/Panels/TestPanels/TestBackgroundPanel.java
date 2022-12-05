@@ -3,6 +3,7 @@ package Panels.TestPanels;
 import Panels.Activities.ActivitiesPanel;
 import Panels.Favourites.FavouritesPanel;
 import Panels.Home.HomeHintsPanel;
+import Panels.Home.HomeVideoButtonPanel;
 import Panels.Map.TestMapPanel;
 import Panels.Recommended.RecommendedPanel;
 import Panels.Stores.StoresPanel;
@@ -17,8 +18,11 @@ import java.io.IOException;
 public class TestBackgroundPanel extends JPanel {
 
     private HomeHintsPanel hintsPanel;
+    private JPanel videoPanel;
     private Image backgroundImage;
     private Image logoImage;
+
+
     public TestBackgroundPanel()
     {
         LoadPanel();
@@ -34,9 +38,16 @@ public class TestBackgroundPanel extends JPanel {
         LoadBackgroundImage();
         LoadLogoImage();
         LoadHintsPanel();
+        LoadVideoPanel();
         this.setVisible(true);
         System.out.println("Panel Added");
 
+    }
+
+    private void LoadVideoPanel()
+    {
+        videoPanel=new HomeVideoButtonPanel();
+        this.add(videoPanel,BorderLayout.EAST);
     }
 
     public void LoadHintsPanel()

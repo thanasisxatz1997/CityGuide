@@ -5,6 +5,7 @@ import Panels.Stores.StoreDetails.StoreDetailsFrame;
 import Repository.DataManager;
 import Repository.Filtering;
 import Repository.ImageResizer;
+import Repository.ThreadManager;
 import org.bson.Document;
 
 import javax.imageio.ImageIO;
@@ -27,6 +28,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class StoreDisplayPanel extends JPanel {
+    public static Thread t2;
     //public  ArrayList<Document> storesDocList;
     private ArrayList<StoresSinglePanel> singleStorePanelList;
     public StoreFilterPanel connectedFilterPanel;
@@ -60,7 +62,8 @@ public class StoreDisplayPanel extends JPanel {
         //this.add(storesLabel);
         this.revalidate();
         this.setVisible(true);
-        Thread t2=new Thread(new Runnable() {
+
+        t2=new Thread(new Runnable() {
             @Override
             public void run() {
                 AddRandomStores();
@@ -80,10 +83,11 @@ public class StoreDisplayPanel extends JPanel {
         {
             Document storeDoc=DataManager.GetRandomRecommendedStoreTest();
             TestRectButton testRectButton=new TestRectButton(250,180);
-            testRectButton.backgroundImage=DataManager.GetRandomStoreImage(storeDoc);
+            Image backgroundImage=DataManager.GetStoreImage(storeDoc);
+            testRectButton.backgroundImage= backgroundImage;
             testRectButton.text= (String) storeDoc.get("name");
             this.add(testRectButton);
-            CreateButtonListener(testRectButton,storeDoc,testRectButton.backgroundImage);
+            CreateButtonListener(testRectButton,storeDoc,backgroundImage);
         }
 
 
@@ -102,7 +106,8 @@ public class StoreDisplayPanel extends JPanel {
             System.out.println("Added Panel: "+i);
             Document doc=storesDocList.get(i);
             TestRectButton testRectButton=new TestRectButton(240,180);
-            testRectButton.backgroundImage=GetStoreImage(doc);
+            Image backgroundImage=DataManager.GetStoreImage(doc);
+            testRectButton.backgroundImage=backgroundImage;
             testRectButton.text= doc.get("name").toString();
             testRectButton.setMaximumSize(new Dimension(250,180));
             this.add(testRectButton);
@@ -134,7 +139,8 @@ public class StoreDisplayPanel extends JPanel {
                 StoreDetailsFrame storeDetailsFrame=new StoreDetailsFrame();
                 storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetDoc(finalStoreDoc);
-                storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetComponentsDetails(finalStoreDoc.get("name").toString(),(double)finalStoreDoc.get("rating"),(int)finalStoreDoc.get("user_ratings_total"),"");
+                storeDetailsFrame.storeName=finalStoreDoc.get("name").toString();
+                storeDetailsFrame.SetName();
             }
         });
     }
@@ -146,7 +152,11 @@ public class StoreDisplayPanel extends JPanel {
             this.removeAll();
             this.repaint();
             this.revalidate();
-            Thread t2=new Thread(new Runnable() {
+            if(t2!=null && t2.isAlive())
+            {
+                t2.stop();
+            }
+            t2=new Thread(new Runnable() {
                 @Override
                 public void run() {
                     System.out.println("RestaurantsCheck!");

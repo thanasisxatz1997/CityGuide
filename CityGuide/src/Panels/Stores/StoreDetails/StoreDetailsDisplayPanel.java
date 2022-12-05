@@ -1,111 +1,75 @@
 package Panels.Stores.StoreDetails;
 
-import Repository.CurrentUser;
-import Repository.DataManager;
+import Panels.Stores.StoreDetails.StoreOpeningHoursPanels.StoreOpeningHoursPanel;
+import Panels.Stores.StoreDetails.StorePhotoPanels.StorePhotosPanel;
+import Panels.Stores.StoreDetails.StoreReviewsPanels.StoreReviewsPanel;
 import org.bson.Document;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class StoreDetailsDisplayPanel extends JPanel {
     private Document storeDoc;
-    private JLabel nameLabel;
-    private JLabel ratingLabel;
-    private JButton saveButton;
-    private JButton websiteButton;
-    private JScrollPane commentsScrollPane;
+    public StoreDetailsImagePanel connectedStoreDetailsImagePanel;
     private Font customLargeFont;
     private Font customSmallFont;
+    private JPanel photosPanel;
+    private StoreReviewsPanel reviewsPanel;
+    private StoreOpeningHoursPanel openHoursPanel;
+
     public StoreDetailsDisplayPanel()
     {
         Load();
     }
     private void Load()
     {
-        this.setPreferredSize(new Dimension(430,460));
-        this.setBorder(BorderFactory.createRaisedBevelBorder());
-        this.setLayout(new GridBagLayout());
+        this.setPreferredSize(new Dimension(580,525));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
         customLargeFont=LoadLargeFontWithSize(16);
         customSmallFont=LoadSmallFontWithSize(14);
-        GridBagConstraints c=new GridBagConstraints();
-        AddComponents(c);
-        LoadListeners();
         this.revalidate();
         this.repaint();
         this.setVisible(true);
     }
-    private void AddComponents(GridBagConstraints c)
+
+    public void LoadReviewsPanel()
     {
-        nameLabel=new JLabel("Name Label");
-        nameLabel.setFont(customLargeFont);
-        c.gridwidth=2;
-        c.gridheight=1;
-        c.gridx=0;
-        c.gridy=0;
-        this.add(nameLabel,c);
-
-        ratingLabel=new JLabel("4.5"+" (671)");
-        ratingLabel.setFont(customSmallFont);
-        ratingLabel.setIcon(new ImageIcon("src/resources/ButtonIcons/star-icon.png"));
-        c.gridwidth=1;
-        c.gridheight=1;
-        c.gridx=2;
-        c.gridy=0;
-        this.add(ratingLabel,c);
-
-        saveButton=new JButton("Save");
-        c.gridwidth=1;
-        c.gridheight=1;
-        c.gridx=0;
-        c.gridy=4;
-        this.add(saveButton,c);
-
-        websiteButton=new JButton("Web");
-        c.gridwidth=1;
-        c.gridheight=1;
-        c.gridx=2;
-        c.gridy=4;
-        this.add(websiteButton,c);
-
-        commentsScrollPane=new JScrollPane();
-        commentsScrollPane.setPreferredSize(new Dimension(400,400));
-        commentsScrollPane.setBorder(BorderFactory.createRaisedBevelBorder());
-        commentsScrollPane.setForeground(new Color(1f,1f,1f,0f));
-        c.gridx=0;
-        c.gridy=1;
-        c.gridwidth=3;
-        c.gridheight=3;
-        this.add(commentsScrollPane,c);
+        ArrayList<Document> reviewsDocList= (ArrayList<Document>) storeDoc.getList("reviews", Document.class);
+        System.out.println("DOC IS::::"+storeDoc);
+        System.out.println("REVIEWS ARE:::: "+reviewsDocList);
+        reviewsPanel=new StoreReviewsPanel(reviewsDocList);
+        this.add(reviewsPanel);
     }
 
-    private void LoadListeners()
+    public void LoadPhotosPanel()
     {
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(CurrentUser.IsLoggedIn())
-                {
-                    DataManager.AddStoreToFavourites(storeDoc);
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Please log in for more features!","Not Logged In!",JOptionPane.ERROR_MESSAGE);
-                }
+        ArrayList<Document> photosDocList=(ArrayList<Document>) storeDoc.getList("photos", Document.class);
+        photosPanel=new StorePhotosPanel(photosDocList);
+        this.add(photosPanel);
+    }
 
-            }
-        });
-    }
-    public void SetComponentsDetails(String storeName,double ratingsScore,int ratingsCount,String website)
+    public void LoadOpeningHoursPanel()
     {
-        this.nameLabel.setText(storeName);
-        this.ratingLabel.setText(ratingsScore+" "+"("+ratingsCount+")");
+        ArrayList<String> openingHoursStrList;
+        if(storeDoc.containsKey("opening_hours"))
+        {
+            System.out.println("IT CONTAINS!!!!!!!!");
+            Document openingHoursDoc= (Document) storeDoc.get("opening_hours");
+            openingHoursStrList = (ArrayList<String>) openingHoursDoc.getList("weekday_text",String.class);
+        }
+        else
+        {
+            openingHoursStrList=null;
+        }
+        openHoursPanel=new StoreOpeningHoursPanel(openingHoursStrList);
+        this.add(openHoursPanel);
     }
+
 
     private Font LoadLargeFontWithSize(int fontSize) {
         Font customFont;
@@ -146,7 +110,7 @@ public class StoreDetailsDisplayPanel extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
 
         this.revalidate();
         this.repaint();

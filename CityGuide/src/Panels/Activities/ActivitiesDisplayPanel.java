@@ -1,11 +1,14 @@
 package Panels.Activities;
 
+import Panels.Activities.ActivitiesDetails.ActivitiesDetailsFrame;
 import Panels.Recommended.TestStraightRectButton;
 import Repository.DataManager;
 import org.bson.Document;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ActivitiesDisplayPanel extends JPanel {
@@ -39,6 +42,16 @@ public class ActivitiesDisplayPanel extends JPanel {
             TestStraightRectButton testStraightRectButton=new TestStraightRectButton(350,255);
             testStraightRectButton.backgroundImage=DataManager.GetActivitiesImage(activitiesList.get(i));
             testStraightRectButton.text= (String) activitiesList.get(i).get("name");
+            int j = i;
+            testStraightRectButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ActivitiesDetailsFrame activitiesDetailsFrame=new ActivitiesDetailsFrame();
+                    activitiesDetailsFrame.backgroundPanel.backgroundImage=testStraightRectButton.backgroundImage;
+                    activitiesDetailsFrame.backgroundPanel.descriptionStr=(String) activitiesList.get(j).get("description");
+                    activitiesDetailsFrame.backgroundPanel.ChangeDescription();
+                }
+            });
             this.add(testStraightRectButton);
         }
     }
