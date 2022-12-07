@@ -15,4 +15,8 @@ public class Vehicle {
         System.out.println(pron+name);
         System.out.println("I have a number of "+wheels+" wheels");
     }
+    public void MakeSound()
+    {
+        System.out.println("I Don't go BRRRRRRRRRRRR! ");
+    }
 }

@@ -113,7 +113,7 @@ public class Filtering {
         System.out.println("I AM HERE AND I AM A : "+typeArraylist.get(0));
         MongoCollection collection=database.getCollection(typeArraylist.get(0));
         //MongoCollection collection=database.getCollection("Stores");
-        Bson projectionFields= Projections.fields(Projections.include("name","photos","rating","place_id","reviews","opening_hours"),Projections.excludeId());
+        Bson projectionFields= Projections.fields(Projections.include("name","photos","rating","place_id","reviews","opening_hours","website"),Projections.excludeId());
         ArrayList<Document> results = new ArrayList<Document>();
         //FindIterable<Document> iterable = collection.find(new Document("type",type));
         System.out.println("TYPES TO SEARCH ARE: "+typeArraylist);

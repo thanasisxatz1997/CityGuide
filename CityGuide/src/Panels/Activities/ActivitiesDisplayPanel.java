@@ -49,6 +49,8 @@ public class ActivitiesDisplayPanel extends JPanel {
                     ActivitiesDetailsFrame activitiesDetailsFrame=new ActivitiesDetailsFrame();
                     activitiesDetailsFrame.backgroundPanel.backgroundImage=testStraightRectButton.backgroundImage;
                     activitiesDetailsFrame.backgroundPanel.descriptionStr=(String) activitiesList.get(j).get("description");
+                    activitiesDetailsFrame.nameStr=activitiesList.get(j).get("name").toString();
+                    activitiesDetailsFrame.ChangeTitle();
                     activitiesDetailsFrame.backgroundPanel.ChangeDescription();
                 }
             });

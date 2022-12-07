@@ -140,6 +140,7 @@ public class StoreDisplayPanel extends JPanel {
                 storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetDoc(finalStoreDoc);
                 storeDetailsFrame.storeName=finalStoreDoc.get("name").toString();
+                storeDetailsFrame.storeDetailsImagePanel.storeDetailsButtonPanel.webpageStr=finalStoreDoc.get("website").toString();
                 storeDetailsFrame.SetName();
             }
         });

@@ -6,5 +6,7 @@ public class Init {
         vehicle.Pronounce();
         Car car=new Car();
         car.Pronounce();
+        car.MakeSound();
+
     }
 }

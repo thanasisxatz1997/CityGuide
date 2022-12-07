@@ -19,12 +19,14 @@ public class BackgroundPanel extends JPanel {
     }
     public void Load()
     {
-        this.setPreferredSize(new Dimension(600,600));
+        this.setPreferredSize(new Dimension(660,660));
         LoadSmallFont("src/resources/Fonts/CaviarDreams.ttf");
         textArea=new JTextArea();
         textArea.setFont(customFont);
-        textArea.setPreferredSize(new Dimension(590,590));
-        this.add(textArea);
+        textArea.setPreferredSize(new Dimension(640,640));
+        JScrollPane textScrollPane=new JScrollPane(textArea);
+        textScrollPane.setPreferredSize(new Dimension(630,630));
+        this.add(textScrollPane);
         this.setVisible(true);
     }
 

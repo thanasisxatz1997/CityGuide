@@ -13,9 +13,13 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class StoreDetailsButtonPanel extends JPanel {
     private Document storeDoc;
+    public String webpageStr;
     public StoreDetailsImagePanel connectedStoreDetailsImagePanel;
     private JButton saveButton;
     private JButton websiteButton;
@@ -75,7 +79,41 @@ public class StoreDetailsButtonPanel extends JPanel {
         websiteButton.setIcon(new ImageIcon("src/resources/ButtonIcons/world-wide-web.png"));
         websiteButton.setPreferredSize(new Dimension(35,35));
         this.add(websiteButton);
+        websiteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (webpageStr!=null)
+                {
+                    openWebpage(URI.create(webpageStr));
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "This store has no website!","No Website.",JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
+    public static boolean openWebpage(URI uri) {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(uri);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    /*public static boolean openWebpage(URL url) {
+        try {
+            return openWebpage(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }*/
 
     private void LoadPhotosButton()
     {
