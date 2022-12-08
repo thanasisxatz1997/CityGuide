@@ -1,6 +1,6 @@
 package Panels.Home;
 
-import chrriis.dj.nativeswing.swtimpl.NativeInterface;
+//import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class HomeVideoButtonPanel extends JPanel {
         videoButton=new JButton();
         videoButton.setPreferredSize(new Dimension(50,50));
         videoButton.setIcon(new ImageIcon("src/resources/ButtonIcons/video-camera.png"));
-        videoButton.addActionListener(new ActionListener() {
+        /*videoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -39,7 +39,7 @@ public class HomeVideoButtonPanel extends JPanel {
                 });
 
             }
-        });
+        });*/
         this.add(videoButton);
     }
     @Override

@@ -1,5 +1,6 @@
 package Panels.Stores.StoreDetails;
 
+import Panels.Stores.StoreDetails.StoreDetailsMapPanels.DetailsMapPanel;
 import Panels.Stores.StoreDetails.StoreOpeningHoursPanels.StoreOpeningHoursPanel;
 import Panels.Stores.StoreDetails.StorePhotoPanels.StorePhotosPanel;
 import Panels.Stores.StoreDetails.StoreReviewsPanels.StoreReviewsPanel;
@@ -19,6 +20,7 @@ public class StoreDetailsDisplayPanel extends JPanel {
     private Font customLargeFont;
     private Font customSmallFont;
     private JPanel photosPanel;
+    private JPanel mapPanel;
     private StoreReviewsPanel reviewsPanel;
     private StoreOpeningHoursPanel openHoursPanel;
 
@@ -44,6 +46,11 @@ public class StoreDetailsDisplayPanel extends JPanel {
         System.out.println("REVIEWS ARE:::: "+reviewsDocList);
         reviewsPanel=new StoreReviewsPanel(reviewsDocList);
         this.add(reviewsPanel);
+    }
+
+    public void LoadMapPanel()
+    {
+        mapPanel=new DetailsMapPanel(storeDoc);
     }
 
     public void LoadPhotosPanel()

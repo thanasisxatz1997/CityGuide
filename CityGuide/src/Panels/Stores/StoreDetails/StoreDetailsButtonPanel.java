@@ -26,6 +26,7 @@ public class StoreDetailsButtonPanel extends JPanel {
     private JButton photosButton;
     private JButton reviewsButton;
     private JButton openHoursButton;
+    private JButton mapButton;
     private JLabel ratingLabel;
     private Font customSmallFont;
     public StoreDetailsButtonPanel()
@@ -50,6 +51,7 @@ public class StoreDetailsButtonPanel extends JPanel {
         LoadPhotosButton();
         LoadReviewsButton();
         LoadOpenHoursButton();
+        LoadMapButton();
         LoadRatingsLabel();
     }
     private void LoadSaveButton()
@@ -90,6 +92,19 @@ public class StoreDetailsButtonPanel extends JPanel {
                 {
                     JOptionPane.showMessageDialog(null, "This store has no website!","No Website.",JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+    }
+    private void LoadMapButton()
+    {
+        mapButton=new JButton("MAP");
+        mapButton.setPreferredSize(new Dimension(35,35));
+        this.add(mapButton);
+        mapButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                connectedStoreDetailsImagePanel.storeDetailsDisplayPanel.removeAll();
+                connectedStoreDetailsImagePanel.storeDetailsDisplayPanel.LoadMapPanel();
             }
         });
     }

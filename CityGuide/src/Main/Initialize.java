@@ -4,8 +4,8 @@ import Repository.APIinfoplaces;
 import Repository.ConnectToDatabase;
 import Repository.CurrentUser;
 import Repository.Handlers;
-import chrriis.dj.nativeswing.NativeSwing;
-import chrriis.dj.nativeswing.swtimpl.NativeInterface;
+//import chrriis.dj.nativeswing.NativeSwing;
+//import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 
 
 import javax.swing.*;
@@ -26,7 +26,7 @@ public class Initialize {
         }
         catch (Exception ignored)
         {
-            System.out.println("Look  NOT Changed");
+            System.out.println("Look NOT Changed");
         }
         new ConnectToDatabase();
         new Forms.TestMainForm();
