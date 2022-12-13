@@ -107,6 +107,7 @@ public class TestRecommendedDisplayPanel2 extends JPanel {
                 StoreDetailsFrame storeDetailsFrame=new StoreDetailsFrame();
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetDoc(finalStoreDoc);
                 storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
+                storeDetailsFrame.storeDetailsImagePanel.storeDetailsButtonPanel.storeDoc=finalStoreDoc;
                 storeDetailsFrame.storeName=finalStoreDoc.get("name").toString();
                 storeDetailsFrame.SetName();
             }

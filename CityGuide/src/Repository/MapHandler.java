@@ -42,7 +42,7 @@ public class MapHandler {
                 "}\n" +
                 "</script>\n" +
                 "\n" +
-                "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyArkQ61IThme_qefwNNMustbwQ3Ms9kalg&callback=myMap\"></script>\n" +
+                "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBgNG7tFRkbstl6J3tAp0otEwvBpsRsqDc&callback=myMap\"></script>\n" +
                 "\n" +
                 "</body>\n" +
                 "</html>";

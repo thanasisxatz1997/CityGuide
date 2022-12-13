@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Projections.*;
 
 public class TestMapPanel extends JPanel {
     public  JFXPanel fxPanel;
@@ -79,6 +80,13 @@ public class TestMapPanel extends JPanel {
                         // write locations to html file
                         try {
                             writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
                         } catch (IOException eio) {
                             eio.printStackTrace();
                         }
@@ -93,6 +101,13 @@ public class TestMapPanel extends JPanel {
                         // write locations to html file
                         try {
                             writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
                         } catch (IOException eio) {
                             eio.printStackTrace();
                         }
@@ -165,7 +180,12 @@ public class TestMapPanel extends JPanel {
         this.setVisible(true);
     }
 
-    private void writeToHtml(String locations) throws IOException
+    /**
+     * Write markers (POI's) formatted as string, into html file
+     * @param locations
+     * @throws IOException
+     */
+    public void writeToHtml(String locations) throws IOException
     {
 
         String prefix = "<!DOCTYPE html>\n" +
@@ -203,7 +223,7 @@ public class TestMapPanel extends JPanel {
                 "}\n" +
                 "</script>\n" +
                 "\n" +
-                "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyArkQ61IThme_qefwNNMustbwQ3Ms9kalg&callback=myMap\"></script>\n" +
+                "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBgNG7tFRkbstl6J3tAp0otEwvBpsRsqDc&callback=myMap\"></script>\n" +
                 "\n" +
                 "</body>\n" +
                 "</html>";
@@ -218,65 +238,84 @@ public class TestMapPanel extends JPanel {
         writer.append(postfix);
 
         writer.close();
-
-        // reload map
-        TestBackgroundPanel panel = (TestBackgroundPanel)this.getParent();
-        panel.AddMapPanel();
     }
 
-    private String convertLocationToString(List<POI> locations)
+    /**
+     * Converts a list of POI's to String.
+     * @param locations
+     * @return String
+     */
+    public String convertLocationToString(List<POI> locations)
     {
-        String str_result = "";
-        for (int i = 0; i < locations.size(); i++) {
-            str_result = str_result + locations.get(i)+",";
+        StringBuilder str_result = new StringBuilder();
+        for (POI location : locations) {
+            str_result.append(location).append(",");
         }
-        return str_result;
+        return str_result.toString();
     }
 
+    /**
+     * Search database for POI's only in one collection specified by user input.
+     * @param key  user input (category to search for)
+     * @return   list of POI's
+     */
     private List<POI> searchByCategory(String key)
     {
-        database= ConnectToDatabase.mainDatabase;
-        MongoCollection<Document> collection = database.getCollection(key);
-        //DistinctIterable<Document> geo = collection.distinct("geometry.location", Document.class);
-
-        List<Document> documents = collection.find().into(new ArrayList<>());
+        // list to store POI's
         List<POI> locations = new ArrayList<>();
-        for(Document document: documents) {
-            Document geo = (Document) document.get("geometry");
-            if (geo != null) {
-                Document location = (Document) geo.get("location");
-                Double lat = (Double) location.get("lat");
-                Double lng = (Double) location.get("lng");
-                Object rating_obj = document.get("rating");
-                String rating = "";
-                if (rating_obj == null) {
-                    rating = "N/A";
-                } else {
-                    rating = rating_obj.toString();
-                }
-                // Double rating = Double.parseDouble(document.getDouble("rating").toString());
-                String name = document.getString("name");
-                String address = document.getString("vicinity");
 
-                locations.add(new POI(name, lat, lng, rating, address));
-            }
+        // connect to database
+        MongoDatabase database = connectToDB.getDatabase();
+        // get collection by user input
+        MongoCollection<Document> collection = database.getCollection(key);
+        // create empty filter (we need all documents from collection)
+        Bson filter = Filters.empty();
+        // create projection with fields we need
+        Bson projection = fields(include("geometry.location", "rating", "name", "vicinity"), excludeId());
+        // get relevant documents
+        MongoCursor<Document> cursor = collection.find(filter).projection(projection).cursor();
+
+        // iterate cursor to extract fields
+        while (cursor.hasNext()) {
+            // for each document
+            Document doc = cursor.next();
+            // convert document to POI and add it to locations array list
+            locations.add(DocumentToPOI(doc));
         }
-        //names.into(names_results);
-        /*List<POI> locations = new ArrayList<>();
-        for(int i = 0; i < geo_results.size(); i++)
-        {
-            String name = (String)names_results.get(i).get("name");
-            Double lat  = (Double)geo_results.get(i).get("lat");
-            Double lng = (Double)geo_results.get(i).get("lng");
-            locations.add(new POI(name, lat, lng));
-        }*/
-
-        /*for (int i = 0; i < locations.size(); i++) {
-            System.out.println(locations.get(i).toString());
-        }*/
-
-        //System.out.println(results);
         return locations;
+    }
+
+    public POI DocumentToPOI(Document doc) {
+        // POI to return
+        POI poi = new POI();
+        // get geometry field
+        Document geo = (Document) doc.get("geometry");
+        // if geometry is not null
+        if (geo != null) {
+            // get location inner field
+            Document location = (Document) geo.get("location");
+            // and extract latitude...
+            Double lat = (Double) location.get("lat");
+            // and longitude
+            Double lng = (Double) location.get("lng");
+            // then get rating field
+            Object rating_obj = doc.get("rating");
+            String rating = "";
+            // if rating is null
+            if (rating_obj == null) {
+                // then rating is not available
+                rating = "N/A";
+            } else {
+                // else convert rating to string
+                rating = rating_obj.toString();
+            }
+            // get name of location
+            String name = doc.getString("name");
+            // and get address
+            String address = doc.getString("vicinity");
+            poi = new POI(name, lat, lng, rating, address);
+        }
+        return poi;
     }
 
     /*private List<POI> searchByName1(String key) {
@@ -324,7 +363,6 @@ public class TestMapPanel extends JPanel {
         }
         return locations;
     }*/
-
 
     private List<POI> searchByName(String key, String key2) {
         database = ConnectToDatabase.mainDatabase;

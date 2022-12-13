@@ -1,5 +1,8 @@
 package Panels.Stores;
 
+import Panels.Stores.StoreDetails.TransparentPanel;
+import javafx.animation.Animation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +17,10 @@ public class StoreFilterPanel extends JPanel {
     JLabel ratingsLabel;
     JComboBox typeComboBox;
     JComboBox ratingsComboBox;
+    public TransparentPanel animationPanel;
+    public static StoreLoadingPanel loadingPanel;
+    public static Timer loadingAnimationTimer;
+    public static int loadingState=1;
 
     public StoreDisplayPanel connectedStoreDisplayPanel;
     public StoreFilterPanel()
@@ -42,7 +49,9 @@ public class StoreFilterPanel extends JPanel {
         LoadRatingsLabel(c);
         LoadTypeComboBox(c);
         LoadRatingsComboBox(c);
+        LoadLoadingPanel(c);
         LoadActionListener();
+        CreateAnimationTimer();
 
 
 
@@ -58,9 +67,11 @@ public class StoreFilterPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(StoreDisplayPanel.t2!=null && StoreDisplayPanel.t2.isAlive())
                 {
-                    StoreDisplayPanel.t2.stop();
+                    StoreDisplayPanel.t2.interrupt();
                 }
+                StoreFilterPanel.StartLoadingAnimation();
                 connectedStoreDisplayPanel.DisplayPanels();
+                StopLoadingAnimation();
             }
         };
         applyFiltersButton.addActionListener(buttonPressed);
@@ -146,7 +157,6 @@ public class StoreFilterPanel extends JPanel {
         ratingsComboBox.addItem("3");
         ratingsComboBox.addItem("4");
         ratingsComboBox.addItem("5");
-        c.insets = new Insets(10,10,450,5);
         c.weightx=0.9;
         c.weighty=1;
         c.gridwidth=2;
@@ -154,6 +164,27 @@ public class StoreFilterPanel extends JPanel {
         c.gridx=1;
         c.gridy=2;
         this.add(ratingsComboBox,c);
+    }
+
+    private void LoadLoadingPanel(GridBagConstraints c)
+    {
+        animationPanel=new TransparentPanel();
+        loadingPanel=new StoreLoadingPanel();
+        loadingPanel.setPreferredSize(new Dimension(200,200));
+        c.insets = new Insets(250,0,10,0);
+        c.anchor=GridBagConstraints.SOUTH;
+        c.weightx=1;
+        c.weighty=1;
+        c.gridheight=3;
+        c.gridwidth=3;
+        c.gridx=0;
+        c.gridy=3;
+        c.ipadx=120;
+        c.ipady=150;
+        animationPanel.setVisible(true);
+        loadingPanel.setVisible(true);
+        this.add(animationPanel,c);
+        animationPanel.add(loadingPanel);
     }
 
     protected void paintComponent(Graphics g) {
@@ -166,6 +197,42 @@ public class StoreFilterPanel extends JPanel {
         this.revalidate();
         this.repaint();
     }
+
+    private void CreateAnimationTimer()
+    {
+        loadingState=1;
+        loadingAnimationTimer=new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoadingAnimation();
+            }
+        });
+    }
+
+    public static void StartLoadingAnimation()
+    {
+        loadingPanel.setVisible(true);
+        loadingPanel.SetStartingImage();
+        loadingAnimationTimer.start();
+    }
+    public static void StopLoadingAnimation()
+    {
+        loadingAnimationTimer.stop();
+        loadingPanel.setVisible(false);
+    }
+    public void LoadingAnimation()
+    {
+        if(loadingState<8)
+        {
+            loadingState++;
+        }
+        else
+        {
+            loadingState=1;
+        }
+        loadingPanel.repaint();
+    }
+
 
 
 }

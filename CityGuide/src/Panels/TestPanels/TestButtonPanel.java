@@ -138,7 +138,7 @@ public class TestButtonPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(StoreDisplayPanel.t2!=null &&StoreDisplayPanel.t2.isAlive())
                 {
-                    StoreDisplayPanel.t2.stop();
+                    StoreDisplayPanel.t2.interrupt();
                 }
                 TestMainForm.mainPanel.backgroundPanel.AddStorePanel();
             }

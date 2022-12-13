@@ -233,7 +233,7 @@ public class DataManager {
                     lastPhotoHeightStr = lastPhotoHeightStr + c;
                 }
 
-                String photoFullStr = "https://maps.googleapis.com/maps/api/place/photo?photoreference=" + photoReferenceStr + "&sensor=false&maxheight=" + lastPhotoHeightStr + "&maxwidth=" + lastPhotoWidthStr + "&key=" + "AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
+                String photoFullStr = "https://maps.googleapis.com/maps/api/place/photo?photoreference=" + photoReferenceStr + "&sensor=false&maxheight=" + lastPhotoHeightStr + "&maxwidth=" + lastPhotoWidthStr + "&key=" + "AIzaSyBgNG7tFRkbstl6J3tAp0otEwvBpsRsqDc";
                 System.out.println("THE PHOTO STRING IS: " + photoFullStr);
                 Image singleStoreImage = new ImageIcon("src/resources/BackgroundImages/colosseum.png").getImage();
                 try {
@@ -285,7 +285,7 @@ public class DataManager {
             }
             photoReferenceStr=builder.toString();
             System.out.println("THE PHOTO REFERENCE IS: "+ photoReference);
-            String photoFullStr="https://maps.googleapis.com/maps/api/place/photo?photoreference="+photoReferenceStr+"&sensor=false&maxheight="+"400"+"&maxwidth="+"400"+"&key="+"AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
+            String photoFullStr="https://maps.googleapis.com/maps/api/place/photo?photoreference="+photoReferenceStr+"&sensor=false&maxheight="+"400"+"&maxwidth="+"400"+"&key="+"AIzaSyBgNG7tFRkbstl6J3tAp0otEwvBpsRsqDc";
             System.out.println("THE PHOTO STRING IS: "+photoFullStr);
             Image singleStoreImage=null;
             try {

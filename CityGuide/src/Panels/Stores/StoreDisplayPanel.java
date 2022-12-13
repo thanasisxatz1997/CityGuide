@@ -62,15 +62,20 @@ public class StoreDisplayPanel extends JPanel {
         //this.add(storesLabel);
         this.revalidate();
         this.setVisible(true);
-
+    }
+    public void StartAddingStores()
+    {
         t2=new Thread(new Runnable() {
             @Override
             public void run() {
+                StoreFilterPanel.StartLoadingAnimation();
                 AddRandomStores();
+                StoreFilterPanel.StopLoadingAnimation();
             }
         });
         t2.start();
     }
+
 
     public void SetConnectedStoreFilterPanel(StoreFilterPanel filterPanel)
     {
@@ -140,6 +145,7 @@ public class StoreDisplayPanel extends JPanel {
                 storeDetailsFrame.storeDetailsImagePanel.SetBackgroundImage(backgroundImage);
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetDoc(finalStoreDoc);
                 storeDetailsFrame.storeName=finalStoreDoc.get("name").toString();
+                storeDetailsFrame.storeDetailsImagePanel.storeDetailsButtonPanel.storeDoc=finalStoreDoc;
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsButtonPanel.webpageStr=finalStoreDoc.get("website").toString();
                 storeDetailsFrame.SetName();
             }
@@ -155,18 +161,20 @@ public class StoreDisplayPanel extends JPanel {
             this.revalidate();
             if(t2!=null && t2.isAlive())
             {
-                t2.stop();
+                t2.interrupt();
             }
+
             t2=new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    StoreFilterPanel.StartLoadingAnimation();
                     System.out.println("RestaurantsCheck!");
                     ArrayList<Document> storesDocList=new ArrayList<>();
                     //System.out.println("1New list= "+Filtering.FindStoreType(this.connectedFilterPanel.searchTextField.getText()));
 
                     String searchedType=(String) connectedFilterPanel.typeComboBox.getItemAt(connectedFilterPanel.typeComboBox.getSelectedIndex());
                     String searchedRating=(String) connectedFilterPanel.ratingsComboBox.getItemAt(connectedFilterPanel.ratingsComboBox.getSelectedIndex());
-                    String searchedText=(String) connectedFilterPanel.searchTextField.getText();
+                    String searchedText=Filtering.GeneralizeSearchedType(connectedFilterPanel.searchTextField.getText());
                     //System.out.println("1New list= "+Filtering.FilterStores(searchedType,searchedRating,searchedText));
                     storesDocList.addAll(Filtering.FilterStores(searchedType,searchedRating,searchedText));
                     //storesDocList.addAll(Filtering.FindStoreType(this.connectedFilterPanel.searchTextField.getText()));
@@ -186,13 +194,21 @@ public class StoreDisplayPanel extends JPanel {
                         singleStorePanelList.add(singleStore);
                     }*/
                     AddSinglePanels(storesDocList);
+                    StoreFilterPanel.StopLoadingAnimation();
                 }
             });
             t2.start();
         }
         else
         {
-            System.out.println("Wrong Search Parameters! Try again");
+            System.out.println("SEARCHING BY NAME!");
+            String searchedType=(String) connectedFilterPanel.typeComboBox.getItemAt(connectedFilterPanel.typeComboBox.getSelectedIndex());
+            String searchedRating=(String) connectedFilterPanel.ratingsComboBox.getItemAt(connectedFilterPanel.ratingsComboBox.getSelectedIndex());
+            String searchedText=connectedFilterPanel.searchTextField.getText();
+            ArrayList<Document> storesDocList=new ArrayList<>();
+            storesDocList.add(Filtering.SearchStoreByName(searchedType,searchedText,searchedRating));
+            System.out.println("The store Doe list IN search by name is: "+storesDocList);
+            AddSinglePanels(storesDocList);
         }
     }
 

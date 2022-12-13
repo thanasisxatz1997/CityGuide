@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class StoreDetailsButtonPanel extends JPanel {
-    private Document storeDoc;
+    public Document storeDoc;
     public String webpageStr;
     public StoreDetailsImagePanel connectedStoreDetailsImagePanel;
     private JButton saveButton;
@@ -97,7 +97,8 @@ public class StoreDetailsButtonPanel extends JPanel {
     }
     private void LoadMapButton()
     {
-        mapButton=new JButton("MAP");
+        mapButton=new JButton("");
+        mapButton.setIcon(new ImageIcon("src/resources/ButtonIcons/map_button_16px.png"));
         mapButton.setPreferredSize(new Dimension(35,35));
         this.add(mapButton);
         mapButton.addActionListener(new ActionListener() {

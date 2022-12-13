@@ -5,6 +5,7 @@ import com.mongodb.CursorType;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import org.apache.http.util.TextUtils;
@@ -70,11 +71,8 @@ public class Filtering {
         availableTypes.add("shopping_mall");
         availableTypes.add("stadium");
         availableTypes.add("theatres");
-        availableTypes.add("activities");
         availableTypes.add("bus_station");
         availableTypes.add("airport");
-        availableTypes.add("activities");
-        availableTypes.add("random_stores");
         availableTypes.add("night_club");
         availableTypes.add("hospital");
         availableTypes.add("church");
@@ -86,11 +84,65 @@ public class Filtering {
         availableTypes.add("museum");
         availableTypes.add("tourist_attraction");
         availableTypes.add("atm");
-        if(availableTypes.contains(filterStr))
+
+        if(availableTypes.contains(GeneralizeSearchedType(filterStr)))
         {
             return true;
         }
+        System.out.println("Gonna be false+ "+GeneralizeSearchedType(filterStr));
         return false;
+    }
+    public static String GeneralizeSearchedType(String str)
+    {
+        String newStr="";
+        str=str.toLowerCase();
+        if(str.charAt(str.length()-1)=='s')
+        {
+            System.out.println("Removing s");
+            for (int i=0;i<str.length()-1;i++)
+            {
+                newStr=newStr+str.charAt(i);
+            }
+        }
+        else
+        {
+            newStr=str;
+        }
+        return newStr;
+    }
+
+    public static Document SearchStoreByName(String type,String name,String rating)
+    {
+        float ratingNum = 0;
+        if(!rating.equals(""))
+        {
+            ratingNum=Float.parseFloat(rating);
+        }
+        ArrayList<String> typeArraylist= new ArrayList<>();
+        Bson filter=Filters.gte("rating",ratingNum);
+        filter=Filters.and(filter,Filters.eq("name",name));
+        if(!type.equals(""))
+        {
+            typeArraylist.add(type.toLowerCase());
+            MongoCollection collection=database.getCollection(type);
+            filter=Filters.and(filter,Filters.eq("name",name));
+            if(database.getCollection(type).find(filter).first()!=null)
+            {
+                return database.getCollection(type).find(filter).first();
+            }
+        }
+        else
+        {
+            MongoIterable<String> collectionIterables=database.listCollectionNames();
+            for (String collName:collectionIterables)
+            {
+                if(database.getCollection(collName).find(filter).limit(200).first()!=null)
+                {
+                    return database.getCollection(collName).find(filter).limit(200).first();
+                }
+            }
+        }
+        return null;
     }
 
     public static ArrayList<Document> FilterStores(String type,String rating,String searchedText)

@@ -51,6 +51,7 @@ public class StoreDetailsDisplayPanel extends JPanel {
     public void LoadMapPanel()
     {
         mapPanel=new DetailsMapPanel(storeDoc);
+        this.add(mapPanel);
     }
 
     public void LoadPhotosPanel()

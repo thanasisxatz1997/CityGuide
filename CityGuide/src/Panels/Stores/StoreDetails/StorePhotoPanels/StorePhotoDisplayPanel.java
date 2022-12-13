@@ -95,7 +95,7 @@ public class StorePhotoDisplayPanel extends JPanel {
         String photoReference=imageDoc.get("photo_reference").toString();
         long photoWidth=(long)imageDoc.get("width");
         long photoHeight=(long)imageDoc.get("height");
-        String photoFullStr = "https://maps.googleapis.com/maps/api/place/photo?photoreference=" + photoReference + "&sensor=false&maxheight=" + photoWidth + "&maxwidth=" + photoHeight + "&key=" + "AIzaSyAvBOia81gDaupwTWI02qZGSgbj1Vgwtes";
+        String photoFullStr = "https://maps.googleapis.com/maps/api/place/photo?photoreference=" + photoReference + "&sensor=false&maxheight=" + photoWidth + "&maxwidth=" + photoHeight + "&key=" + "AIzaSyBgNG7tFRkbstl6J3tAp0otEwvBpsRsqDc";
         System.out.println("THE PHOTO STRING IS: " + photoFullStr);
         Image returnedImage=new ImageIcon("src/resources/BackgroundImages/colosseum.png").getImage();
         try {

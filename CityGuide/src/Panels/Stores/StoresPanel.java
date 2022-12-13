@@ -23,6 +23,7 @@ public class StoresPanel extends JPanel {
         storeDisplayPanel.SetConnectedStoreFilterPanel(storeFilterPanel);
         storeFilterPanel.SetConnectedStoreDisplayPanel(storeDisplayPanel);
 
+
         storesDisplayScrollPane=new JScrollPane(storeDisplayPanel);
         storesDisplayScrollPane.setPreferredSize(new Dimension(550,100));
         storesDisplayScrollPane.setHorizontalScrollBar(null);
@@ -32,6 +33,7 @@ public class StoresPanel extends JPanel {
         this.add(storeFilterPanel,BorderLayout.EAST);
         LoadBackgroundImage();
         this.setVisible(true);
+        storeDisplayPanel.StartAddingStores();
         System.out.println("Done");
     }
 
