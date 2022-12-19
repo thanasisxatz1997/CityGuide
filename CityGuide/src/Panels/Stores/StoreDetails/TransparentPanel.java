@@ -1,6 +1,6 @@
 package Panels.Stores.StoreDetails;
 
-import org.eclipse.swt.internal.C;
+//import org.eclipse.swt.internal.C;
 
 import javax.swing.*;
 import java.awt.*;

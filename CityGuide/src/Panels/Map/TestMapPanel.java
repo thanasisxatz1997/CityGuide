@@ -66,8 +66,510 @@ public class TestMapPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "Select Store Category:"){
-                    JOptionPane.showMessageDialog(null, "You must select a correct Store Category",  "Error",JOptionPane.ERROR_MESSAGE);
-                } else {
+                    /*if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByNameAll(searchTextField.getText());
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    } else {*/
+                        JOptionPane.showMessageDialog(null, "You must select a correct Store Category",  "Error",JOptionPane.ERROR_MESSAGE);
+                    //}
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "art gallery"){
+                    System.out.println("art gallery = art_gallery (1)");
+                    String str = "art_gallery";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory(str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "bus station"){
+                    System.out.println("art gallery = bus_station (2)");
+                    String str = "bus_station";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+                        // then get locations from db
+                        List<POI> locations = searchByCategory(str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "movie theater"){
+                    System.out.println("art gallery = movie_theater (3)");
+                    String str = "movie_theater";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory(str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "night club"){
+                    System.out.println("art gallery = night_club (4)");
+                    String str = "night_club";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory( str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "random stores"){
+                    System.out.println("art gallery = random_stores (5)");
+                    String str = "random_stores";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory( str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "shopping mall"){
+                    System.out.println("art gallery = shopping_mall (6)");
+                    String str = "shopping_mall";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory( str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "subway station"){
+                    System.out.println("art gallery = subway_station (7)");
+                    String str = "subway_station";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory( str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "taxi stand"){
+                    System.out.println("art gallery = taxi_stand (8)");
+                    String str = "taxi_stand";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory( str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "tourist attraction"){
+                    System.out.println("art gallery = tourist_attraction (9)");
+                    String str = "tourist_attraction";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory(str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                if ((String) cmBox.getItemAt(cmBox.getSelectedIndex()) == "transit station"){
+                    System.out.println("art gallery = transit_station (10)");
+                    String str = "transit_station";
+                    // if user type some keyword to search
+                    if (searchTextField.getText().length() == 0){
+
+                        // then get locations from db
+                        List<POI> locations = searchByCategory(str);
+
+                        // convert locations to formatted string
+                        String str_locations = convertLocationToString(locations);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_locations);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                    if (searchTextField.getText().length() > 0){
+                        // search for a single store
+                        List<POI> singlelocation = searchByName(searchTextField.getText(), str);
+
+                        // convert locations to formatted string
+                        String str_singlelocation = convertLocationToString(singlelocation);
+
+                        // write locations to html file
+                        try {
+                            writeToHtml(str_singlelocation);
+                            // reload map with new markers
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    webView.getEngine().reload();
+                                }
+                            });
+                        } catch (IOException eio) {
+                            eio.printStackTrace();
+                        }
+                    }
+                }
+                else {
                     // if user type some keyword to search
                     if (searchTextField.getText().length() == 0){
 
@@ -128,8 +630,10 @@ public class TestMapPanel extends JPanel {
         this.add(searchButton,c);
 
         // add ComboBox
-        String[] collectionscmBox = {"Select Store Category:","airport","art_gallery","atm","bakery","bus_station","cafe","casino","church","hospital","library","movie_theater",
-                "museum","night_club","park","random_stores","restaurant","shopping_mall","spa","stadium","subway_station","taxi_stand","tourist_attraction","transit_station"};
+        String[] collectionscmBox = {"Select Store Category:",
+                "airport", "art gallery", "atm", "bakery", "bus station", "cafe", "casino", "church", "hospital", "library",
+                "movie theater", "museum", "night club", "park", "random stores", "restaurant", "shopping mall", "spa", "stadium",
+                "subway station", "taxi stand", "theatres", "tourist attraction", "transit station", "zoo"};
         cmBox=new JComboBox(collectionscmBox);
         c.anchor=GridBagConstraints.LINE_START;
         c.insets=new Insets(50,50,0,0);
@@ -318,7 +822,7 @@ public class TestMapPanel extends JPanel {
         return poi;
     }
 
-    /*private List<POI> searchByName1(String key) {
+    private List<POI> searchByNameAll(String key) {
 
         MongoDatabase database = connectToDB.getDatabase();
 
@@ -329,6 +833,7 @@ public class TestMapPanel extends JPanel {
 
         // list to store POI's
         List<POI> locations = new ArrayList<>();
+
 
         // iterate all collection names
         while (iterator.hasNext()){
@@ -362,7 +867,7 @@ public class TestMapPanel extends JPanel {
             }
         }
         return locations;
-    }*/
+    }
 
     private List<POI> searchByName(String key, String key2) {
         database = ConnectToDatabase.mainDatabase;
