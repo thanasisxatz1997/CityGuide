@@ -44,7 +44,7 @@ public class StoreDetailsDisplayPanel extends JPanel {
         ArrayList<Document> reviewsDocList= (ArrayList<Document>) storeDoc.getList("reviews", Document.class);
         System.out.println("DOC IS::::"+storeDoc);
         System.out.println("REVIEWS ARE:::: "+reviewsDocList);
-        reviewsPanel=new StoreReviewsPanel(reviewsDocList);
+        reviewsPanel=new StoreReviewsPanel(reviewsDocList,storeDoc);
         this.add(reviewsPanel);
     }
 

@@ -146,8 +146,12 @@ public class StoreDisplayPanel extends JPanel {
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsDisplayPanel.SetDoc(finalStoreDoc);
                 storeDetailsFrame.storeName=finalStoreDoc.get("name").toString();
                 storeDetailsFrame.storeDetailsImagePanel.storeDetailsButtonPanel.storeDoc=finalStoreDoc;
-                storeDetailsFrame.storeDetailsImagePanel.storeDetailsButtonPanel.webpageStr=finalStoreDoc.get("website").toString();
+                if(finalStoreDoc.get("website")!=null)
+                {
+                    storeDetailsFrame.storeDetailsImagePanel.storeDetailsButtonPanel.webpageStr=finalStoreDoc.get("website").toString();
+                }
                 storeDetailsFrame.SetName();
+                System.out.println("STORE DETAILS CREATED WITH NAME: "+storeDetailsFrame.storeName);
             }
         });
     }

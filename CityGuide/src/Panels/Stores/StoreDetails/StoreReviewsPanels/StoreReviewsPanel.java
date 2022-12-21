@@ -9,12 +9,14 @@ import java.util.ArrayList;
 public class StoreReviewsPanel extends JPanel {
 
     private ArrayList<Document> reviewsDocList;
+    private Document storeDoc;
     private StoreReviewsDisplayPanel storeReviewsDisplayPanel;
     private StoreReviewsWritePanel storeReviewsWritePanel;
 
-    public StoreReviewsPanel(ArrayList<Document> revDocList)
+    public StoreReviewsPanel(ArrayList<Document> revDocList,Document doc)
     {
         reviewsDocList=revDocList;
+        storeDoc=doc;
         Load();
     }
     public void Load()
@@ -23,7 +25,7 @@ public class StoreReviewsPanel extends JPanel {
         this.setMaximumSize(new Dimension(430,460));
         this.setLayout(new BorderLayout());
         storeReviewsDisplayPanel=new StoreReviewsDisplayPanel(reviewsDocList);
-        storeReviewsWritePanel=new StoreReviewsWritePanel();
+        storeReviewsWritePanel=new StoreReviewsWritePanel(storeDoc);
 
         StoreReviewsScrollPane storeReviewsDisplayPane=new StoreReviewsScrollPane();
         storeReviewsDisplayPane.setPreferredSize(new Dimension(430,350));
