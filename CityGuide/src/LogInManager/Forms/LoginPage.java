@@ -1,9 +1,9 @@
 package LogInManager.Forms;
 
-import Forms.TestMainForm;
+import MainGui.Forms.TestMainForm;
 import LogInManager.Managers.DataManager;
 import Repository.CurrentUser;
-import Repository.Handlers;
+import Repository.TimeHandlers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +45,7 @@ public class LoginPage extends JFrame{
                             "Welcome!",
                             JOptionPane.ERROR_MESSAGE);
                     CurrentUser.loggedIn=true;
-                    Handlers.startTime=System.nanoTime();
+                    TimeHandlers.startTime=System.nanoTime();
                     CurrentUser.userName=nameTextField.getText();
                     CurrentUser.userEmail=DataManager.GetEmail(nameTextField.getText());
                     TestMainForm.mainPanel.backgroundPanel.AddUserPanel();

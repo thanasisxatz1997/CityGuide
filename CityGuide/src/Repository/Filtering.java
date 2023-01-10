@@ -1,25 +1,15 @@
 package Repository;
 
-import Forms.MainForm;
-import com.mongodb.CursorType;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
-import org.apache.http.util.TextUtils;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.stream.Collectors;
-
-import static com.mongodb.client.model.Filters.gt;
-import static com.mongodb.client.model.Filters.gte;
-import static com.mongodb.client.model.Filters.lt;
 
 public class Filtering {
     //public static MongoCollection collection;

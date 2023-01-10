@@ -1,6 +1,6 @@
 package Repository;
 
-import Panels.Home.HomeHintsPanel;
+import MainGui.Panels.Home.HomeHintsPanel;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
