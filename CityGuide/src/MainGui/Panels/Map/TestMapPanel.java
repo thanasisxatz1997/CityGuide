@@ -1,6 +1,7 @@
 package MainGui.Panels.Map;
 
 
+import MainGui.Panels.Directions.DirectionFrame;
 import Repository.ConnectToCityGuideDB;
 import Repository.ConnectToDatabase;
 import com.mongodb.client.MongoCollection;
@@ -41,6 +42,7 @@ public class TestMapPanel extends JPanel {
     private JTextField searchTextField;
     private MongoDatabase database;
     private JComboBox cmBox;
+    private JButton instructionsButton;
 
     private ConnectToCityGuideDB connectToDB;
 
@@ -58,7 +60,15 @@ public class TestMapPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         c.insets=new Insets(30,50,50,50);
-
+        instructionsButton=new JButton("Instructions");
+        instructionsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DirectionFrame frame =new DirectionFrame();
+                frame.setVisible(true);
+            }
+        });
+        this.add(instructionsButton,c);
         searchButton=new JButton("");
         searchButton.setIcon(new ImageIcon("src/resources/Icons/searchIcon.png"));
         // add listener to button to handle the click event

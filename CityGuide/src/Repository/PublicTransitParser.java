@@ -14,8 +14,10 @@ public class PublicTransitParser {
         ArrayList<Document> legsDocList= (ArrayList<Document>) routesDocList.get(0).get("legs");
         ArrayList<Document> stepsDocList= (ArrayList<Document>) legsDocList.get(0).get("steps");
         String finalInstr="";
+        int count=0;
         for(int i=0;i<stepsDocList.size();i++)
         {
+            count++;
             String startingInstr=stepsDocList.get(i).get("html_instructions").toString();
             String singleInstStr=PublicTransitParser.ChangeInstructionStr(startingInstr);
             //System.out.println(singleInstStr);
@@ -27,8 +29,7 @@ public class PublicTransitParser {
     public static String ChangeInstructionStr(String startingStr)
     {
         String finalStr="";
-
-
+        int count=0;
         while (startingStr.contains("<"))
         {
             int firstCut=startingStr.indexOf('<');

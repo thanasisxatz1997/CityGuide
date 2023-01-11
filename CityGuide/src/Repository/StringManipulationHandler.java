@@ -28,4 +28,19 @@ public class StringManipulationHandler {
             System.out.println("the finalstr here is: "+finalStr);
             return finalStr;
         }
+
+        public static int CountLines(String str)
+        {
+            int count=0;
+            for(int i=0;i<str.length();i++)
+            {
+                if(str.charAt(i)=='\n')
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
 }
+
+

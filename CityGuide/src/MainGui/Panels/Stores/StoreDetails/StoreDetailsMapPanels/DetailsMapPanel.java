@@ -1,5 +1,6 @@
 package MainGui.Panels.Stores.StoreDetails.StoreDetailsMapPanels;
 
+import MainGui.Panels.Directions.DirectionFrame;
 import MainGui.Panels.Map.TestMapPanel;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -9,6 +10,8 @@ import org.bson.Document;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ public class DetailsMapPanel extends JPanel {
     public WebView webView;
     private JPanel mapDisplayPanel;
     private TestMapPanel testMapPanel;
+    private JButton directionsButton;
     public DetailsMapPanel(Document doc)
     {
         this.storeDoc=doc;
@@ -40,6 +44,17 @@ public class DetailsMapPanel extends JPanel {
         mapDisplayPanel.setLayout(new BorderLayout());
         mapDisplayPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         this.add(mapDisplayPanel);
+        directionsButton=new JButton("Directions");
+        directionsButton.setPreferredSize(new Dimension(100,30));
+        directionsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DirectionFrame directionFrame =new DirectionFrame();
+                directionFrame.directionsMainPanel.directionInfoPanel.textDestination.setText(storeDoc.get("vicinity").toString());
+                directionFrame.setVisible(true);
+            }
+        });
+        this.add(directionsButton);
 
         LoadData();
         LoadMap();

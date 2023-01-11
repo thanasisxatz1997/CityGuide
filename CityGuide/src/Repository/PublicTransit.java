@@ -15,10 +15,9 @@ import java.util.ArrayList;
 public class PublicTransit {
     static ArrayList<Document> docList = null;
     public static String ptStr;
-
     public static void main( String[] args) throws ParseException, URISyntaxException {
         String path= new String();
-        path=CalculatePath("Battistini+00167+Roma+RM", "Anagnina+00173+Roma+RM", "TRANSIT");
+        path=CalculatePath("Via+dei+Sabelli,+177,+00185+Roma+RM,+Italy", "Via+Capo+d'Africa,+54,+00184+Roma+RM,+Italy", "TRANSIT");
         //System.out.println(path);
         Document doc=Document.parse(path);
         System.out.println("Doc: "+doc);
@@ -30,8 +29,7 @@ public class PublicTransit {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://maps.googleapis.com/maps/api/directions/json?origin="+startingLocation+"&destination="+finalLcation+"&mode="+mode+"&key=AIzaSyBgNG7tFRkbstl6J3tAp0otEwvBpsRsqDc")).build();
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenAccept(s -> ptStr = s).join();
-        return ptStr;
+        Document doc=Document.parse(ptStr);
+        return PublicTransitParser.GetInstructions(doc);
     }
-
-
 }
