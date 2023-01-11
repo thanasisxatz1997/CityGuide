@@ -143,7 +143,6 @@ public class StoreFilterPanel extends JPanel {
         c.gridy=1;
         this.add(typeComboBox,c);
     }
-
     private void LoadRatingsComboBox(GridBagConstraints c)
     {
         ratingsComboBox=new JComboBox();
@@ -161,7 +160,6 @@ public class StoreFilterPanel extends JPanel {
         c.gridy=2;
         this.add(ratingsComboBox,c);
     }
-
     private void LoadLoadingPanel(GridBagConstraints c)
     {
         animationPanel=new TransparentPanel();

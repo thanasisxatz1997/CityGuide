@@ -1,5 +1,4 @@
 package MainGui.Panels.Stores.StoreDetails.StoreReviewsPanels;
-
 import Repository.ConnectToDatabase;
 import Repository.CurrentUser;
 import com.mongodb.client.MongoCollection;
@@ -12,7 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 public class StoreReviewsWritePanel extends JPanel {
     private JTextArea commentTextArea;
     private Document storeDoc;
@@ -33,7 +31,6 @@ public class StoreReviewsWritePanel extends JPanel {
         textAreaScrollPane.setPreferredSize(new Dimension(430,70));
         textAreaScrollPane.setMaximumSize(new Dimension(430,70));
         textAreaScrollPane.setViewportView(commentTextArea);
-
         postCommentButton=new JButton("Post!");
         postCommentButton.setPreferredSize(new Dimension(50, 30));
         postCommentButton.setMaximumSize(new Dimension(50, 30));
@@ -48,12 +45,9 @@ public class StoreReviewsWritePanel extends JPanel {
                 {System.out.println("Not Logged in!");}
             }
         });
-
         this.add(textAreaScrollPane,BorderLayout.NORTH);
         this.add(postCommentButton,BorderLayout.SOUTH);
         this.setVisible(true);
-
-
     }
     private void PostComment(String commentStr)
     {
@@ -67,7 +61,6 @@ public class StoreReviewsWritePanel extends JPanel {
             }
         }
     }
-
     private Document AddCommentToStoreDoc(Document storeDoc,String commentStr)
     {
         ArrayList<Document> reviewsDocList= (ArrayList<Document>) storeDoc.getList("reviews", Document.class);
@@ -78,7 +71,6 @@ public class StoreReviewsWritePanel extends JPanel {
         reviewsDocList.add(newComment);
         return storeDoc;
     }
-
     public boolean StoreExistsInColl(Document storeDoc,MongoCollection coll)
     {
         String storeName= storeDoc.get("name").toString();
@@ -90,7 +82,6 @@ public class StoreReviewsWritePanel extends JPanel {
         {
             return true;
         }
-
     }
     public void UpdateStoreComments(Document storeDoc,MongoCollection coll)
     {
@@ -98,5 +89,4 @@ public class StoreReviewsWritePanel extends JPanel {
         coll.insertOne(storeDoc);
         System.out.println("Updated comment section of store with name: "+storeDoc.get("name").toString());
     }
-
 }

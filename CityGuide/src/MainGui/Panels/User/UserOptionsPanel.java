@@ -18,6 +18,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.TimerTask;
 
+import MainGui.Forms.ChangeInfoForms.ChangeEmailForm;
+import MainGui.Forms.ChangeInfoForms.ChangePasswordForm;
+import MainGui.Forms.ChangeInfoForms.ChangeUsernameForm;
+import LogInManager.Forms.IntroPage;
+import Repository.CurrentUser;
+import org.checkerframework.checker.units.qual.C;
+
+import java.util.Timer;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.TimerTask;
+
 public class UserOptionsPanel extends JPanel {
     private JLabel statusLabel;
     private JButton logIn_OutButton;
@@ -29,6 +50,7 @@ public class UserOptionsPanel extends JPanel {
     private JButton usernameChangeButton;
     private JButton emailChangeButton;
     private JButton passwordChangeButton;
+    private JLabel passwordDisplayLabel;
 
 
     public UserOptionsPanel()
@@ -101,6 +123,21 @@ public class UserOptionsPanel extends JPanel {
             logIn_OutButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    int a = JOptionPane.showConfirmDialog(logIn_OutButton, "Are you sure?");
+                    // JOptionPane.setRootFrame(null);
+                    if (a == JOptionPane.YES_OPTION) {
+                        CurrentUser.LogOut();
+                        //TestMainForm.dispose();
+                        invalidate();
+                        validate();
+                        repaint();
+                        //Forms.TestMainForm obj = new Forms.TestMainForm();
+                        //obj.setVisible(true);
+                    }
+
+                    //dispose();
+                    //Forms.TestMainForm obj = new Forms.TestMainForm();
+                    //obj.setVisible(true);
                 }
             });
         }
@@ -130,6 +167,12 @@ public class UserOptionsPanel extends JPanel {
         c.insets=new Insets(0,0,0,50);
         c.gridx=2;
         c.gridy=1;
+        usernameChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangeUsernameForm(new JFrame(String.valueOf(getParent())));
+            }
+        });
         this.add(usernameChangeButton,c);
 
         emailDisplayLabel=new JLabel("Email: "+CurrentUser.userEmail);
@@ -142,13 +185,37 @@ public class UserOptionsPanel extends JPanel {
         c.insets=new Insets(0,0,0,50);
         c.gridx=2;
         c.gridy=2;
+        emailChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangeEmailForm(new JFrame(String.valueOf(getParent())));
+            }
+        });
         this.add(emailChangeButton,c);
+
+        passwordDisplayLabel=new JLabel("Password: ");
+        c.insets=new Insets(5,0,0,0);
+        passwordDisplayLabel.setFont(customSmallFont);
+        c.gridx=0;
+        c.gridy=3;
+        this.add(passwordDisplayLabel,c);
+        passwordChangeButton=new JButton("Change");
+        c.insets=new Insets(0,0,0,50);
+        c.gridx=2;
+        c.gridy=3;
+        this.add(passwordChangeButton,c);
+        passwordChangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangePasswordForm(new JFrame(String.valueOf(getParent())));
+            }
+        });
 
         sessionRuntimeLabel=new JLabel("Logged in for: "+ TimeHandlers.ShowCurrentRunTime()+"seconds");
         sessionRuntimeLabel.setFont(customSmallFont);
         c.insets=new Insets(0,0,400,0);
         c.gridx=0;
-        c.gridy=3;
+        c.gridy=4;
         this.add(sessionRuntimeLabel,c);
         LoadSessionTimer();
     }

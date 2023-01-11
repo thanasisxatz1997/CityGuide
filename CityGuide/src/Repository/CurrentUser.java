@@ -12,7 +12,7 @@ public class CurrentUser {
     {
         return loggedIn;
     }
-    private void LogOut()
+    public static void LogOut()
     {
         loggedIn=false;
         userName=null;

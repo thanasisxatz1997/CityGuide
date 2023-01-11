@@ -1,5 +1,4 @@
 package MainGui.Panels.Stores.StoreDetails.StorePhotoPanels;
-
 import org.bson.Document;
 
 import javax.imageio.ImageIO;
@@ -12,8 +11,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
-
 public class StorePhotoDisplayPanel extends JPanel {
     private ArrayList<Document> photosDocList;
     private int currentImageNum;

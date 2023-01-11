@@ -9,7 +9,6 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class DataManager {
     public static MongoCollection DbCollection;
-
     public static boolean CheckIfDataExists(String name,String password,String email) //this function....
     {
         if(DbCollection.find(new Document("name",name).append("password",password).append("email",email)).first()==null)
@@ -21,7 +20,6 @@ public class DataManager {
             return true;
         }
     }
-
     public static boolean PushData(String name,String password,String email)
     {
         String encKey=GenerateEncryptionKey();
@@ -36,10 +34,8 @@ public class DataManager {
             return false;
         }
     }
-
     public static boolean CheckLogin(String name,String password)
     {
-
         Document doc;
         doc=(Document) DataManager.DbCollection.find(eq("name",name)).first();
         if(doc==null)
@@ -66,27 +62,23 @@ public class DataManager {
        //String email=doc.get("email");
         //String encPass=Encrypt(password,key);
     }
-
     public static String GetEmail(String name)
     {
         Document result= (Document) DbCollection.find(new Document("name",name)).first();
         return result.get("email").toString();
     }
-
     public static String GetEncPass(String name)
     {
         Document result= (Document) DbCollection.find(new Document("name",name)).first();
         System.out.println("The password i got is: "+result.get("password").toString());
         return result.get("password").toString();
     }
-
     public static String GetEncKey(String name)
     {
         Document result= (Document) DbCollection.find(new Document("name",name)).first();
 
         return result.get("encKey").toString();
     }
-
     public static String GenerateEncryptionKey()
     {
         int leftLimit=97;
@@ -97,7 +89,6 @@ public class DataManager {
         System.out.println("Encryption key is: "+generatedString);
         return generatedString;
     }
-
     public static String Encrypt(String password,String encKey)
     {
         System.out.println("PASS IS: "+password);
@@ -121,7 +112,6 @@ public class DataManager {
         System.out.println("Encrypted pass is: "+encryptedPass);
         return encryptedPass;
     }
-
     public static String Decrypt(String encryptedPassword,String encryptionKey)
     {
         int sum=0;

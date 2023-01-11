@@ -1,18 +1,13 @@
 package MainGui.Panels.Stores.StoreDetails.StoreReviewsPanels;
-
 import org.bson.Document;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
 public class StoreReviewsPanel extends JPanel {
-
     private ArrayList<Document> reviewsDocList;
     private Document storeDoc;
     private StoreReviewsDisplayPanel storeReviewsDisplayPanel;
     private StoreReviewsWritePanel storeReviewsWritePanel;
-
     public StoreReviewsPanel(ArrayList<Document> revDocList,Document doc)
     {
         reviewsDocList=revDocList;

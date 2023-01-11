@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class Filtering {
     //public static MongoCollection collection;
     public static MongoDatabase database;
-
     public static ArrayList<Document> FindStoreType(String type)
     {
         MongoCollection collection;
@@ -25,7 +24,6 @@ public class Filtering {
         System.out.println(results);
         return (results);
     }
-
     private static String ChangeType(String type)
     {
         type=type.toLowerCase();
@@ -46,7 +44,6 @@ public class Filtering {
         System.out.println("New type is: "+newType);
         return newType;
     }
-
     public static boolean CheckSearchedFilters(String filterStr)
     {
         ArrayList<String> availableTypes=new ArrayList<String>();
@@ -100,7 +97,6 @@ public class Filtering {
         }
         return newStr;
     }
-
     public static Document SearchStoreByName(String type,String name,String rating)
     {
         float ratingNum = 0;
@@ -134,7 +130,6 @@ public class Filtering {
         }
         return null;
     }
-
     public static ArrayList<Document> FilterStores(String type,String rating,String searchedText)
     {
         System.out.println("Searching for: "+type+rating+searchedText);

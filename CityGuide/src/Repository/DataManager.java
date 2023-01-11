@@ -25,18 +25,13 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class DataManager {
     private static MongoDatabase database;
-
-
     public DataManager()
     {
     }
-
     public static void SetDatabase(MongoDatabase db)
     {
         database=db;
     }
-
-
     public static void AddStoreToFavourites(Document doc)
     {
         MongoCollection collection=database.getCollection("Favourites");
@@ -59,7 +54,6 @@ public class DataManager {
             AddStoreToFavourites(doc);
         }
     }
-
     public static void AddUserToFavourites()
     {
         MongoCollection collection=database.getCollection("Favourites");
@@ -259,7 +253,6 @@ public class DataManager {
         iterable.into(results);
         return results;
     }
-
     public static Image GetRandomStoreImage(Document doc)
     {
         final String[] photoStr = new String[1];

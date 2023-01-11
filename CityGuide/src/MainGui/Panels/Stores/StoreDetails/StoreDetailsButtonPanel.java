@@ -83,7 +83,7 @@ public class StoreDetailsButtonPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (webpageStr!=null)
                 {
-                    openWebpage(URI.create(webpageStr));
+                    OpenWebpage(URI.create(webpageStr));
                 }
                 else
                 {
@@ -106,7 +106,7 @@ public class StoreDetailsButtonPanel extends JPanel {
             }
         });
     }
-    public static boolean openWebpage(URI uri) {
+    public static boolean OpenWebpage(URI uri) {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
@@ -118,16 +118,6 @@ public class StoreDetailsButtonPanel extends JPanel {
         }
         return false;
     }
-
-    /*public static boolean openWebpage(URL url) {
-        try {
-            return openWebpage(url.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }*/
-
     private void LoadPhotosButton()
     {
         photosButton=new JButton("");

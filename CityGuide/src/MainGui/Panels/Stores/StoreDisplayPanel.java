@@ -72,8 +72,6 @@ public class StoreDisplayPanel extends JPanel {
         });
         t2.start();
     }
-
-
     public void SetConnectedStoreFilterPanel(StoreFilterPanel filterPanel)
     {
         connectedFilterPanel=filterPanel;
@@ -91,8 +89,6 @@ public class StoreDisplayPanel extends JPanel {
             this.add(testRectButton);
             CreateButtonListener(testRectButton,storeDoc,backgroundImage);
         }
-
-
     }
     public void AddSinglePanels(ArrayList<Document> storesDocList) {
         this.removeAll();
